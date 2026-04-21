@@ -1,49 +1,47 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@import "./styles/awakeagency.webflow.shared.css";
+@import "./styles/lenis.css";
+
+/* Match Webflow export: hide select headings until IX3 is ready */
+html.w-mod-js:not(.w-mod-ix3)
+  :is(
+    .navigation-link.for-footer,
+    .c2a-title,
+    .home-heading-h2,
+    .crafting-heading,
+    .our-work-heading,
+    .creative-mind-heading,
+    .testimonial-heading-h2,
+    .pricing-heading-h2,
+    .heading-20,
+    .achevement-heading-h2,
+    .hero-heading-h1,
+    .about-card-2
+  ) {
+  visibility: hidden !important;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.w-webflow-badge {
+  display: none !important;
+}
+
+/* Do not override Webflow layout — keep minimal reset only where needed */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 html {
   height: 100%;
 }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
+body.body {
   min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+.hero-heading-h1 .italic-span {
+  font-family: var(--font-instrument-serif), "Instrument Serif", serif;
 }
