@@ -1,0 +1,98 @@
+@font-face {
+  font-family: 'Instrument Serif';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/s_instrumentserif_v5_jizHRFtNs2ka5fXjeivQ4LroWlx-6zATiw.ttf") format('truetype');
+}
+@font-face {
+  font-family: 'Instrument Serif';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/s_instrumentserif_v5_jizBRFtNs2ka5fXjeivQ4LroWlx-2zI.ttf") format('truetype');
+}
+@font-face {
+  font-family: 'Inter Tight';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/s_intertight_v9_NGShv5HMAFg6IuGlBNMjxLsC66ZMtb8hyW62x0xCHy5X.ttf") format('truetype');
+}
+@font-face {
+  font-family: 'Inter Tight';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../fonts/s_intertight_v9_NGShv5HMAFg6IuGlBNMjxLsC66ZMtb8hyW62x0xwHy5X.ttf") format('truetype');
+}
+@font-face {
+  font-family: 'Inter Tight';
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../fonts/s_intertight_v9_NGShv5HMAFg6IuGlBNMjxLsC66ZMtb8hyW62x0ycGC5X.ttf") format('truetype');
+}
+@font-face {
+  font-family: 'Inter Tight';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/s_intertight_v9_NGShv5HMAFg6IuGlBNMjxLsC66ZMtb8hyW62x0ylGC5X.ttf") format('truetype');
+}
+@font-face {
+  font-family: 'Inter Tight';
+  font-style: italic;
+  font-weight: 800;
+  font-display: swap;
+  src: url("../fonts/s_intertight_v9_NGShv5HMAFg6IuGlBNMjxLsC66ZMtb8hyW62x0zCGC5X.ttf") format('truetype');
+}
+@font-face {
+  font-family: 'Inter Tight';
+  font-style: italic;
+  font-weight: 900;
+  font-display: swap;
+  src: url("../fonts/s_intertight_v9_NGShv5HMAFg6IuGlBNMjxLsC66ZMtb8hyW62x0zrGC5X.ttf") format('truetype');
+}
+@font-face {
+  font-family: 'Inter Tight';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/s_intertight_v9_NGSnv5HMAFg6IuGlBNMjxJEL2VmU3NS7Z2mjDw-qXA.ttf") format('truetype');
+}
+@font-face {
+  font-family: 'Inter Tight';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../fonts/s_intertight_v9_NGSnv5HMAFg6IuGlBNMjxJEL2VmU3NS7Z2mjPQ-qXA.ttf") format('truetype');
+}
+@font-face {
+  font-family: 'Inter Tight';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../fonts/s_intertight_v9_NGSnv5HMAFg6IuGlBNMjxJEL2VmU3NS7Z2mj0QiqXA.ttf") format('truetype');
+}
+@font-face {
+  font-family: 'Inter Tight';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/s_intertight_v9_NGSnv5HMAFg6IuGlBNMjxJEL2VmU3NS7Z2mj6AiqXA.ttf") format('truetype');
+}
+@font-face {
+  font-family: 'Inter Tight';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("../fonts/s_intertight_v9_NGSnv5HMAFg6IuGlBNMjxJEL2VmU3NS7Z2mjjwiqXA.ttf") format('truetype');
+}
+@font-face {
+  font-family: 'Inter Tight';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("../fonts/s_intertight_v9_NGSnv5HMAFg6IuGlBNMjxJEL2VmU3NS7Z2mjpgiqXA.ttf") format('truetype');
+}
