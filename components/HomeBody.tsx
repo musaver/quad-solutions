@@ -1,15 +1,38 @@
 "use client";
 
-import parse from "html-react-parser";
 import { TemplateNavbar } from "@/components/TemplateNavbar";
-import { HOME_CONTENT_HTML } from "@/components/homeBodyHtml";
+import { Footer } from "@/components/Footer";
+import {
+  HeroSection,
+  LogoMarqueeSection,
+  AboutSection,
+  ServicesSection,
+  WorkSection,
+  TeamSection,
+  TestimonialsSection,
+  PricingSection,
+  FAQSection,
+  AwardsSection,
+  CTASection,
+} from "@/components/home";
 
 export function HomeBody() {
   return (
     <div className="main">
       <div className="gradient-background" />
       <TemplateNavbar />
-      {parse(HOME_CONTENT_HTML)}
+      <HeroSection />
+      <LogoMarqueeSection />
+      <AboutSection />
+      <ServicesSection />
+      <WorkSection />
+      <TeamSection />
+      <TestimonialsSection />
+      <PricingSection />
+      <FAQSection />
+      <AwardsSection />
+      <CTASection />
+      <Footer />
     </div>
   );
 }
