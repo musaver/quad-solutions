@@ -4964,6 +4964,12 @@ a {
     color: #1e1d1eb3;
   }
 
+  .link-6.w--current {
+    color: #1b1d1e;
+    font-weight: 700;
+    opacity: 1;
+  }
+
   .image-28 {
     cursor: pointer;
   }

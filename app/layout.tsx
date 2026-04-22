@@ -56,6 +56,23 @@ export default function RootLayout({
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{ __html: webflowTouchClass }}
         />
+        {/* Preload critical animation scripts for faster hero content display */}
+        <Script
+          src="/assets/js/jquery-3.5.1.min.js"
+          strategy="beforeInteractive"
+        />
+        <Script
+          src="/assets/gsap/gsap.min.js"
+          strategy="beforeInteractive"
+        />
+        <Script
+          src="/assets/gsap/SplitText.min.js"
+          strategy="beforeInteractive"
+        />
+        <Script
+          src="/assets/gsap/ScrollTrigger.min.js"
+          strategy="beforeInteractive"
+        />
         {children}
         <WebflowRouteSync />
         <WebflowRuntime />

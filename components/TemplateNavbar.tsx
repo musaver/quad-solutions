@@ -44,40 +44,25 @@ export function TemplateNavbar() {
             <ul role="list" className="nav-menu-two-2 w-list-unstyled">
               <li className="list-item-14">
                 <Link
-                  href="/#home"
-                  className="nav-link-4"
+                  href="/"
+                  className={`nav-link-4${onHome ? " w--current" : ""}`}
                   aria-current={onHome ? "page" : undefined}
                 >
                   Home
                 </Link>
-                <Link href="/#about-us" className="nav-link-4">
-                  About us
-                </Link>
                 <Link
                   href="/services"
-                  className="nav-link-4"
+                  className={`nav-link-4${onServices ? " w--current" : ""}`}
                   aria-current={onServices ? "page" : undefined}
                 >
                   Services
                 </Link>
                 <Link
                   href="/case-studies"
-                  className="nav-link-4"
+                  className={`nav-link-4${onCaseStudies ? " w--current" : ""}`}
                   aria-current={onCaseStudies ? "page" : undefined}
                 >
                   Case studies
-                </Link>
-                <Link href="/#work" className="nav-link-4">
-                  Work
-                </Link>
-                <Link href="/#team" className="nav-link-4">
-                  Team
-                </Link>
-                <Link href="/#pricing" className="nav-link-4">
-                  Pricing
-                </Link>
-                <Link href="/#award" className="nav-link-4">
-                  Awards
                 </Link>
               </li>
             </ul>
@@ -131,24 +116,19 @@ export function TemplateNavbar() {
             <ul role="list" className="list-6">
               <li className="list-item-11">
                 <Link
-                  href="/#home"
+                  href="/"
                   data-w-id="dfe9cf34-6fbd-1abd-f2e5-f3543201f30d"
-                  className="link-6"
+                  className={`link-6${onHome ? " w--current" : ""}`}
                   aria-current={onHome ? "page" : undefined}
                 >
                   Home
-                </Link>
-              </li>
-              <li className="list-item-11">
-                <Link href="/#about-us" className="link-6">
-                  About
                 </Link>
               </li>
               <li className="list-item-12">
                 <Link
                   href="/services"
                   data-w-id="03b7d350-5f42-547a-b4d6-be27ef8aff27"
-                  className="link-6"
+                  className={`link-6${onServices ? " w--current" : ""}`}
                   aria-current={onServices ? "page" : undefined}
                 >
                   Services
@@ -157,46 +137,10 @@ export function TemplateNavbar() {
               <li className="list-item-12">
                 <Link
                   href="/case-studies"
-                  className="link-6"
+                  className={`link-6${onCaseStudies ? " w--current" : ""}`}
                   aria-current={onCaseStudies ? "page" : undefined}
                 >
                   Case studies
-                </Link>
-              </li>
-              <li className="list-item-13">
-                <Link
-                  href="/#work"
-                  data-w-id="03b7d350-5f42-547a-b4d6-be27ef8aff2a"
-                  className="link-6"
-                >
-                  Work
-                </Link>
-              </li>
-              <li className="list-item-10">
-                <Link
-                  href="/#team"
-                  data-w-id="03b7d350-5f42-547a-b4d6-be27ef8aff2d"
-                  className="link-6"
-                >
-                  Team
-                </Link>
-              </li>
-              <li className="list-item-13">
-                <Link
-                  href="/#pricing"
-                  data-w-id="03b7d350-5f42-547a-b4d6-be27ef8aff30"
-                  className="link-6"
-                >
-                  Pricing
-                </Link>
-              </li>
-              <li className="list-item-13">
-                <Link
-                  href="/#award"
-                  data-w-id="03b7d350-5f42-547a-b4d6-be27ef8aff33"
-                  className="link-6"
-                >
-                  Award
                 </Link>
               </li>
             </ul>

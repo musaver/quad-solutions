@@ -21,11 +21,22 @@ function loadScriptOnce(src: string): Promise<void> {
     `script[src="${src}"]`,
   );
   if (existing) {
+    // If already marked as loaded, skip
     if (existing.dataset.loaded === "true") {
       return Promise.resolve();
     }
+    // If script exists (e.g., from Next.js Script preload) and appears ready, skip
+    // Check readyState or just assume it's loaded since it's in the DOM
+    if (document.readyState === "complete" || document.readyState === "interactive") {
+      existing.dataset.loaded = "true";
+      return Promise.resolve();
+    }
+    // Otherwise wait for it to load
     return new Promise((resolve, reject) => {
-      existing.addEventListener("load", () => resolve(), { once: true });
+      existing.addEventListener("load", () => {
+        existing.dataset.loaded = "true";
+        resolve();
+      }, { once: true });
       existing.addEventListener("error", () => reject(new Error(src)), {
         once: true,
       });
