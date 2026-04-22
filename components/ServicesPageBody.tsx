@@ -1,101 +1,178 @@
+"use client";
+
 import Link from "next/link";
 import { ServicesTestimonials } from "@/components/ServicesTestimonials";
 import { TemplateFooter } from "@/components/TemplateFooter";
 import { TemplateNavbar } from "@/components/TemplateNavbar";
-import { TemplateHero } from "@/components/TemplateHero";
 import { ServiceArrowIcon } from "@/components/ServiceArrowIcon";
+import { FeatureCardChipRow } from "@/components/FeatureCardChipRow";
+import { useHeroAnimation } from "@/hooks/useHeroAnimation";
 
-type ServiceCard = {
-  slug: string;
-  tag: string;
-  tagBg: string;
-  tagColor: string;
-  cardBg: string;
+type FeatureChipGroup = {
   title: string;
-  desc: string;
-  chips: string[];
+  sub?: string;
+  chips: { label: string }[];
+  topCount?: number;
 };
 
-const SERVICES: ServiceCard[] = [
+const FEATURE_CARDS: {
+  num: string;
+  title: string;
+  desc: string;
+  icon: string;
+  bg: string;
+  tile: string;
+  accent: string;
+  scroll: boolean;
+  groups: FeatureChipGroup[];
+}[] = [
   {
-    slug: "brand-strategy",
-    tag: "Brand Strategy",
-    tagBg: "rgba(73,40,253,0.12)",
-    tagColor: "#4928fd",
-    cardBg: "rgba(73,40,253,0.04)",
-    title: "Brand Strategy & Positioning",
-    desc: "We help businesses discover their unique voice and place in the market — creating strategic foundations that drive growth, loyalty, and lasting competitive advantage.",
-    chips: ["Market Research", "Brand Positioning", "Messaging Framework"],
+    num: "01",
+    title: "Growth Marketing",
+    desc: "Customer acquisition, lead generation, and revenue scaling.",
+    icon: "/assets/wf/67b2f932468e3acae7e236f3/68e623e24b10e2e4e2969b30_digitalmarketing.svg",
+    bg: "hsla(211, 100%, 72%, 0.2)",
+    tile: "hsla(211, 100%, 72%, 0.4)",
+    accent: "hsl(211, 45%, 52%)",
+    scroll: true,
+    groups: [
+      {
+        title: "Paid Advertising",
+        sub: "Performance Marketing",
+        topCount: 2,
+        chips: [
+          { label: "Meta Ads (Facebook & Instagram)" },
+          { label: "Google Ads (Search, Display, YouTube)" },
+          { label: "TikTok Ads" },
+          { label: "LinkedIn Ads" },
+          { label: "Pinterest Ads" },
+        ],
+      },
+      {
+        title: "Organic Marketing",
+        sub: "Content Strategy",
+        chips: [
+          { label: "Search Engine Optimization (SEO)" },
+          { label: "Social Media Management" },
+          { label: "Brand Awareness Campaigns" },
+        ],
+      },
+      {
+        title: "Strategic Optimization",
+        chips: [
+          { label: "Audience Targeting & Segmentation" },
+          { label: "Campaign Performance Analysis" },
+          { label: "Lead Generation Funnels" },
+        ],
+      },
+    ],
   },
   {
-    slug: "brand-identity",
-    tag: "Brand Identity",
-    tagBg: "rgba(186,129,238,0.15)",
-    tagColor: "#ba81ee",
-    cardBg: "rgba(186,129,238,0.05)",
-    title: "Brand Identity Design",
-    desc: "We bring your strategy to life visually — crafting distinctive identities with logos, typography, color systems, and comprehensive brand guidelines that ensure consistency.",
-    chips: ["Logo Design", "Visual Systems", "Brand Guidelines"],
+    num: "02",
+    title: "Creative Production",
+    desc: "High-impact visual storytelling and brand identity.",
+    icon: "/assets/wf/67b2f932468e3acae7e236f3/68e6018a556df7bc3330d227_brand.svg",
+    bg: "hsla(271, 76%, 72%, 0.2)",
+    tile: "hsla(271, 76%, 72%, 0.4)",
+    accent: "hsl(271, 55%, 55%)",
+    scroll: false,
+    groups: [
+      {
+        title: "Visual Content Creation",
+        chips: [
+          { label: "Product Photography" },
+          { label: "Brand Identity Design" },
+          { label: "Social Media Visuals" },
+        ],
+      },
+      {
+        title: "Video & Post-Production",
+        chips: [
+          { label: "Commercial & Advertisement Creatives" },
+          { label: "Video Editing & Visual Refinement" },
+          { label: "Graphic Design for Digital Platforms" },
+        ],
+      },
+      {
+        title: "AI-Generated Content",
+        sub: "AI-Accelerated",
+        chips: [
+          { label: "UGC-Style AI Content" },
+          { label: "Cinematic & Documentary-Style Videos" },
+          { label: "Animations & Cartoon Videos" },
+          { label: "Podcast & YouTube Advertisements" },
+        ],
+      },
+    ],
   },
   {
-    slug: "ui-ux-design",
-    tag: "UI/UX Design",
-    tagBg: "rgba(112,181,255,0.15)",
-    tagColor: "#70b5ff",
-    cardBg: "rgba(112,181,255,0.05)",
-    title: "UI/UX Design & Research",
-    desc: "We design digital experiences rooted in user empathy — blending research, wireframing, prototyping, and testing to create products people genuinely love to use.",
-    chips: ["User Research", "Interface Design", "Usability Testing"],
+    num: "03",
+    title: "Digital Products",
+    desc: "Scalable software and high-performance web solutions.",
+    icon: "/assets/wf/67b2f932468e3acae7e236f3/68e621c968fd23ebcbec7320_webdevp.svg",
+    bg: "hsla(350, 83%, 75%, 0.2)",
+    tile: "hsla(350, 83%, 75%, 0.4)",
+    accent: "hsl(350, 65%, 55%)",
+    scroll: false,
+    groups: [
+      {
+        title: "Web Development",
+        chips: [
+          { label: "Custom Website Design & Build" },
+          { label: "E-commerce Platforms" },
+          { label: "Landing Page Optimization" },
+        ],
+      },
+      {
+        title: "Mobile App Development",
+        chips: [
+          { label: "iOS & Android Applications" },
+          { label: "Cross-Platform Solutions" },
+        ],
+      },
+      {
+        title: "Custom Software Solutions",
+        chips: [
+          { label: "Business Process Software" },
+          { label: "Scalable Digital Product Development" },
+          { label: "Technology-Driven Business Solutions" },
+        ],
+      },
+    ],
   },
   {
-    slug: "content-strategy",
-    tag: "Content Strategy",
-    tagBg: "rgba(255,175,104,0.15)",
-    tagColor: "#ffaf68",
-    cardBg: "rgba(255,175,104,0.05)",
-    title: "Content Strategy & Copywriting",
-    desc: "We craft compelling narratives that engage audiences — from web copy and campaign messaging to content frameworks that guide all brand communications with a consistent voice.",
-    chips: ["Brand Copy", "Content Plans", "Storytelling"],
-  },
-  {
-    slug: "marketing",
-    tag: "Marketing",
-    tagBg: "rgba(121,212,94,0.15)",
-    tagColor: "#79d45e",
-    cardBg: "rgba(121,212,94,0.05)",
-    title: "Marketing Strategy & Campaigns",
-    desc: "We turn brand strategy into action — building go-to-market plans, integrated campaigns, and growth initiatives that drive measurable, sustainable business results.",
-    chips: ["GTM Strategy", "Campaign Planning", "Growth Marketing"],
-  },
-  {
-    slug: "web-design",
-    tag: "Web Design",
-    tagBg: "rgba(244,136,154,0.15)",
-    tagColor: "#f4889a",
-    cardBg: "rgba(244,136,154,0.05)",
-    title: "Web Design & Development",
-    desc: "We design and build high-performance websites that convert — combining beautiful visual design with clean, scalable code to create digital homes your brand deserves.",
-    chips: ["Web Design", "Frontend Dev", "CMS Integration"],
-  },
-  {
-    slug: "digital-marketing",
-    tag: "Digital Marketing",
-    tagBg: "rgba(255,215,0,0.2)",
-    tagColor: "#c8960c",
-    cardBg: "rgba(255,215,0,0.04)",
-    title: "Digital Marketing & SEO",
-    desc: "We grow your online presence with precision — combining search optimisation, paid media, and analytics to attract the right audiences and maximise return on every penny spent.",
-    chips: ["SEO", "Paid Media", "Analytics"],
-  },
-  {
-    slug: "motion-design",
-    tag: "Motion Design",
-    tagBg: "rgba(91,159,212,0.15)",
-    tagColor: "#5b9fd4",
-    cardBg: "rgba(91,159,212,0.04)",
-    title: "Motion Design & Animation",
-    desc: "We bring brands to life through movement — creating animations, motion graphics, and interactive micro-interactions that elevate digital products and campaigns.",
-    chips: ["Brand Animation", "UI Motion", "Video Production"],
+    num: "04",
+    title: "AI & Automation",
+    desc: "Operational efficiency and intelligent systems.",
+    icon: "/assets/wf/67b2f932468e3acae7e236f3/68e623fa72bd543218e41cb8_uiux.svg",
+    bg: "hsla(28, 100%, 70%, 0.2)",
+    tile: "hsla(28, 100%, 70%, 0.4)",
+    accent: "hsl(28, 80%, 48%)",
+    scroll: false,
+    groups: [
+      {
+        title: "Intelligent Automation",
+        chips: [
+          { label: "Workflow Automation Systems" },
+          { label: "Business Process Optimization" },
+        ],
+      },
+      {
+        title: "AI Communication Tools",
+        chips: [
+          { label: "Custom AI Chatbots" },
+          { label: "Intelligent Customer Support Systems" },
+        ],
+      },
+      {
+        title: "Advanced AI Systems",
+        chips: [
+          { label: "Autonomous AI Agents" },
+          { label: "AI-Driven Data Insights" },
+          { label: "Custom AI Integrations for Niche Workflows" },
+        ],
+      },
+    ],
   },
 ];
 
@@ -123,55 +200,34 @@ const FAQ_ITEMS: { q: string; a: string }[] = [
 ];
 
 export function ServicesPageBody() {
+  const heroRef = useHeroAnimation();
+
   return (
-    <div className="main qs-services-page">
+    <div className="main qs-services-page qs-case-studies-page">
       <div className="gradient-background" />
       <TemplateNavbar />
-      <TemplateHero />
 
-      <section className="section qs-stats-section">
+      <header className="qs-case-hero">
         <div className="qs-inner">
-          <div className="qs-stats-row">
-            <div className="qs-stat">
-              <p className="qs-stat-num">12+</p>
-              <p className="qs-stat-label">
-                Years of
-                <br />
-                expertise
-              </p>
-            </div>
-            <div className="qs-stat-divider" aria-hidden />
-            <div className="qs-stat">
-              <p className="qs-stat-num">8</p>
-              <p className="qs-stat-label">
-                Core service
-                <br />
-                disciplines
-              </p>
-            </div>
-            <div className="qs-stat-divider" aria-hidden />
-            <div className="qs-stat">
-              <p className="qs-stat-num">94%</p>
-              <p className="qs-stat-label">
-                Client retention
-                <br />
-                rate
-              </p>
-            </div>
-            <div className="qs-stat-divider" aria-hidden />
-            <div className="qs-stat">
-              <p className="qs-stat-num">1000+</p>
-              <p className="qs-stat-label">
-                Clients served
-                <br />
-                worldwide
-              </p>
-            </div>
+          <div className="qs-case-hero-badge-wrap">
+          </div>
+          <h1 ref={heroRef} className="qs-case-hero-title">
+            Work that <span className="qs-case-hero-italic">speaks</span>
+            <br />
+            for itself
+          </h1>
+          <p className="qs-case-hero-lede">
+            A curated collection of brand strategies, identities, digital
+            products, and campaigns — each one built to make a lasting impact.
+          </p>
+          <div className="qs-case-stats-card hidden">
           </div>
         </div>
-      </section>
+      </header>
 
-      <section className="section qs-section-pad">
+      
+
+      <section className="section qs-feature-card-section qs-section-pad">
         <div className="qs-inner">
           <div className="qs-services-header">
             <div>
@@ -179,53 +235,85 @@ export function ServicesPageBody() {
                 Everything you need to <span className="span-txt">grow</span>
               </h1>
               <p className="qs-services-lede">
-                Eight core disciplines, one cohesive team. Click any service to
+                Four core disciplines, one cohesive team. Click any service to
                 explore its full process, pricing, and case studies.
               </p>
             </div>
             <div className="qs-pill-count">
-              <strong>8</strong>
+              <strong>4</strong>
               <span>services available</span>
             </div>
           </div>
 
-          <div className="qs-services-grid w-dyn-items" role="list">
-            {SERVICES.map((s) => (
-              <Link
-                key={s.title}
-                href={`/service-details?service=${s.slug}`}
-                className="qs-service-card w-inline-block w-dyn-item"
-                role="listitem"
-                style={{ backgroundColor: s.cardBg }}
-              >
-                <div>
-                  <span
-                    className="qs-service-tag"
-                    style={{
-                      backgroundColor: s.tagBg,
-                      color: s.tagColor,
-                    }}
-                  >
-                    {s.tag}
-                  </span>
-                </div>
-                <h2 className="qs-service-title">{s.title}</h2>
-                <p className="qs-service-desc">{s.desc}</p>
-                <div className="qs-chip-row">
-                  {s.chips.map((c) => (
-                    <span key={c} className="qs-chip">
-                      {c}
-                    </span>
+          <div className="qs-feature-card-row">
+            {FEATURE_CARDS.map((card) => {
+              const ChipGroups = (
+                <div className="qs-feature-card-groups">
+                  {card.groups.map((g) => (
+                    <div key={g.title} className="qs-feature-card-group">
+                      <div className="qs-feature-card-group-head">
+                        <span className="qs-feature-card-group-title">
+                          {g.title}
+                        </span>
+                        {g.sub ? (
+                          <span className="qs-feature-card-group-sub">
+                            {g.sub}
+                          </span>
+                        ) : null}
+                      </div>
+                      <FeatureCardChipRow
+                        chips={g.chips}
+                        topCount={g.topCount}
+                      />
+                    </div>
                   ))}
                 </div>
-                <div className="qs-card-footer">
-                  <span className="qs-learn">Learn more</span>
-                  <span className="qs-arrow-btn" aria-hidden>
-                    <ServiceArrowIcon variant="on-dark" />
-                  </span>
+              );
+
+              return (
+                <div
+                  key={card.num}
+                  className="qs-feature-card"
+                  style={
+                    {
+                      "--card-bg": card.bg,
+                      "--card-tile": card.tile,
+                      "--card-accent": card.accent,
+                    } as React.CSSProperties
+                  }
+                >
+                  <div className="qs-feature-card-top">
+                    <div className="qs-feature-card-head">
+                      <h3 className="heading-25">{card.title}</h3>
+
+                    </div>
+                    <div className="qs-feature-card-top-row">
+                      <div className="qs-feature-card-icon" aria-hidden>
+                        <img
+                          src={card.icon}
+                          alt=""
+                          width={40}
+                          height={40}
+                          loading="lazy"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="qs-feature-card-body">
+                    {ChipGroups}
+                    <Link
+                      href="/service-details?service=marketing"
+                      className="qs-feature-card-link"
+                    >
+                      <span>Learn more</span>
+                      <span className="qs-feature-card-arrow" aria-hidden>
+                        <ServiceArrowIcon variant="on-dark" />
+                      </span>
+                    </Link>
+                  </div>
                 </div>
-              </Link>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

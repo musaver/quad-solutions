@@ -101,6 +101,69 @@ function FinalCtaLockIcon() {
   );
 }
 
+function renderDeliverableIcon(n: string) {
+  const common = {
+    width: 16,
+    height: 16,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.8,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+  };
+  switch (n) {
+    case "01": // Brand Identity — palette
+      return (
+        <svg {...common}>
+          <circle cx="12" cy="12" r="9" />
+          <circle cx="8" cy="10" r="1" fill="currentColor" />
+          <circle cx="12" cy="7.5" r="1" fill="currentColor" />
+          <circle cx="16" cy="10" r="1" fill="currentColor" />
+          <path d="M12 21a3 3 0 0 1 0-6 1.5 1.5 0 0 0 0-3" />
+        </svg>
+      );
+    case "02": // Brand Guidelines — book
+      return (
+        <svg {...common}>
+          <path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v16H6.5A2.5 2.5 0 0 0 4 20.5z" />
+          <path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20v4H6.5A2.5 2.5 0 0 1 4 19.5" />
+        </svg>
+      );
+    case "03": // Marketing Collateral — megaphone
+      return (
+        <svg {...common}>
+          <path d="M3 11v2a1 1 0 0 0 1 1h3l6 4V6L7 10H4a1 1 0 0 0-1 1z" />
+          <path d="M17 9a3 3 0 0 1 0 6" />
+        </svg>
+      );
+    case "04": // Digital Assets — image / layers
+      return (
+        <svg {...common}>
+          <rect x="3" y="3" width="18" height="18" rx="2" />
+          <circle cx="9" cy="9" r="1.5" />
+          <path d="m21 15-5-5L5 21" />
+        </svg>
+      );
+    case "05": // Source Files — folder
+      return (
+        <svg {...common}>
+          <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+        </svg>
+      );
+    case "06": // Implementation Support — lifebuoy
+      return (
+        <svg {...common}>
+          <circle cx="12" cy="12" r="9" />
+          <circle cx="12" cy="12" r="3.5" />
+          <path d="m4.9 4.9 4.6 4.6M14.5 14.5l4.6 4.6M4.9 19.1l4.6-4.6M14.5 9.5l4.6-4.6" />
+        </svg>
+      );
+    default:
+      return null;
+  }
+}
+
 const FAQ_ITEMS: { q: string; a: string }[] = [
   {
     q: "What does your brand strategy process involve?",
@@ -524,10 +587,10 @@ export function ServiceDetailsPageBody() {
                   </span>
                   <span
                     className="arrow"
-                    style={{ background: x.arrowBg }}
+                    style={{ background: x.arrowBg, color: x.num }}
                     aria-hidden
                   >
-                    <ServiceArrowIcon variant="on-light" />
+                    {renderDeliverableIcon(x.n)}
                   </span>
                 </header>
                 <h3>{x.t}</h3>
