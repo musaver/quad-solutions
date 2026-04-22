@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { TemplateFooter } from "@/components/TemplateFooter";
 import { TemplateNavbar } from "@/components/TemplateNavbar";
 import { ServiceArrowIcon } from "@/components/ServiceArrowIcon";
+import { getServiceHeroSerif } from "@/lib/serviceDetailsHero";
 
 const TEAM = "/assets/figma-service-details";
 const WORK = "/assets/figma-case-studies";
@@ -297,6 +299,8 @@ const HOW_STEPS = [
 ];
 
 export function ServiceDetailsPageBody() {
+  const searchParams = useSearchParams();
+  const heroSerif = getServiceHeroSerif(searchParams.get("service"));
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   return (
@@ -310,7 +314,7 @@ export function ServiceDetailsPageBody() {
           <h1 className="qs-sd-hero-title-block">
             <span className="qs-sd-hero-line1">Transform your brand</span>
             <span className="qs-sd-hero-line2">
-              with <span className="qs-sd-serif">expert strategy</span>
+              with <span className="qs-sd-serif">{heroSerif}</span>
             </span>
           </h1>
           <p className="qs-sd-hero-lede">

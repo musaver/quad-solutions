@@ -2,9 +2,16 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useMemo } from "react";
+import { useSearchParams } from "next/navigation";
 import { TemplateFooter } from "@/components/TemplateFooter";
 import { TemplateNavbar } from "@/components/TemplateNavbar";
 import { ServiceArrowIcon } from "@/components/ServiceArrowIcon";
+import {
+  getCaseStudyVariant,
+  getNextCaseStudy,
+  getOtherCaseStudies,
+} from "@/lib/caseStudyProject";
 
 const ASSET = "/assets/figma-case-study-details";
 
@@ -46,6 +53,19 @@ const PROCESS_STEPS = [
 ];
 
 export function CaseStudyDetailsPageBody() {
+  const searchParams = useSearchParams();
+  const v = getCaseStudyVariant(searchParams.get("project"));
+  const nextProject = getNextCaseStudy(v.id);
+  const moreProjects = getOtherCaseStudies(v.id, 2);
+
+  const processSteps = useMemo(
+    () =>
+      PROCESS_STEPS.map((step, i) =>
+        i === 1 ? { ...step, body: v.processCompetitiveBody } : step,
+      ),
+    [v.processCompetitiveBody],
+  );
+
   return (
     <div className="main qs-csd-page">
       <div className="gradient-background" />
@@ -54,8 +74,8 @@ export function CaseStudyDetailsPageBody() {
       <section className="qs-csd-hero" aria-labelledby="qs-csd-hero-title">
         <div className="qs-inner">
           <nav className="qs-csd-breadcrumb" aria-label="Breadcrumb">
-            <Link href="/#work" className="qs-csd-breadcrumb-link">
-              Work
+            <Link href="/case-studies" className="qs-csd-breadcrumb-link">
+              Case studies
             </Link>
             <Image
               src={`${ASSET}/icon-chevron.svg`}
@@ -64,54 +84,53 @@ export function CaseStudyDetailsPageBody() {
               height={16}
               className="qs-csd-breadcrumb-sep"
             />
-            <span className="qs-csd-breadcrumb-current">FlowBank</span>
+            <span className="qs-csd-breadcrumb-current">{v.clientName}</span>
           </nav>
 
           <div className="qs-csd-hero-top">
             <div className="qs-csd-hero-copy">
               <div className="qs-csd-hero-badges">
                 <span className="qs-csd-badge qs-csd-badge--accent">
-                  Brand Strategy
+                  {v.primaryBadge}
                 </span>
-                <span className="qs-csd-badge qs-csd-badge--muted">FinTech</span>
+                <span className="qs-csd-badge qs-csd-badge--muted">
+                  {v.secondaryBadge}
+                </span>
               </div>
               <h1 id="qs-csd-hero-title" className="qs-csd-hero-title">
-                <span className="qs-csd-hero-title-strong">FlowBank</span>
+                <span className="qs-csd-hero-title-strong">{v.clientName}</span>
                 <span className="qs-csd-serif qs-csd-hero-title-serif">
                   {" "}
-                  — FinTech
+                  — {v.industryShort}
                 </span>
               </h1>
-              <p className="qs-csd-hero-lede">
-                FlowBank needed to carve out a distinct identity in an
-                increasingly crowded fintech space — moving from a generic
-                digital bank to a trusted financial partner with a clear
-                strategic narrative.
-              </p>
+              <p className="qs-csd-hero-lede">{v.lede}</p>
             </div>
 
             <aside className="qs-csd-meta-card-wrap">
               <div className="qs-csd-meta-card">
                 <div className="qs-csd-meta-row">
                   <span className="qs-csd-meta-label">Client</span>
-                  <span className="qs-csd-meta-value">FlowBank Ltd</span>
+                  <span className="qs-csd-meta-value">{v.clientLegal}</span>
                 </div>
                 <div className="qs-csd-meta-row">
                   <span className="qs-csd-meta-label">Year</span>
-                  <span className="qs-csd-meta-value">2024</span>
+                  <span className="qs-csd-meta-value">{v.year}</span>
                 </div>
                 <div className="qs-csd-meta-row">
                   <span className="qs-csd-meta-label">Industry</span>
-                  <span className="qs-csd-meta-value">FinTech</span>
+                  <span className="qs-csd-meta-value">{v.industry}</span>
                 </div>
                 <div className="qs-csd-meta-row">
                   <span className="qs-csd-meta-label">Services</span>
-                  <span className="qs-csd-meta-value">Brand Positioning</span>
+                  <span className="qs-csd-meta-value">{v.servicesLine}</span>
                 </div>
                 <div className="qs-csd-meta-tags">
-                  <span className="qs-csd-meta-tag">Brand Positioning</span>
-                  <span className="qs-csd-meta-tag">Market Strategy</span>
-                  <span className="qs-csd-meta-tag">Messaging</span>
+                  {v.metaTags.map((tag) => (
+                    <span key={tag} className="qs-csd-meta-tag">
+                      {tag}
+                    </span>
+                  ))}
                 </div>
               </div>
               <Link href="/contact" className="qs-csd-btn-similar w-inline-block">
@@ -125,7 +144,7 @@ export function CaseStudyDetailsPageBody() {
 
           <div className="qs-csd-hero-image-wrap">
             <Image
-              src={`${ASSET}/hero-terminal.jpg`}
+              src={v.heroImage}
               alt=""
               width={1272}
               height={520}
@@ -150,11 +169,7 @@ export function CaseStudyDetailsPageBody() {
                 <span className="qs-csd-serif">real problem</span>
               </h2>
               <p className="qs-csd-body">
-                The fintech market had become saturated with similar-looking
-                brands all promising the same values: speed, simplicity, and
-                security. FlowBank struggled to communicate what made them
-                genuinely different — their human-first approach to digital
-                banking.
+                {v.challengeMarket} {v.challengeStruggle}
               </p>
               <div className="qs-csd-key-box qs-csd-key-box--challenge">
                 <p className="qs-csd-key-box-title">Key challenges</p>
@@ -187,13 +202,7 @@ export function CaseStudyDetailsPageBody() {
                 </span>
                 <span className="qs-csd-serif">strategy</span>
               </h2>
-              <p className="qs-csd-body">
-                We began with a comprehensive market audit and stakeholder
-                immersion, interviewing 40+ customers to uncover what they
-                truly valued in a financial partner. This research revealed an
-                underserved emotional need: people didn&apos;t just want fast
-                banking — they wanted to feel financially empowered.
-              </p>
+              <p className="qs-csd-body">{v.approachLead}</p>
               <div className="qs-csd-key-box qs-csd-key-box--approach">
                 <p className="qs-csd-key-box-title">Key highlights</p>
                 <ul className="qs-csd-key-list">
@@ -229,7 +238,7 @@ export function CaseStudyDetailsPageBody() {
             </p>
           </div>
           <div className="qs-csd-process-grid">
-            {PROCESS_STEPS.map((s) => (
+            {processSteps.map((s) => (
               <div key={s.num} className="qs-csd-process-card">
                 <p className="qs-csd-process-num">{s.num}</p>
                 <div>
@@ -321,7 +330,7 @@ export function CaseStudyDetailsPageBody() {
       <section className="qs-csd-quote-banner" aria-label="Project overview">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={`${ASSET}/hero-terminal.jpg`}
+          src={v.heroImage}
           alt=""
           className="qs-csd-quote-banner-bg"
         />
@@ -346,7 +355,7 @@ export function CaseStudyDetailsPageBody() {
             />
             <div>
               <p className="qs-csd-quote-banner-name">Michael Chen</p>
-              <p className="qs-csd-quote-banner-role">CEO, FlowBank</p>
+              <p className="qs-csd-quote-banner-role">CEO, {v.clientName}</p>
             </div>
           </div>
         </div>
@@ -364,8 +373,9 @@ export function CaseStudyDetailsPageBody() {
           <blockquote className="qs-csd-testimonial-quote">
             &ldquo;Awake helped us discover who we really are as a brand. Their
             strategic process uncovered insights that transformed how we
-            position ourselves in the market. We went from being just another
-            fintech to a brand people genuinely connect with.&rdquo;
+            position ourselves in the market. We went from being just another{" "}
+            {v.quoteSectorPhrase} to a brand people genuinely connect
+            with.&rdquo;
           </blockquote>
           <div className="qs-csd-stars" aria-label="5 out of 5 stars">
             {[0, 1, 2, 3].map((i) => (
@@ -394,7 +404,7 @@ export function CaseStudyDetailsPageBody() {
             />
             <div>
               <p className="qs-csd-testimonial-name">Michael Chen</p>
-              <p className="qs-csd-testimonial-role">CEO, FlowBank</p>
+              <p className="qs-csd-testimonial-role">CEO, {v.clientName}</p>
             </div>
           </div>
         </div>
@@ -442,14 +452,9 @@ export function CaseStudyDetailsPageBody() {
             </div>
             <div className="qs-csd-conclusion-copy">
               <p>
-                We began with a comprehensive market audit and stakeholder
-                immersion, interviewing 40+ customers to uncover what they
-                truly valued in a financial partner. This research revealed an
-                underserved emotional need: people didn&apos;t just want fast
-                banking — they wanted to feel financially empowered. The work
-                we delivered for FlowBank Ltd represents exactly the kind of
-                impact we pursue with every engagement — strategic clarity
-                translated into measurable commercial outcomes.
+                The work we delivered for {v.clientLegal} represents exactly the
+                kind of impact we pursue with every engagement — strategic
+                clarity translated into measurable commercial outcomes.
               </p>
               <p>
                 From initial discovery through to final delivery, every decision
@@ -498,92 +503,42 @@ export function CaseStudyDetailsPageBody() {
             </Link>
           </div>
           <div className="qs-csd-more-grid">
-            <Link
-              href="/contact"
-              className="qs-csd-more-card w-inline-block"
-            >
-              <div className="qs-csd-more-img-wrap">
-                <Image
-                  src={`${ASSET}/project-academy.jpg`}
-                  alt=""
-                  width={624}
-                  height={280}
-                  className="qs-csd-more-img"
-                />
-                <span className="qs-csd-more-badge">Brand Identity</span>
-              </div>
-              <div className="qs-csd-more-body">
-                <div className="qs-csd-more-title-row">
-                  <div className="qs-csd-more-text">
-                    <p className="qs-csd-more-card-name">Academy.co</p>
-                    <p className="qs-csd-more-card-meta">Academy.co · 2024</p>
-                  </div>
-                  <span className="qs-csd-more-arrow" aria-hidden>
-                    <ServiceArrowIcon variant="on-light" />
-                  </span>
+            {moreProjects.map((p) => (
+              <Link
+                key={p.id}
+                href={`/case-study-details?project=${p.id}`}
+                className="qs-csd-more-card w-inline-block"
+              >
+                <div className="qs-csd-more-img-wrap">
+                  <Image
+                    src={p.heroImage}
+                    alt=""
+                    width={624}
+                    height={280}
+                    className="qs-csd-more-img"
+                  />
+                  <span className="qs-csd-more-badge">{p.primaryBadge}</span>
                 </div>
-              </div>
-            </Link>
-            <Link
-              href="/contact"
-              className="qs-csd-more-card w-inline-block"
-            >
-              <div className="qs-csd-more-img-wrap">
-                <Image
-                  src={`${ASSET}/project-genome.jpg`}
-                  alt=""
-                  width={624}
-                  height={280}
-                  className="qs-csd-more-img"
-                />
-                <span className="qs-csd-more-badge">UI/UX Design</span>
-              </div>
-              <div className="qs-csd-more-body">
-                <div className="qs-csd-more-title-row">
-                  <div className="qs-csd-more-text">
-                    <p className="qs-csd-more-card-name">Genome Health</p>
-                    <p className="qs-csd-more-card-meta">Genome Health · 2023</p>
+                <div className="qs-csd-more-body">
+                  <div className="qs-csd-more-title-row">
+                    <div className="qs-csd-more-text">
+                      <p className="qs-csd-more-card-name">{p.clientName}</p>
+                      <p className="qs-csd-more-card-meta">
+                        {p.clientName} · {p.year}
+                      </p>
+                    </div>
+                    <span className="qs-csd-more-arrow" aria-hidden>
+                      <ServiceArrowIcon variant="on-light" />
+                    </span>
                   </div>
-                  <span className="qs-csd-more-arrow" aria-hidden>
-                    <ServiceArrowIcon variant="on-light" />
-                  </span>
                 </div>
-              </div>
-            </Link>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="qs-csd-next">
-        <div className="qs-inner">
-          <p className="qs-csd-next-label">Next Project</p>
-          <Link href="/contact" className="qs-csd-next-card w-inline-block">
-            <div className="qs-csd-next-bg">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={`${ASSET}/project-academy.jpg`}
-                alt=""
-                className="qs-csd-next-bg-img"
-              />
-              <div className="qs-csd-next-overlay" />
-            </div>
-            <div className="qs-csd-next-content">
-              <div>
-                <p className="qs-csd-next-name">Academy.co</p>
-                <p className="qs-csd-next-meta">
-                  Brand Identity · Education
-                </p>
-              </div>
-              <span className="qs-csd-next-btn">
-                View Project
-                <span className="qs-csd-next-btn-icon" aria-hidden>
-                  <ServiceArrowIcon variant="on-dark" />
-                </span>
-              </span>
-            </div>
-          </Link>
-        </div>
-      </section>
+      
 
       <section className="qs-csd-final-cta">
         <div className="qs-inner">
