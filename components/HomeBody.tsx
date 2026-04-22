@@ -1,8 +1,15 @@
 "use client";
 
 import parse from "html-react-parser";
-import { HOME_BODY_HTML } from "./homeBodyHtml";
+import { TemplateNavbar } from "@/components/TemplateNavbar";
+import { HOME_CONTENT_HTML } from "@/components/homeBodyHtml";
 
 export function HomeBody() {
-  return <>{parse(HOME_BODY_HTML)}</>;
+  return (
+    <div className="main">
+      <div className="gradient-background" />
+      <TemplateNavbar />
+      {parse(HOME_CONTENT_HTML)}
+    </div>
+  );
 }
