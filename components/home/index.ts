@@ -1,0 +1,11 @@
+export { HeroSection } from "./HeroSection";
+export { LogoMarqueeSection } from "./LogoMarqueeSection";
+export { AboutSection } from "./AboutSection";
+export { ServicesSection } from "./ServicesSection";
+export { WorkSection } from "./WorkSection";
+export { TeamSection } from "./TeamSection";
+export { TestimonialsSection } from "./TestimonialsSection";
+export { PricingSection } from "./PricingSection";
+export { FAQSection } from "./FAQSection";
+export { AwardsSection } from "./AwardsSection";
+export { CTASection } from "./CTASection";
