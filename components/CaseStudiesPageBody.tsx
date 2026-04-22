@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { TemplateFooter } from "@/components/TemplateFooter";
 import { TemplateNavbar } from "@/components/TemplateNavbar";
 import { ServiceArrowIcon } from "@/components/ServiceArrowIcon";
+import { useHeroAnimation } from "@/hooks/useHeroAnimation";
 
 const ASSET = "/assets/figma-case-studies";
 
@@ -112,6 +113,7 @@ const MARQUEE_NAMES = [
 
 export function CaseStudiesPageBody() {
   const [filter, setFilter] = useState<FilterId>("all");
+  const heroRef = useHeroAnimation();
 
   const visibleProjects = useMemo(
     () =>
@@ -130,7 +132,7 @@ export function CaseStudiesPageBody() {
         <div className="qs-inner">
           <div className="qs-case-hero-badge-wrap">
           </div>
-          <h1 className="qs-case-hero-title">
+          <h1 ref={heroRef} className="qs-case-hero-title">
             Work that <span className="qs-case-hero-italic">speaks</span>
             <br />
             for itself
@@ -140,7 +142,7 @@ export function CaseStudiesPageBody() {
             products, and campaigns — each one built to make a lasting impact.
           </p>
           <div className="qs-case-stats-card hidden">
-            
+
           </div>
         </div>
       </header>
