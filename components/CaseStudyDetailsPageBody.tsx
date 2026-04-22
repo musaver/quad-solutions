@@ -12,6 +12,7 @@ import {
   getNextCaseStudy,
   getOtherCaseStudies,
 } from "@/lib/caseStudyProject";
+import { useHeroAnimation } from "@/hooks/useHeroAnimation";
 
 const ASSET = "/assets/figma-case-study-details";
 
@@ -57,6 +58,7 @@ export function CaseStudyDetailsPageBody() {
   const v = getCaseStudyVariant(searchParams.get("project"));
   const nextProject = getNextCaseStudy(v.id);
   const moreProjects = getOtherCaseStudies(v.id, 2);
+  const heroRef = useHeroAnimation();
 
   const processSteps = useMemo(
     () =>
@@ -97,7 +99,7 @@ export function CaseStudyDetailsPageBody() {
                   {v.secondaryBadge}
                 </span>
               </div>
-              <h1 id="qs-csd-hero-title" className="qs-csd-hero-title">
+              <h1 ref={heroRef} id="qs-csd-hero-title" className="qs-csd-hero-title">
                 <span className="qs-csd-hero-title-strong">{v.clientName}</span>
                 <span className="qs-csd-serif qs-csd-hero-title-serif">
                   {" "}

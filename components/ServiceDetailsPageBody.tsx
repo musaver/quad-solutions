@@ -7,6 +7,7 @@ import { TemplateFooter } from "@/components/TemplateFooter";
 import { TemplateNavbar } from "@/components/TemplateNavbar";
 import { ServiceArrowIcon } from "@/components/ServiceArrowIcon";
 import { getServiceHeroSerif } from "@/lib/serviceDetailsHero";
+import { useHeroAnimation } from "@/hooks/useHeroAnimation";
 
 const TEAM = "/assets/figma-service-details";
 const WORK = "/assets/figma-case-studies";
@@ -302,6 +303,7 @@ export function ServiceDetailsPageBody() {
   const searchParams = useSearchParams();
   const heroSerif = getServiceHeroSerif(searchParams.get("service"));
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const heroRef = useHeroAnimation();
 
   return (
     <div className="main qs-sd-page">
@@ -310,8 +312,8 @@ export function ServiceDetailsPageBody() {
 
       <header className="qs-sd-hero">
         <div className="qs-inner qs-sd-hero-inner">
-          
-          <h1 className="qs-sd-hero-title-block">
+
+          <h1 ref={heroRef} className="qs-sd-hero-title-block">
             <span className="qs-sd-hero-line1">Transform your brand</span>
             <span className="qs-sd-hero-line2">
               with <span className="qs-sd-serif">{heroSerif}</span>
