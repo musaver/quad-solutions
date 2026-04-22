@@ -3,6 +3,7 @@ import Script from "next/script";
 import { Instrument_Serif, Inter_Tight } from "next/font/google";
 import "./globals.css";
 import { WebflowRuntime } from "@/components/WebflowRuntime";
+import { WebflowRouteSync } from "@/components/WebflowRouteSync";
 
 const interTight = Inter_Tight({
   subsets: ["latin"],
@@ -56,6 +57,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: webflowTouchClass }}
         />
         {children}
+        <WebflowRouteSync />
         <WebflowRuntime />
       </body>
     </html>

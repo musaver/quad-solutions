@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { startIx3PayloadCapture } from "@/lib/webflowIx3Rehydrate";
 
 const SCRIPT_CHAIN = [
   "/assets/js/jquery-3.5.1.min.js",
@@ -65,14 +66,20 @@ async function loadWebflowStack(): Promise<void> {
     return;
   }
 
-  const lenis = new LenisCtor({ lerp: 0.1 });
-  lenis.on("scroll", () => {
-    ST.update();
-  });
-  gsap.ticker.add((time: number) => {
-    lenis.raf(time * 1000);
-  });
-  gsap.ticker.lagSmoothing(0);
+  const win = window as Window & {
+    __awakeLenis?: InstanceType<NonNullable<typeof LenisCtor>>;
+  };
+  if (!win.__awakeLenis) {
+    win.__awakeLenis = new LenisCtor({ lerp: 0.1 });
+    const lenis = win.__awakeLenis;
+    lenis.on("scroll", () => {
+      ST.update();
+    });
+    gsap.ticker.add((time: number) => {
+      lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0);
+  }
 }
 
 function ensureWebflowRuntime(): Promise<void> {
@@ -87,9 +94,13 @@ function ensureWebflowRuntime(): Promise<void> {
 
 export function WebflowRuntime() {
   useEffect(() => {
-    ensureWebflowRuntime().catch((e) => {
-      console.error(e);
-    });
+    ensureWebflowRuntime()
+      .then(() => {
+        startIx3PayloadCapture();
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   }, []);
 
   return null;
