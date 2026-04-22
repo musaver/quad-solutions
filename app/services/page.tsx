@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ServicesPageBody } from "@/components/ServicesPageBody";
+import "../case-studies/case-studies-page.css";
 import "./services-page.css";
 
 export const metadata: Metadata = {
