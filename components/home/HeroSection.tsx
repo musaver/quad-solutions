@@ -1,18 +1,61 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+
 export function HeroSection() {
+  const [revealed, setRevealed] = useState(false);
+  const hasRevealedRef = useRef(false);
+
+  useEffect(() => {
+    if (hasRevealedRef.current) {
+      setRevealed(true);
+      return;
+    }
+
+    const reveal = () => {
+      if (hasRevealedRef.current) return;
+      hasRevealedRef.current = true;
+      setRevealed(true);
+    };
+
+    if (document.readyState === "complete") {
+      const t = window.setTimeout(reveal, 50);
+      return () => window.clearTimeout(t);
+    }
+
+    window.addEventListener("load", reveal, { once: true });
+    const safety = window.setTimeout(reveal, 1500);
+    return () => {
+      window.removeEventListener("load", reveal);
+      window.clearTimeout(safety);
+    };
+  }, []);
+
+  const baseStyle = {
+    transition: "opacity 0.8s ease-out, transform 0.8s ease-out",
+    willChange: "opacity, transform" as const,
+  };
+  const headingStyle = {
+    ...baseStyle,
+    opacity: revealed ? 1 : 0,
+    transform: revealed ? "translateY(0)" : "translateY(20px)",
+  };
+  const paraStyle = {
+    ...baseStyle,
+    transition:
+      "opacity 0.8s ease-out 0.15s, transform 0.8s ease-out 0.15s",
+    opacity: revealed ? 1 : 0,
+    transform: revealed ? "translateY(0)" : "translateY(20px)",
+  };
+
   return (
     <section id="home" className="section">
       <div className="w-layout-blockcontainer container-main w-container">
-        <h1
-          data-w-id="6d188073-2487-31fa-c36a-0d1621970df1"
-          className="hero-heading-h1"
-        >
+        <h1 className="qs-hero-heading-h1" style={headingStyle}>
           Building bold brands with{" "}
           <span className="italic-span typing-text">thoughtful design</span>
         </h1>
-        <p
-          data-w-id="aca08924-3373-f5fc-69ef-f496c3c5cc2e"
-          className="para-txt"
-        >
+        <p className="para-txt" style={paraStyle}>
           At Awake, we help small startups tackle the world&apos;s biggest
           challenges with tailored solutions, guiding you from strategy to
           success in a competitive market.
