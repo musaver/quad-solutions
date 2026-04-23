@@ -1,5 +1,6 @@
 @import "./styles/awakeagency.webflow.shared.css";
 @import "./styles/lenis.css";
+@import "./services/services-page.css";
 
 /* Match Webflow export: hide select headings until IX3 is ready */
 html.w-mod-js:not(.w-mod-ix3)
@@ -46,4 +47,59 @@ body.body {
 
 .hero-heading-h1 .italic-span {
   font-family: var(--font-instrument-serif), "Instrument Serif", serif;
+}
+
+/* React-controlled mobile menu — slide in from right, smooth + reliable across
+   client-side navigations (doesn't depend on Webflow IX3 re-binding). */
+.awake-menu-btn {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.awake-menu-close {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 991px) {
+  .awake-menu-btn {
+    display: inline-flex;
+  }
+
+  .div-block-47 .mobile-menu-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.22s ease-out;
+  }
+
+  .div-block-47.is-menu-open .mobile-menu-overlay {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .div-block-47 .div-block-29 {
+    display: flex !important;
+    transform: translateX(100%);
+    transition: transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1);
+    will-change: transform;
+  }
+
+  .div-block-47.is-menu-open .div-block-29 {
+    transform: translateX(0) !important;
+  }
 }

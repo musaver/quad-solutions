@@ -1,0 +1,265 @@
+"use client";
+
+import Link from "next/link";
+import { FeatureCardChipRow } from "@/components/FeatureCardChipRow";
+import { ServiceArrowIcon } from "@/components/ServiceArrowIcon";
+
+type FeatureChipGroup = {
+  title: string;
+  sub?: string;
+  chips: { label: string }[];
+  topCount?: number;
+};
+
+type FeatureCard = {
+  num: string;
+  title: string;
+  desc: string;
+  icon: string;
+  bg: string;
+  tile: string;
+  accent: string;
+  scroll: boolean;
+  href: string;
+  groups: FeatureChipGroup[];
+};
+
+const FEATURE_CARDS: FeatureCard[] = [
+  {
+    num: "01",
+    title: "Growth Marketing",
+    desc: "Customer acquisition, lead generation, and revenue scaling.",
+    icon: "/assets/wf/67b2f932468e3acae7e236f3/68e623e24b10e2e4e2969b30_digitalmarketing.svg",
+    bg: "hsla(211, 100%, 72%, 0.2)",
+    tile: "hsla(211, 100%, 72%, 0.4)",
+    accent: "hsl(211, 45%, 52%)",
+    scroll: true,
+    href: "/service-details?service=marketing",
+    groups: [
+      {
+        title: "Paid Advertising",
+        sub: "Performance Marketing",
+        topCount: 2,
+        chips: [
+          { label: "Meta Ads (Facebook & Instagram)" },
+          { label: "Google Ads (Search, Display, YouTube)" },
+          { label: "TikTok Ads" },
+          { label: "LinkedIn Ads" },
+          { label: "Pinterest Ads" },
+        ],
+      },
+      {
+        title: "Organic Marketing",
+        sub: "Content Strategy",
+        chips: [
+          { label: "Search Engine Optimization (SEO)" },
+          { label: "Social Media Management" },
+          { label: "Brand Awareness Campaigns" },
+        ],
+      },
+      {
+        title: "Strategic Optimization",
+        chips: [
+          { label: "Audience Targeting & Segmentation" },
+          { label: "Campaign Performance Analysis" },
+          { label: "Lead Generation Funnels" },
+        ],
+      },
+    ],
+  },
+  {
+    num: "02",
+    title: "Creative Production",
+    desc: "High-impact visual storytelling and brand identity.",
+    icon: "/assets/wf/67b2f932468e3acae7e236f3/68e6018a556df7bc3330d227_brand.svg",
+    bg: "hsla(271, 76%, 72%, 0.2)",
+    tile: "hsla(271, 76%, 72%, 0.4)",
+    accent: "hsl(271, 55%, 55%)",
+    scroll: false,
+    href: "/service-details?service=creative",
+    groups: [
+      {
+        title: "Visual Content Creation",
+        chips: [
+          { label: "Product Photography" },
+          { label: "Brand Identity Design" },
+          { label: "Social Media Visuals" },
+        ],
+      },
+      {
+        title: "Video & Post-Production",
+        chips: [
+          { label: "Commercial & Advertisement Creatives" },
+          { label: "Video Editing & Visual Refinement" },
+          { label: "Graphic Design for Digital Platforms" },
+        ],
+      },
+      {
+        title: "AI-Generated Content",
+        sub: "AI-Accelerated",
+        chips: [
+          { label: "UGC-Style AI Content" },
+          { label: "Cinematic & Documentary-Style Videos" },
+          { label: "Animations & Cartoon Videos" },
+          { label: "Podcast & YouTube Advertisements" },
+        ],
+      },
+    ],
+  },
+  {
+    num: "03",
+    title: "Digital Products",
+    desc: "Scalable software and high-performance web solutions.",
+    icon: "/assets/wf/67b2f932468e3acae7e236f3/68e621c968fd23ebcbec7320_webdevp.svg",
+    bg: "hsla(350, 83%, 75%, 0.2)",
+    tile: "hsla(350, 83%, 75%, 0.4)",
+    accent: "hsl(350, 65%, 55%)",
+    scroll: false,
+    href: "/service-details?service=digital",
+    groups: [
+      {
+        title: "Web Development",
+        chips: [
+          { label: "Custom Website Design & Build" },
+          { label: "E-commerce Platforms" },
+          { label: "Landing Page Optimization" },
+        ],
+      },
+      {
+        title: "Mobile App Development",
+        chips: [
+          { label: "iOS & Android Applications" },
+          { label: "Cross-Platform Solutions" },
+        ],
+      },
+      {
+        title: "Custom Software Solutions",
+        chips: [
+          { label: "Business Process Software" },
+          { label: "Scalable Digital Product Development" },
+          { label: "Technology-Driven Business Solutions" },
+        ],
+      },
+    ],
+  },
+  {
+    num: "04",
+    title: "AI & Automation",
+    desc: "Operational efficiency and intelligent systems.",
+    icon: "/assets/wf/67b2f932468e3acae7e236f3/68e623fa72bd543218e41cb8_uiux.svg",
+    bg: "hsla(28, 100%, 70%, 0.2)",
+    tile: "hsla(28, 100%, 70%, 0.4)",
+    accent: "hsl(28, 80%, 48%)",
+    scroll: false,
+    href: "/service-details?service=ai",
+    groups: [
+      {
+        title: "Intelligent Automation",
+        chips: [
+          { label: "Workflow Automation Systems" },
+          { label: "Business Process Optimization" },
+        ],
+      },
+      {
+        title: "AI Communication Tools",
+        chips: [
+          { label: "Custom AI Chatbots" },
+          { label: "Intelligent Customer Support Systems" },
+        ],
+      },
+      {
+        title: "Advanced AI Systems",
+        chips: [
+          { label: "Autonomous AI Agents" },
+          { label: "AI-Driven Data Insights" },
+          { label: "Custom AI Integrations for Niche Workflows" },
+        ],
+      },
+    ],
+  },
+];
+
+export function ServicesCardsSection() {
+  return (
+    <section className="section qs-feature-card-section qs-section-pad">
+      <div className="qs-inner">
+        <div className="qs-services-header">
+          <div>
+            <h2 className="home-heading-h2 qs-h2">
+              Everything you need to <span className="span-txt">grow</span>
+            </h2>
+            <p className="qs-services-lede">
+              Four core disciplines, one cohesive team. Click any service to
+              explore its full process, pricing, and case studies.
+            </p>
+          </div>
+          <div className="qs-pill-count">
+            <strong>{FEATURE_CARDS.length}</strong>
+            <span>services available</span>
+          </div>
+        </div>
+
+        <div className="qs-feature-card-row">
+          {FEATURE_CARDS.map((card) => (
+            <div
+              key={card.num}
+              className="qs-feature-card"
+              style={
+                {
+                  "--card-bg": card.bg,
+                  "--card-tile": card.tile,
+                  "--card-accent": card.accent,
+                } as React.CSSProperties
+              }
+            >
+              <div className="qs-feature-card-top">
+                <div className="qs-feature-card-head">
+                  <h3 className="heading-25">{card.title}</h3>
+                </div>
+                <div className="qs-feature-card-top-row">
+                  <div className="qs-feature-card-icon" aria-hidden>
+                    <img
+                      src={card.icon}
+                      alt=""
+                      width={40}
+                      height={40}
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="qs-feature-card-body">
+                <div className="qs-feature-card-groups">
+                  {card.groups.map((g) => (
+                    <div key={g.title} className="qs-feature-card-group">
+                      <div className="qs-feature-card-group-head">
+                        <span className="qs-feature-card-group-title">
+                          {g.title}
+                        </span>
+                        {g.sub ? (
+                          <span className="qs-feature-card-group-sub">
+                            {g.sub}
+                          </span>
+                        ) : null}
+                      </div>
+                      <FeatureCardChipRow
+                        chips={g.chips}
+                        topCount={g.topCount}
+                      />
+                    </div>
+                  ))}
+                </div>
+                <Link href={card.href} className="qs-feature-card-link">
+                  <span>Learn more</span>
+                  <span className="qs-feature-card-arrow" aria-hidden>
+                    <ServiceArrowIcon variant="on-dark" />
+                  </span>
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
