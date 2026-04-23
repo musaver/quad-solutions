@@ -1,0 +1,11 @@
+<svg width="680" height="520" viewBox="0 0 680 520" xmlns="http://www.w3.org/2000/svg">
+  <title>Pastel signal bars — updated palette</title>
+  <rect x="182" y="304" width="60" height="160" rx="30" fill="#75B5F9"/>
+  <rect x="267" y="204" width="60" height="260" rx="30" fill="#B379E7"/>
+  <rect x="352" y="124" width="60" height="340" rx="30" fill="#F28AA8"/>
+  <rect x="437" y="64"  width="60" height="400" rx="30" fill="#F5A96A"/>
+  <rect x="182" y="300" width="60" height="160" rx="30" fill="#E4F0FF"/>
+  <rect x="267" y="200" width="60" height="260" rx="30" fill="#EDE1F9"/>
+  <rect x="352" y="120" width="60" height="340" rx="30" fill="#FBDFE6"/>
+  <rect x="437" y="60"  width="60" height="400" rx="30" fill="#FFEFDF"/>
+</svg>
