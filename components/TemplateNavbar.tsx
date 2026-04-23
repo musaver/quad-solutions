@@ -2,18 +2,44 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 /** Top navigation from the Awake Webflow template (shared across pages). */
 export function TemplateNavbar() {
   const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const onHome = pathname === "/";
   const onServices =
     pathname === "/services" || pathname === "/service-details";
   const onCaseStudies =
     pathname === "/case-studies" || pathname === "/case-study-details";
 
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+      const onKey = (e: KeyboardEvent) => {
+        if (e.key === "Escape") setMenuOpen(false);
+      };
+      window.addEventListener("keydown", onKey);
+      return () => {
+        document.body.style.overflow = prev;
+        window.removeEventListener("keydown", onKey);
+      };
+    }
+    document.body.style.overflow = prev;
+  }, [menuOpen]);
+
+  const openMenu = () => setMenuOpen(true);
+  const closeMenu = () => setMenuOpen(false);
+
   return (
-    <div className="div-block-47">
+    <div className={`div-block-47${menuOpen ? " is-menu-open" : ""}`}>
       <div className="navbar-logo-left">
         <div
           data-animation="default"
@@ -24,10 +50,7 @@ export function TemplateNavbar() {
           role="banner"
           className="navbar-logo-left-container shadow-three w-nav"
         >
-          <div
-            data-w-id="03b7d350-5f42-547a-b4d6-be27ef8aff04"
-            className="navbar-wrapper-3"
-          >
+          <div className="navbar-wrapper-3">
             <div className="div-block-2">
               <Link
                 href="/"
@@ -39,11 +62,13 @@ export function TemplateNavbar() {
                   loading="lazy"
                   src="/assets/logo/pastel_tiles_v3.svg"
                   alt=""
-                  style={{     height: "44px",
+                  style={{
+                    height: "44px",
                     width: "auto",
                     display: "block",
                     opacity: "0.8",
-                    marginRight: "-3px" }}
+                    marginRight: "-3px",
+                  }}
                 />
                 <span
                   className="navbar-brand-text"
@@ -53,16 +78,13 @@ export function TemplateNavbar() {
                     lineHeight: 1,
                   }}
                 >
-                  <span
-                    className=""
-                    style={{ fontSize: 22.2, lineHeight: 1, fontWeight: 500 }}
-                  >
+                  <span style={{ fontSize: 23, lineHeight: 1, fontWeight: 500 }}>
                     QUAD
                   </span>
                   <span
                     className="italic-span typing-text"
                     style={{
-                      fontSize: 18,
+                      fontSize: 18.5,
                       lineHeight: 1,
                       letterSpacing: 0,
                       fontWeight: 400,
@@ -100,20 +122,22 @@ export function TemplateNavbar() {
               </li>
             </ul>
             <div className="div-block-50">
-              <div
-                data-w-id="03b7d350-5f42-547a-b4d6-be27ef8aff17"
-                className="div-block-53"
+              <button
+                type="button"
+                aria-label="Open menu"
+                aria-expanded={menuOpen}
+                aria-controls="mobile-menu-drawer"
+                onClick={openMenu}
+                className="div-block-53 awake-menu-btn"
               >
                 <img
-                  data-w-id="03b7d350-5f42-547a-b4d6-be27ef8aff18"
                   loading="lazy"
-                  alt="menu-icon"
+                  alt=""
                   src="/assets/wf/67a5fb8bc33c7f25ab4e52d9/68e4b4ad148fb73ce88066c5_menu-icon.svg"
                   className="image-28"
                 />
-              </div>
+              </button>
               <Link
-                data-w-id="fd288f42-3e11-14d5-988f-4ecf39ac68a1"
                 href="/contact"
                 className="c2a-button w-inline-block"
               >
@@ -132,25 +156,40 @@ export function TemplateNavbar() {
           </div>
         </div>
       </div>
-      <div className="mobile-menu-overlay" />
-      <div className="div-block-29">
+      <div
+        className="mobile-menu-overlay"
+        onClick={closeMenu}
+        aria-hidden={!menuOpen}
+      />
+      <div
+        id="mobile-menu-drawer"
+        className="div-block-29"
+        role="dialog"
+        aria-modal="true"
+        aria-hidden={!menuOpen}
+      >
         <div className="div-block-54">
           <div className="div-block-51">
             <div className="div-block-49">
               <p className="paragraph-10">Menu</p>
-              <img
-                data-w-id="03b7d350-5f42-547a-b4d6-be27ef8aff21"
-                loading="lazy"
-                alt="close-icon"
-                src="/assets/wf/67a5fb8bc33c7f25ab4e52d9/68e4b4ad148fb73ce88066c6_cross-black.svg"
-                className="image-9"
-              />
+              <button
+                type="button"
+                aria-label="Close menu"
+                onClick={closeMenu}
+                className="awake-menu-close"
+              >
+                <img
+                  loading="lazy"
+                  alt=""
+                  src="/assets/wf/67a5fb8bc33c7f25ab4e52d9/68e4b4ad148fb73ce88066c6_cross-black.svg"
+                  className="image-9"
+                />
+              </button>
             </div>
             <ul role="list" className="list-6">
               <li className="list-item-11">
                 <Link
                   href="/"
-                  data-w-id="dfe9cf34-6fbd-1abd-f2e5-f3543201f30d"
                   className={`link-6${onHome ? " w--current" : ""}`}
                   aria-current={onHome ? "page" : undefined}
                 >
@@ -160,7 +199,6 @@ export function TemplateNavbar() {
               <li className="list-item-12">
                 <Link
                   href="/services"
-                  data-w-id="03b7d350-5f42-547a-b4d6-be27ef8aff27"
                   className={`link-6${onServices ? " w--current" : ""}`}
                   aria-current={onServices ? "page" : undefined}
                 >

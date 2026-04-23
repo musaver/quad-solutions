@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { startIx3PayloadCapture } from "@/lib/webflowIx3Rehydrate";
+import { initCustomScrollAnimations } from "@/lib/gsapScrollAnimations";
 
 const SCRIPT_CHAIN = [
   "/assets/js/jquery-3.5.1.min.js",
@@ -112,6 +113,24 @@ export function WebflowRuntime() {
       .catch((e) => {
         console.error(e);
       });
+
+    // Initial-load watchdog: if Webflow IX3 hasn't initialized within ~1.2s,
+    // unblock `visibility: hidden` headings and run the GSAP fallback so the
+    // hero never gets stuck waiting for scripts.
+    const watchdog = window.setTimeout(() => {
+      const html = document.documentElement;
+      if (html.classList.contains("w-mod-ix3")) return;
+      html.classList.add("w-mod-ix3");
+      try {
+        initCustomScrollAnimations();
+      } catch (e) {
+        console.warn("Awake: hero fallback animations failed", e);
+      }
+    }, 1200);
+
+    return () => {
+      window.clearTimeout(watchdog);
+    };
   }, []);
 
   return null;
