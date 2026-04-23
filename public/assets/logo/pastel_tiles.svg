@@ -1,0 +1,14 @@
+<svg width="420" height="424" viewBox="130 50 420 424" xmlns="http://www.w3.org/2000/svg">
+  <title>Refined pastel tile grid</title>
+  <desc>Four pastel rounded tiles in a 2x2 grid with squircle corners and a subtle beveled bottom rim</desc>
+
+  <rect x="130" y="54" width="200" height="200" rx="48" fill="#BFD8EF"/>
+  <rect x="350" y="54" width="200" height="200" rx="48" fill="#D6C3ED"/>
+  <rect x="130" y="274" width="200" height="200" rx="48" fill="#F4C6D1"/>
+  <rect x="350" y="274" width="200" height="200" rx="48" fill="#F4CE98"/>
+
+  <rect x="130" y="50" width="200" height="200" rx="48" fill="#DFEEFB"/>
+  <rect x="350" y="50" width="200" height="200" rx="48" fill="#EEE5FA"/>
+  <rect x="130" y="270" width="200" height="200" rx="48" fill="#FCE3E8"/>
+  <rect x="350" y="270" width="200" height="200" rx="48" fill="#FDEAD3"/>
+</svg>

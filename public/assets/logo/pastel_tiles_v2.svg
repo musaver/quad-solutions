@@ -1,0 +1,11 @@
+<svg width="680" height="520" viewBox="0 0 680 520" xmlns="http://www.w3.org/2000/svg">
+  <title>Pastel tile grid — updated palette</title>
+  <rect x="130" y="54" width="200" height="200" rx="48" fill="#75B5F9"/>
+  <rect x="350" y="54" width="200" height="200" rx="48" fill="#B379E7"/>
+  <rect x="130" y="274" width="200" height="200" rx="48" fill="#F28AA8"/>
+  <rect x="350" y="274" width="200" height="200" rx="48" fill="#F5A96A"/>
+  <rect x="130" y="50" width="200" height="200" rx="48" fill="#E4F0FF"/>
+  <rect x="350" y="50" width="200" height="200" rx="48" fill="#EDE1F9"/>
+  <rect x="130" y="270" width="200" height="200" rx="48" fill="#FBDFE6"/>
+  <rect x="350" y="270" width="200" height="200" rx="48" fill="#FFEFDF"/>
+</svg>

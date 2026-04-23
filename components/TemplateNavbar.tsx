@@ -33,12 +33,45 @@ export function TemplateNavbar() {
                 href="/"
                 className={`navbar-brand-2 w-nav-brand${onHome ? " w--current" : ""}`}
                 aria-current={onHome ? "page" : undefined}
+                style={{ display: "inline-flex", alignItems: "center", gap: 0 }}
               >
                 <img
                   loading="lazy"
-                  src="/assets/wf/67a5fb8bc33c7f25ab4e52d9/67a5fbb8c1bbd60c8bd785ca_Frame%202.png"
+                  src="/assets/logo/pastel_bars_v3.svg"
                   alt=""
+                  style={{     height: "44px",
+                    width: "auto",
+                    display: "block",
+                    opacity: "0.9",
+                    marginRight: "-3px" }}
                 />
+                <span
+                  className="navbar-brand-text"
+                  style={{
+                    display: "inline-flex",
+                    flexDirection: "column",
+                    lineHeight: 1,
+                  }}
+                >
+                  <span
+                    className=""
+                    style={{ fontSize: 22.2, lineHeight: 1, fontWeight: 500 }}
+                  >
+                    QUAD
+                  </span>
+                  <span
+                    className="italic-span typing-text"
+                    style={{
+                      fontSize: 18,
+                      lineHeight: 1,
+                      letterSpacing: 0,
+                      fontWeight: 400,
+                      color: "var(--black-100)",
+                    }}
+                  >
+                    Solutions
+                  </span>
+                </span>
               </Link>
             </div>
             <ul role="list" className="nav-menu-two-2 w-list-unstyled">

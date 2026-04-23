@@ -3384,6 +3384,7 @@ a {
   padding: 9px 15px;
   display: flex;
   position: relative;
+  background: white !important;
 }
 
 .nav-menu-two-2 {

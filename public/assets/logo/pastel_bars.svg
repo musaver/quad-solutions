@@ -1,0 +1,14 @@
+<svg width="315" height="404" viewBox="182 60 315 404" xmlns="http://www.w3.org/2000/svg">
+  <title>Refined pastel signal bars</title>
+  <desc>Four ascending pastel bars with pill-shaped tops and a subtle bottom depth rim</desc>
+
+  <rect x="182" y="304" width="60" height="160" rx="30" fill="#BFD8EF"/>
+  <rect x="267" y="204" width="60" height="260" rx="30" fill="#D6C3ED"/>
+  <rect x="352" y="124" width="60" height="340" rx="30" fill="#F4C6D1"/>
+  <rect x="437" y="64"  width="60" height="400" rx="30" fill="#F4CE98"/>
+
+  <rect x="182" y="300" width="60" height="160" rx="30" fill="#DFEEFB"/>
+  <rect x="267" y="200" width="60" height="260" rx="30" fill="#EEE5FA"/>
+  <rect x="352" y="120" width="60" height="340" rx="30" fill="#FCE3E8"/>
+  <rect x="437" y="60"  width="60" height="400" rx="30" fill="#FDEAD3"/>
+</svg>
