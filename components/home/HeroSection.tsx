@@ -4,7 +4,6 @@ export function HeroSection() {
       <div className="w-layout-blockcontainer container-main w-container">
         <h1
           data-w-id="6d188073-2487-31fa-c36a-0d1621970df1"
-          style={{ opacity: 0 }}
           className="hero-heading-h1"
         >
           Building bold brands with{" "}
@@ -12,7 +11,6 @@ export function HeroSection() {
         </h1>
         <p
           data-w-id="aca08924-3373-f5fc-69ef-f496c3c5cc2e"
-          style={{ opacity: 0 }}
           className="para-txt"
         >
           At Awake, we help small startups tackle the world&apos;s biggest

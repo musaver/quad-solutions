@@ -15,7 +15,6 @@ html.w-mod-js:not(.w-mod-ix3)
     .pricing-heading-h2,
     .heading-20,
     .achevement-heading-h2,
-    .hero-heading-h1,
     .about-card-2
   ) {
   visibility: hidden !important;
