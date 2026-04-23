@@ -37,7 +37,7 @@ export function TemplateNavbar() {
               >
                 <img
                   loading="lazy"
-                  src="/assets/logo/pastel_bars_v3.svg"
+                  src="/assets/logo/pastel_bars_v2.svg"
                   alt=""
                   style={{     height: "44px",
                     width: "auto",
