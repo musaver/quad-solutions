@@ -42,7 +42,7 @@ export function TemplateNavbar() {
                   style={{     height: "44px",
                     width: "auto",
                     display: "block",
-                    opacity: "0.9",
+                    opacity: "0.8",
                     marginRight: "-3px" }}
                 />
                 <span
