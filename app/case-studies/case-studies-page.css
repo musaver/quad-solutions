@@ -487,9 +487,9 @@
   gap: 16px;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 700px) {
   .qs-case-cat-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   }
 }
 

@@ -3,9 +3,9 @@ import { CaseStudiesPageBody } from "@/components/CaseStudiesPageBody";
 import "./case-studies-page.css";
 
 export const metadata: Metadata = {
-  title: "Case Studies | Awake",
+  title: "Case Studies",
   description:
-    "A curated collection of brand strategies, identities, digital products, and campaigns — each one built to make a lasting impact.",
+    "How Quad Solutions teams have shipped marketing campaigns, content systems, software products, and AI automations that moved the numbers for our clients.",
 };
 
 export default function CaseStudiesPage() {

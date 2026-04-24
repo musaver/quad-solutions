@@ -2,70 +2,27 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import { TemplateFooter } from "@/components/TemplateFooter";
 import { TemplateNavbar } from "@/components/TemplateNavbar";
 import { ServiceArrowIcon } from "@/components/ServiceArrowIcon";
 import {
   getCaseStudyVariant,
-  getNextCaseStudy,
   getOtherCaseStudies,
 } from "@/lib/caseStudyProject";
 import { useHeroAnimation } from "@/hooks/useHeroAnimation";
 
 const ASSET = "/assets/figma-case-study-details";
 
-const CHALLENGE_ITEMS = [
-  "Limited brand recognition in competitive market",
-  "Inconsistent visual identity across touchpoints",
-  "Unclear positioning and messaging strategy",
-  "Low customer engagement and retention rates",
-];
-
-const APPROACH_ITEMS = [
-  "Discovery & Immersion",
-  "Competitive Positioning",
-  "Positioning Workshop",
-  "Strategy Playbook",
-];
-
-const PROCESS_STEPS = [
-  {
-    num: "01",
-    title: "Discovery & Immersion",
-    body: "Deep-dive interviews with 40+ customers and 12 stakeholders to map brand perception gaps and market opportunities.",
-  },
-  {
-    num: "02",
-    title: "Competitive Positioning",
-    body: "Mapped 24 fintech competitors across 8 strategic dimensions to identify the white space FlowBank could uniquely own.",
-  },
-  {
-    num: "03",
-    title: "Positioning Workshop",
-    body: "Facilitated a 2-day leadership workshop to define the brand essence, promise, and personality pillars.",
-  },
-  {
-    num: "04",
-    title: "Strategy Playbook",
-    body: "Delivered a 60-page brand strategy document with messaging framework, tone of voice, and implementation roadmap.",
-  },
-];
-
 export function CaseStudyDetailsPageBody() {
   const searchParams = useSearchParams();
   const v = getCaseStudyVariant(searchParams.get("project"));
-  const nextProject = getNextCaseStudy(v.id);
   const moreProjects = getOtherCaseStudies(v.id, 2);
   const heroRef = useHeroAnimation();
 
-  const processSteps = useMemo(
-    () =>
-      PROCESS_STEPS.map((step, i) =>
-        i === 1 ? { ...step, body: v.processCompetitiveBody } : step,
-      ),
-    [v.processCompetitiveBody],
+  const testimonialQuote = v.testimonial.quote.replace(
+    "{sector}",
+    v.quoteSectorPhrase,
   );
 
   return (
@@ -176,7 +133,7 @@ export function CaseStudyDetailsPageBody() {
               <div className="qs-csd-key-box qs-csd-key-box--challenge">
                 <p className="qs-csd-key-box-title">Key challenges</p>
                 <ul className="qs-csd-key-list">
-                  {CHALLENGE_ITEMS.map((t) => (
+                  {v.challengeItems.map((t) => (
                     <li key={t} className="qs-csd-key-item">
                       <span className="qs-csd-key-icon qs-csd-key-icon--red">
                         <Image
@@ -208,7 +165,7 @@ export function CaseStudyDetailsPageBody() {
               <div className="qs-csd-key-box qs-csd-key-box--approach">
                 <p className="qs-csd-key-box-title">Key highlights</p>
                 <ul className="qs-csd-key-list">
-                  {APPROACH_ITEMS.map((t) => (
+                  {v.approachItems.map((t) => (
                     <li key={t} className="qs-csd-key-item">
                       <span className="qs-csd-key-icon qs-csd-key-icon--blue">
                         <Image
@@ -232,7 +189,8 @@ export function CaseStudyDetailsPageBody() {
         <div className="qs-inner">
           <div className="qs-csd-process-head">
             <h2 className="qs-csd-process-title home-heading-h2">
-              How we <span className="span-txt">approached it</span>
+              {v.processHeading.strong}
+              <span className="span-txt">{v.processHeading.serif}</span>
             </h2>
             <p className="qs-csd-process-sub">
               A structured process designed to uncover insight, build clarity,
@@ -240,7 +198,7 @@ export function CaseStudyDetailsPageBody() {
             </p>
           </div>
           <div className="qs-csd-process-grid">
-            {processSteps.map((s) => (
+            {v.processSteps.map((s) => (
               <div key={s.num} className="qs-csd-process-card">
                 <p className="qs-csd-process-num">{s.num}</p>
                 <div>
@@ -257,32 +215,28 @@ export function CaseStudyDetailsPageBody() {
         <div className="qs-inner">
           <div className="qs-csd-results-head">
             <h2 className="qs-csd-results-title">
-              The <span className="qs-csd-serif">results</span>
+              {v.resultsHeading.strong}
+              <span className="qs-csd-serif">{v.resultsHeading.serif}</span>
             </h2>
-            <p className="qs-csd-results-lede">
-              Measurable outcomes that demonstrate the real-world impact of
-              strategic thinking.
-            </p>
+            <p className="qs-csd-results-lede">{v.resultsLede}</p>
           </div>
           <div className="qs-csd-results-grid">
-            <div className="qs-csd-stat qs-csd-stat--dark">
-              <p className="qs-csd-stat-num">3.5x</p>
-              <p className="qs-csd-stat-label">
-                Brand awareness increase in 6 months
-              </p>
-            </div>
-            <div className="qs-csd-stat qs-csd-stat--tint">
-              <p className="qs-csd-stat-num">40%</p>
-              <p className="qs-csd-stat-label qs-csd-stat-label--dark">
-                New customer acquisition growth
-              </p>
-            </div>
-            <div className="qs-csd-stat qs-csd-stat--tint">
-              <p className="qs-csd-stat-num">+185%</p>
-              <p className="qs-csd-stat-label qs-csd-stat-label--dark">
-                Brand value increase post-launch
-              </p>
-            </div>
+            {v.results.map((r) => {
+              const tone = r.tone ?? "tint";
+              return (
+                <div
+                  key={r.label}
+                  className={`qs-csd-stat qs-csd-stat--${tone}`}
+                >
+                  <p className="qs-csd-stat-num">{r.value}</p>
+                  <p
+                    className={`qs-csd-stat-label${tone === "tint" ? " qs-csd-stat-label--dark" : ""}`}
+                  >
+                    {r.label}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -345,7 +299,7 @@ export function CaseStudyDetailsPageBody() {
             </span>
           </div>
           <blockquote className="qs-csd-quote-banner-text">
-            &ldquo;Awake helped us discover who we really are as a brand.&rdquo;
+            &ldquo;{testimonialQuote}&rdquo;
           </blockquote>
           <div className="qs-csd-quote-banner-person">
             <Image
@@ -356,8 +310,8 @@ export function CaseStudyDetailsPageBody() {
               className="qs-csd-quote-banner-avatar"
             />
             <div>
-              <p className="qs-csd-quote-banner-name">Michael Chen</p>
-              <p className="qs-csd-quote-banner-role">CEO, {v.clientName}</p>
+              <p className="qs-csd-quote-banner-name">{v.testimonial.name}</p>
+              <p className="qs-csd-quote-banner-role">{v.testimonial.role}</p>
             </div>
           </div>
         </div>
@@ -373,11 +327,7 @@ export function CaseStudyDetailsPageBody() {
             className="qs-csd-testimonial-quote-icon"
           />
           <blockquote className="qs-csd-testimonial-quote">
-            &ldquo;Awake helped us discover who we really are as a brand. Their
-            strategic process uncovered insights that transformed how we
-            position ourselves in the market. We went from being just another{" "}
-            {v.quoteSectorPhrase} to a brand people genuinely connect
-            with.&rdquo;
+            &ldquo;{testimonialQuote}&rdquo;
           </blockquote>
           <div className="qs-csd-stars" aria-label="5 out of 5 stars">
             {[0, 1, 2, 3].map((i) => (
@@ -405,8 +355,8 @@ export function CaseStudyDetailsPageBody() {
               className="qs-csd-testimonial-avatar"
             />
             <div>
-              <p className="qs-csd-testimonial-name">Michael Chen</p>
-              <p className="qs-csd-testimonial-role">CEO, {v.clientName}</p>
+              <p className="qs-csd-testimonial-name">{v.testimonial.name}</p>
+              <p className="qs-csd-testimonial-role">{v.testimonial.role}</p>
             </div>
           </div>
         </div>
@@ -424,45 +374,28 @@ export function CaseStudyDetailsPageBody() {
               </div>
               <h2 className="qs-csd-conclusion-title">
                 <span className="qs-csd-heading-strong">
-                  A project built on{" "}
+                  {v.conclusionHeading.strong}
                 </span>
-                <span className="qs-csd-serif">precision</span>
+                <span className="qs-csd-serif">
+                  {v.conclusionHeading.serif}
+                </span>
               </h2>
               <p className="qs-csd-conclusion-title-line">
-                and lasting impact
+                {v.conclusionSubtitle}
               </p>
               <div className="qs-csd-conclusion-stats">
-                <div>
-                  <p className="qs-csd-conclusion-stat-num">3.5x</p>
-                  <p className="qs-csd-conclusion-stat-label">
-                    Brand awareness increase in 6 months
-                  </p>
-                </div>
-                <div>
-                  <p className="qs-csd-conclusion-stat-num">40%</p>
-                  <p className="qs-csd-conclusion-stat-label">
-                    New customer acquisition growth
-                  </p>
-                </div>
-                <div>
-                  <p className="qs-csd-conclusion-stat-num">+185%</p>
-                  <p className="qs-csd-conclusion-stat-label">
-                    Brand value increase post-launch
-                  </p>
-                </div>
+                {v.results.map((r) => (
+                  <div key={r.label}>
+                    <p className="qs-csd-conclusion-stat-num">{r.value}</p>
+                    <p className="qs-csd-conclusion-stat-label">{r.label}</p>
+                  </div>
+                ))}
               </div>
             </div>
             <div className="qs-csd-conclusion-copy">
-              <p>
-                The work we delivered for {v.clientLegal} represents exactly the
-                kind of impact we pursue with every engagement — strategic
-                clarity translated into measurable commercial outcomes.
-              </p>
-              <p>
-                From initial discovery through to final delivery, every decision
-                was guided by a single question: what will genuinely move this
-                brand forward? The results speak for themselves.
-              </p>
+              {v.conclusionParagraphs.map((para, i) => (
+                <p key={i}>{para}</p>
+              ))}
               <div className="qs-csd-conclusion-actions">
                 <Link href="/contact" className="qs-csd-btn-dark w-inline-block">
                   <span>Start your project</span>

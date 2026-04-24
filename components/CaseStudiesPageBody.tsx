@@ -14,14 +14,17 @@ type FilterId =
   | "brand-strategy"
   | "brand-identity"
   | "ui-ux"
-  | "marketing";
+  | "marketing"
+  | "ecommerce";
+
+type ProjectCategory = Exclude<FilterId, "all">;
 
 type Project = {
   id: string;
   title: string;
   subtitle: string;
   badge: string;
-  category: FilterId;
+  category: ProjectCategory;
   image: string;
   tags: string[];
 };
@@ -32,6 +35,60 @@ const FILTERS: { id: FilterId; label: string }[] = [
   { id: "brand-identity", label: "Brand Identity" },
   { id: "ui-ux", label: "UI/UX Design" },
   { id: "marketing", label: "Marketing" },
+  { id: "ecommerce", label: "E-commerce" },
+];
+
+const CATEGORY_CARDS: {
+  category: ProjectCategory;
+  title: string;
+  desc: string;
+  style: { background: string; borderColor: string };
+}[] = [
+  {
+    category: "brand-strategy",
+    title: "Brand Strategy",
+    desc: "Positioning & messaging",
+    style: {
+      background: "rgba(73,40,253,0.03)",
+      borderColor: "rgba(73,40,253,0.19)",
+    },
+  },
+  {
+    category: "brand-identity",
+    title: "Brand Identity",
+    desc: "Logo & visual systems",
+    style: {
+      background: "rgba(186,129,238,0.03)",
+      borderColor: "rgba(186,129,238,0.19)",
+    },
+  },
+  {
+    category: "ui-ux",
+    title: "UI/UX Design",
+    desc: "Digital experiences",
+    style: {
+      background: "rgba(112,181,255,0.03)",
+      borderColor: "rgba(112,181,255,0.19)",
+    },
+  },
+  {
+    category: "marketing",
+    title: "Marketing",
+    desc: "Campaigns & growth",
+    style: {
+      background: "rgba(121,212,94,0.03)",
+      borderColor: "rgba(121,212,94,0.19)",
+    },
+  },
+  {
+    category: "ecommerce",
+    title: "E-commerce",
+    desc: "DTC growth & marketplaces",
+    style: {
+      background: "rgba(255,175,104,0.04)",
+      borderColor: "rgba(255,175,104,0.22)",
+    },
+  },
 ];
 
 const PROJECTS: Project[] = [
@@ -98,17 +155,15 @@ const PROJECTS: Project[] = [
     image: `${ASSET}/project-6.jpg`,
     tags: ["Digital Marketing", "Growth Strategy", "Content Marketing"],
   },
-];
-
-const MARQUEE_NAMES = [
-  "FlowBank",
-  "Academy.co",
-  "Genome Health",
-  "Hotto",
-  "Verdant Co.",
-  "Nova Labs",
-  "Craft Studio",
-  "Pulse Media",
+  {
+    id: "mexivida",
+    title: "MexiVida",
+    subtitle: "MexiVida · 2025",
+    badge: "E-commerce Growth",
+    category: "ecommerce",
+    image: `${ASSET}/mexivida.jpg`,
+    tags: ["Meta Ads", "Amazon SEO", "Cultural Content"],
+  },
 ];
 
 export function CaseStudiesPageBody() {
@@ -122,6 +177,14 @@ export function CaseStudiesPageBody() {
         : PROJECTS.filter((p) => p.category === filter),
     [filter],
   );
+
+  const categoryCounts = useMemo(() => {
+    const counts = new Map<ProjectCategory, number>();
+    for (const p of PROJECTS) {
+      counts.set(p.category, (counts.get(p.category) ?? 0) + 1);
+    }
+    return counts;
+  }, []);
 
   return (
     <div className="main qs-case-studies-page">
@@ -248,58 +311,20 @@ export function CaseStudiesPageBody() {
       <section className="qs-case-categories">
         <div className="qs-inner">
           <div className="qs-case-cat-grid">
-            <div
-              className="qs-case-cat-card"
-              style={{
-                background: "rgba(73,40,253,0.03)",
-                borderColor: "rgba(73,40,253,0.19)",
-              }}
-            >
-              <p className="qs-case-cat-count">2 projects</p>
-              <div>
-                <p className="qs-case-cat-title">Brand Strategy</p>
-                <p className="qs-case-cat-desc">Positioning &amp; messaging</p>
-              </div>
-            </div>
-            <div
-              className="qs-case-cat-card"
-              style={{
-                background: "rgba(186,129,238,0.03)",
-                borderColor: "rgba(186,129,238,0.19)",
-              }}
-            >
-              <p className="qs-case-cat-count">2 projects</p>
-              <div>
-                <p className="qs-case-cat-title">Brand Identity</p>
-                <p className="qs-case-cat-desc">Logo &amp; visual systems</p>
-              </div>
-            </div>
-            <div
-              className="qs-case-cat-card"
-              style={{
-                background: "rgba(112,181,255,0.03)",
-                borderColor: "rgba(112,181,255,0.19)",
-              }}
-            >
-              <p className="qs-case-cat-count">2 projects</p>
-              <div>
-                <p className="qs-case-cat-title">UI/UX Design</p>
-                <p className="qs-case-cat-desc">Digital experiences</p>
-              </div>
-            </div>
-            <div
-              className="qs-case-cat-card"
-              style={{
-                background: "rgba(121,212,94,0.03)",
-                borderColor: "rgba(121,212,94,0.19)",
-              }}
-            >
-              <p className="qs-case-cat-count">2 projects</p>
-              <div>
-                <p className="qs-case-cat-title">Marketing</p>
-                <p className="qs-case-cat-desc">Campaigns &amp; growth</p>
-              </div>
-            </div>
+            {CATEGORY_CARDS.map((c) => {
+              const count = categoryCounts.get(c.category) ?? 0;
+              return (
+                <div key={c.category} className="qs-case-cat-card" style={c.style}>
+                  <p className="qs-case-cat-count">
+                    {count} {count === 1 ? "project" : "projects"}
+                  </p>
+                  <div>
+                    <p className="qs-case-cat-title">{c.title}</p>
+                    <p className="qs-case-cat-desc">{c.desc}</p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -311,7 +336,9 @@ export function CaseStudiesPageBody() {
               <h2 className="qs-case-projects-title home-heading-h2">
                 All <span className="span-txt">projects</span>
               </h2>
-              <p className="qs-case-projects-count">8 projects</p>
+              <p className="qs-case-projects-count">
+                {PROJECTS.length} projects
+              </p>
             </div>
             <div className="qs-case-filter-bar" role="tablist" aria-label="Filter projects">
               {FILTERS.map((f) => (
