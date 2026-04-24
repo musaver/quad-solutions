@@ -2,6 +2,17 @@
 
 import { useEffect, useRef, useState } from "react";
 
+type GSAPLib = {
+  set: (target: Element | Element[], vars: Record<string, unknown>) => void;
+  to: (target: Element | Element[], vars: Record<string, unknown>) => void;
+};
+type SplitTextInstance = { chars: Element[]; revert: () => void };
+type SplitTextCtor = new (
+  target: Element | string,
+  vars?: { type?: string },
+) => SplitTextInstance;
+type AnimationWin = Window & { gsap?: GSAPLib; SplitText?: SplitTextCtor };
+
 export function HeroSection() {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const paraRef = useRef<HTMLParagraphElement>(null);
@@ -9,33 +20,110 @@ export function HeroSection() {
 
   useEffect(() => {
     const heading = headingRef.current;
+    const para = paraRef.current;
     if (!heading) return;
+
+    let cancelled = false;
+    let observer: MutationObserver | null = null;
+    let safetyTimer: number | undefined;
+    let progressTimer: number | undefined;
+    let split: SplitTextInstance | null = null;
+
+    // GSAP equivalent of the original IX3 hero load animation. Used when IX3
+    // binds but doesn't fire its load trigger (e.g. SPA nav back to /).
+    const playFallback = () => {
+      if (cancelled) return;
+      const win = window as AnimationWin;
+      const gsap = win.gsap;
+      if (!gsap) return;
+
+      // IX3 may have left the element at its initial frame (opacity:0,
+      // transform:translate3d(100px,0,0)). Wipe so GSAP can drive cleanly.
+      heading.style.cssText = "";
+      if (para) para.style.cssText = "";
+
+      if (win.SplitText) {
+        split = new win.SplitText(heading, { type: "chars" });
+        gsap.set(split.chars, { opacity: 0, x: 100 });
+        gsap.to(split.chars, {
+          opacity: 1,
+          x: 0,
+          duration: 0.8,
+          stagger: 0.04,
+          ease: "power2.out",
+        });
+      } else {
+        gsap.set(heading, { opacity: 0, x: 50 });
+        gsap.to(heading, {
+          opacity: 1,
+          x: 0,
+          duration: 0.8,
+          ease: "power2.out",
+        });
+      }
+      if (para) {
+        gsap.set(para, { opacity: 0, y: 20 });
+        gsap.to(para, {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          delay: 0.5,
+          ease: "power2.out",
+        });
+      }
+    };
+
+    const onIx3Bound = () => {
+      if (cancelled) return;
+      // IX3 has bound — cancel the "never bound" safety so it can't fire later
+      // and replay an already-finished animation.
+      if (safetyTimer !== undefined) {
+        window.clearTimeout(safetyTimer);
+        safetyTimer = undefined;
+      }
+      setIx3Ready(true);
+      // Give IX3 ~300ms to start animating. If opacity is still ~0, the load
+      // trigger didn't fire (typical after SPA nav) — run our fallback.
+      progressTimer = window.setTimeout(() => {
+        if (cancelled) return;
+        const op = parseFloat(getComputedStyle(heading).opacity);
+        if (op < 0.1) playFallback();
+      }, 300);
+    };
 
     // Webflow IX3 sets inline `style` (opacity/transform) on data-w-id elements
     // the moment it binds. Treat that as the signal to swap skeleton → real text.
-    const checkBound = () => heading.getAttribute("style") !== null;
-    if (checkBound()) {
-      setIx3Ready(true);
-      return;
+    if (heading.getAttribute("style") !== null) {
+      onIx3Bound();
+    } else {
+      observer = new MutationObserver(() => {
+        if (heading.getAttribute("style") !== null) {
+          observer?.disconnect();
+          onIx3Bound();
+        }
+      });
+      observer.observe(heading, { attributes: true, attributeFilter: ["style"] });
+
+      // Safety: if IX3 never binds (script blocked, missing payload), reveal
+      // and run the fallback animation directly.
+      safetyTimer = window.setTimeout(() => {
+        observer?.disconnect();
+        if (cancelled) return;
+        setIx3Ready(true);
+        playFallback();
+      }, 1500);
     }
 
-    const observer = new MutationObserver(() => {
-      if (checkBound()) {
-        setIx3Ready(true);
-        observer.disconnect();
-      }
-    });
-    observer.observe(heading, { attributes: true, attributeFilter: ["style"] });
-
-    // Safety: reveal anyway after 3s in case IX3 never binds (script blocked, etc.)
-    const safety = window.setTimeout(() => {
-      setIx3Ready(true);
-      observer.disconnect();
-    }, 3000);
-
     return () => {
-      observer.disconnect();
-      window.clearTimeout(safety);
+      cancelled = true;
+      observer?.disconnect();
+      if (safetyTimer) window.clearTimeout(safetyTimer);
+      if (progressTimer) window.clearTimeout(progressTimer);
+      try {
+        split?.revert();
+      } catch {
+        /* ignore */
+      }
     };
   }, []);
 
