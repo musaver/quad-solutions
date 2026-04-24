@@ -133,11 +133,11 @@ export function Footer() {
                 </li>
                 <li className="list-item-9">
                   <a
-                    href="mailto:hello@awake.agnecy"
+                    href="mailto:hello@quadsolutions.ai"
                     className="navigation-link for-footer w-inline-block"
                   >
-                    <div className="nav-text first">hello@awake.agnecy</div>
-                    <div className="nav-text second">hello@awake.agnecy</div>
+                    <div className="nav-text first">hello@quadsolutions.ai</div>
+                    <div className="nav-text second">hello@quadsolutions.ai</div>
                   </a>
                 </li>
                 <li className="list-item-9">
