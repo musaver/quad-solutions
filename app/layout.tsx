@@ -51,6 +51,16 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className={`body ${interTight.className}`} suppressHydrationWarning>
+        {/* Preload the hero gradient so `document.readyState === "complete"`
+           (the event Webflow IX3 uses to fire its hero load animation) happens
+           as early as possible — otherwise IX3 replays the animation after the
+           gradient finishes downloading. */}
+        <link
+          rel="preload"
+          as="image"
+          href="/assets/wf/67a5fb8bc33c7f25ab4e52d9/68e4efa959606e9a7d41cc67_background-gradient.webp"
+          fetchPriority="high"
+        />
         <Script
           id="webflow-w-mod"
           strategy="beforeInteractive"

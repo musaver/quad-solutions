@@ -1,16 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { TemplateFooter } from "@/components/TemplateFooter";
 import { TemplateNavbar } from "@/components/TemplateNavbar";
 import { ServiceArrowIcon } from "@/components/ServiceArrowIcon";
-import { getServiceHeroSerif } from "@/lib/serviceDetailsHero";
+import {
+  getServiceDetailsContent,
+  type HeadingPair,
+  type ServiceDetailsContent,
+} from "@/lib/serviceDetailsContent";
 import { useHeroAnimation } from "@/hooks/useHeroAnimation";
 
 const TEAM = "/assets/figma-service-details";
-const WORK = "/assets/figma-case-studies";
 
 function ListIconX() {
   return (
@@ -113,7 +116,7 @@ function renderDeliverableIcon(n: string) {
     strokeLinejoin: "round" as const,
   };
   switch (n) {
-    case "01": // Brand Identity — palette
+    case "01":
       return (
         <svg {...common}>
           <circle cx="12" cy="12" r="9" />
@@ -123,21 +126,21 @@ function renderDeliverableIcon(n: string) {
           <path d="M12 21a3 3 0 0 1 0-6 1.5 1.5 0 0 0 0-3" />
         </svg>
       );
-    case "02": // Brand Guidelines — book
+    case "02":
       return (
         <svg {...common}>
           <path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v16H6.5A2.5 2.5 0 0 0 4 20.5z" />
           <path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20v4H6.5A2.5 2.5 0 0 1 4 19.5" />
         </svg>
       );
-    case "03": // Marketing Collateral — megaphone
+    case "03":
       return (
         <svg {...common}>
           <path d="M3 11v2a1 1 0 0 0 1 1h3l6 4V6L7 10H4a1 1 0 0 0-1 1z" />
           <path d="M17 9a3 3 0 0 1 0 6" />
         </svg>
       );
-    case "04": // Digital Assets — image / layers
+    case "04":
       return (
         <svg {...common}>
           <rect x="3" y="3" width="18" height="18" rx="2" />
@@ -145,13 +148,13 @@ function renderDeliverableIcon(n: string) {
           <path d="m21 15-5-5L5 21" />
         </svg>
       );
-    case "05": // Source Files — folder
+    case "05":
       return (
         <svg {...common}>
           <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
         </svg>
       );
-    case "06": // Implementation Support — lifebuoy
+    case "06":
       return (
         <svg {...common}>
           <circle cx="12" cy="12" r="9" />
@@ -164,209 +167,42 @@ function renderDeliverableIcon(n: string) {
   }
 }
 
-const FAQ_ITEMS: { q: string; a: string }[] = [
-  {
-    q: "What does your brand strategy process involve?",
-    a: "Our process follows five key phases: Immersion, Analysis, Positioning, Messaging, and Delivery. Each phase includes collaborative workshops, research deliverables, and strategic documentation you can activate across your organization.",
-  },
-  {
-    q: "How long does a typical brand strategy project take?",
-    a: "Most engagements run 6–8 weeks depending on research depth and stakeholder availability. We provide a fixed timeline and milestones in your proposal.",
-  },
-  {
-    q: "Do you work with existing marketing teams or in-house designers?",
-    a: "Yes. We regularly partner with internal teams — aligning on process, handoffs, and file formats so strategy translates cleanly into execution.",
-  },
-  {
-    q: "What deliverables do we receive at the end?",
-    a: "You receive a strategy playbook, positioning and messaging frameworks, and recommendations for visual and channel activation — tailored to what you commissioned.",
-  },
-  {
-    q: "How do you measure the success of a brand strategy?",
-    a: "We align on KPIs up front — awareness, conversion, retention, or internal clarity — and define how we will track them post-launch.",
-  },
-  {
-    q: "How do I get started with Awake Agency?",
-    a: "Book a discovery call or use the form below. We will respond with next steps and a tailored scope within a few business days.",
-  },
-];
+function renderHeadingPair(h: HeadingPair) {
+  return (
+    <>
+      {renderWithBreaks(h.prefix)}
+      <span className="qs-sd-serif">{h.serif}</span>
+      {h.suffix ? renderWithBreaks(h.suffix) : null}
+    </>
+  );
+}
 
-const FOUNDATION_STEPS = [
-  {
-    title: "Market Research",
-    bg: "rgba(186, 129, 238, 0.08)",
-    border: "rgba(186, 129, 238, 0.22)",
-    accent: "#6d28d9",
-    numBg: "rgba(186, 129, 238, 0.16)",
-  },
-  {
-    title: "Brand Positioning",
-    bg: "rgba(112, 181, 255, 0.1)",
-    border: "rgba(112, 181, 255, 0.26)",
-    accent: "#1d4ed8",
-    numBg: "rgba(112, 181, 255, 0.18)",
-  },
-  {
-    title: "Messaging Framework",
-    bg: "rgba(255, 175, 104, 0.12)",
-    border: "rgba(255, 175, 104, 0.28)",
-    accent: "#c2410c",
-    numBg: "rgba(255, 175, 104, 0.2)",
-  },
-  {
-    title: "Competitive Analysis",
-    bg: "rgba(121, 212, 94, 0.1)",
-    border: "rgba(121, 212, 94, 0.26)",
-    accent: "#15803d",
-    numBg: "rgba(121, 212, 94, 0.18)",
-  },
-  {
-    title: "Brand Architecture",
-    bg: "rgba(244, 136, 154, 0.1)",
-    border: "rgba(244, 136, 154, 0.24)",
-    accent: "#be185d",
-    numBg: "rgba(244, 136, 154, 0.18)",
-  },
-] as const;
+function renderWithBreaks(text: string) {
+  const parts = text.split("\n");
+  return parts.map((p, i) => (
+    <Fragment key={i}>
+      {i > 0 ? <br /> : null}
+      {p}
+    </Fragment>
+  ));
+}
 
-const DELIVERABLES = [
-  {
-    n: "01",
-    t: "Complete Brand Identity",
-    d: "Logo design, color palette, typography system, and visual elements that define your brand's unique look and feel.",
-    bg: "rgba(73, 40, 253, 0.05)",
-    border: "rgba(73, 40, 253, 0.12)",
-    num: "#4928fd",
-    arrowBg: "rgba(73, 40, 253, 0.13)",
-  },
-  {
-    n: "02",
-    t: "Brand Guidelines",
-    d: "Comprehensive documentation covering logo usage, color specifications, typography rules, and application examples.",
-    bg: "rgba(186, 129, 238, 0.08)",
-    border: "rgba(186, 129, 238, 0.2)",
-    num: "#7c3aed",
-    arrowBg: "rgba(186, 129, 238, 0.18)",
-  },
-  {
-    n: "03",
-    t: "Marketing Collateral",
-    d: "Business cards, letterheads, presentations, and other essential materials ready for print and digital use.",
-    bg: "rgba(255, 175, 104, 0.1)",
-    border: "rgba(255, 175, 104, 0.26)",
-    num: "#ea580c",
-    arrowBg: "rgba(255, 175, 104, 0.2)",
-  },
-  {
-    n: "04",
-    t: "Digital Assets",
-    d: "Social media templates, email signatures, website graphics, and all digital touchpoint designs.",
-    bg: "rgba(112, 181, 255, 0.1)",
-    border: "rgba(112, 181, 255, 0.24)",
-    num: "#2563eb",
-    arrowBg: "rgba(112, 181, 255, 0.18)",
-  },
-  {
-    n: "05",
-    t: "Source Files",
-    d: "All original design files in multiple formats (AI, PSD, PDF, PNG, SVG) for complete creative control.",
-    bg: "rgba(121, 212, 94, 0.1)",
-    border: "rgba(121, 212, 94, 0.24)",
-    num: "#16a34a",
-    arrowBg: "rgba(121, 212, 94, 0.18)",
-  },
-  {
-    n: "06",
-    t: "Implementation Support",
-    d: "Ongoing guidance and support to ensure consistent brand application across all channels and touchpoints.",
-    bg: "rgba(244, 136, 154, 0.1)",
-    border: "rgba(244, 136, 154, 0.22)",
-    num: "#db2777",
-    arrowBg: "rgba(244, 136, 154, 0.18)",
-  },
-] as const;
+type ServiceDetailsPageBodyProps = {
+  slug?: string;
+};
 
-const WEEK_PHASES = [
-  {
-    w: "WEEK 1–2",
-    t: "Immersion",
-    items: ["Stakeholder interviews", "Customer research", "Competitive audit"],
-    bg: "rgba(124, 58, 237, 0.07)",
-    border: "rgba(124, 58, 237, 0.18)",
-    accent: "#5b21b6",
-    tagBg: "rgba(124, 58, 237, 0.14)",
-    bullet: "#7c3aed",
-  },
-  {
-    w: "WEEK 3–4",
-    t: "Analysis",
-    items: ["Market gap mapping", "Audience segmentation", "Opportunity framing"],
-    bg: "rgba(59, 130, 246, 0.08)",
-    border: "rgba(59, 130, 246, 0.2)",
-    accent: "#1e40af",
-    tagBg: "rgba(59, 130, 246, 0.14)",
-    bullet: "#2563eb",
-  },
-  {
-    w: "WEEK 5–6",
-    t: "Positioning",
-    items: ["Workshop sessions", "Positioning statement", "Value pillars"],
-    bg: "rgba(249, 115, 22, 0.09)",
-    border: "rgba(249, 115, 22, 0.22)",
-    accent: "#c2410c",
-    tagBg: "rgba(249, 115, 22, 0.16)",
-    bullet: "#ea580c",
-  },
-  {
-    w: "WEEK 7–8",
-    t: "Delivery",
-    items: ["Messaging framework", "Strategy playbook", "Activation roadmap"],
-    bg: "rgba(34, 197, 94, 0.08)",
-    border: "rgba(34, 197, 94, 0.2)",
-    accent: "#166534",
-    tagBg: "rgba(34, 197, 94, 0.14)",
-    bullet: "#16a34a",
-  },
-] as const;
-
-const HOW_STEPS = [
-  {
-    n: "01",
-    title: "Immersion & Audit",
-    body: "We immerse ourselves in your business — conducting stakeholder interviews, customer research, and a full competitive audit to uncover opportunities.",
-    badge: "Step 1 of 5",
-  },
-  {
-    n: "02",
-    title: "Strategic Analysis",
-    body: "We analyze market trends, audience insights, and competitive positioning to identify where your brand can win.",
-    badge: "Step 2 of 5",
-  },
-  {
-    n: "03",
-    title: "Positioning Workshop",
-    body: "Through collaborative sessions, we define your brand's unique value proposition, personality, and market position.",
-    badge: "Step 3 of 5",
-  },
-  {
-    n: "04",
-    title: "Messaging Architecture",
-    body: "We build a comprehensive messaging framework — from elevator pitch to channel-specific copy guidelines.",
-    badge: "Step 4 of 5",
-  },
-  {
-    n: "05",
-    title: "Strategy Playbook",
-    body: "You receive a detailed brand strategy document with actionable recommendations for implementation across all touchpoints.",
-    badge: "Step 5 of 5",
-  },
-];
-
-export function ServiceDetailsPageBody() {
+export function ServiceDetailsPageBody({ slug }: ServiceDetailsPageBodyProps = {}) {
   const searchParams = useSearchParams();
-  const heroSerif = getServiceHeroSerif(searchParams.get("service"));
+  const effectiveSlug = slug ?? searchParams.get("service");
+  const content = getServiceDetailsContent(effectiveSlug);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const heroRef = useHeroAnimation();
+
+  const testimonialVariantClass: Record<string, string> = {
+    dark: "is-dark",
+    cream: "is-cream",
+    sky: "is-sky",
+  };
 
   return (
     <div className="main qs-sd-page">
@@ -375,36 +211,36 @@ export function ServiceDetailsPageBody() {
 
       <header className="qs-sd-hero">
         <div className="qs-inner qs-sd-hero-inner">
-
           <h1 ref={heroRef} className="qs-sd-hero-title-block">
-            <span className="qs-sd-hero-line1">Transform your brand</span>
+            <span className="qs-sd-hero-line1">{content.hero.line1}</span>
             <span className="qs-sd-hero-line2">
-              with <span className="qs-sd-serif">{heroSerif}</span>
+              {content.hero.line2Prefix}
+              <span className="qs-sd-serif">{content.hero.serif}</span>
             </span>
           </h1>
-          <p className="qs-sd-hero-lede">
-            From brand strategy to visual identity, we create comprehensive
-            solutions that help businesses stand out, connect with their
-            audience, and achieve lasting growth.
-          </p>
+          <p className="qs-sd-hero-lede">{content.hero.lede}</p>
           <div className="qs-sd-hero-actions">
-            <Link href="/contact" className="qs-sd-btn-primary-lg w-inline-block">
-              Get Started
+            <Link
+              href={content.hero.primary.href}
+              className="qs-sd-btn-primary-lg w-inline-block"
+            >
+              {content.hero.primary.label}
               <span className="qs-sd-icon-circle" aria-hidden>
                 <ServiceArrowIcon variant="on-light" />
               </span>
             </Link>
-            <Link
-              href="/case-studies"
-              className="qs-sd-btn-dark-outline w-inline-block"
-            >
-              View Portfolio
-              <span className="qs-sd-icon-circle-sm" aria-hidden>
-                <ServiceArrowIcon variant="on-light" />
-              </span>
-            </Link>
+            {content.hero.secondary ? (
+              <Link
+                href={content.hero.secondary.href}
+                className="qs-sd-btn-dark-outline w-inline-block"
+              >
+                {content.hero.secondary.label}
+                <span className="qs-sd-icon-circle-sm" aria-hidden>
+                  <ServiceArrowIcon variant="on-light" />
+                </span>
+              </Link>
+            ) : null}
           </div>
-         
         </div>
       </header>
 
@@ -413,25 +249,13 @@ export function ServiceDetailsPageBody() {
           <div>
             <div className="qs-sd-kicker">
               <span className="qs-sd-kicker-bar is-pink" aria-hidden />
-              <span>The Challenge</span>
+              <span>{content.challenge.kicker}</span>
             </div>
-            <h2>
-              Standing out in a <span className="qs-sd-serif">crowded market</span>
-            </h2>
-            <p className="qs-sd-prose">
-              Many businesses have great products but struggle to communicate
-              their value visually. Without professional creative direction and
-              cohesive design, brands blend into the background and miss
-              opportunities to connect with their ideal customers.
-            </p>
+            <h2>{renderHeadingPair(content.challenge.heading)}</h2>
+            <p className="qs-sd-prose">{content.challenge.prose}</p>
             <div className="qs-sd-list-card is-challenge">
-              <h3>Key challenges</h3>
-              {[
-                "Unclear brand identity and visual inconsistency",
-                "Generic messaging that fails to connect with audience",
-                "Outdated design that doesn't reflect business growth",
-                "Lack of cohesive strategy across all touchpoints",
-              ].map((t) => (
+              <h3>{content.challenge.listTitle}</h3>
+              {content.challenge.items.map((t) => (
                 <div key={t} className="qs-sd-list-row">
                   <span className="qs-sd-list-icon is-x" aria-hidden>
                     <ListIconX />
@@ -444,26 +268,13 @@ export function ServiceDetailsPageBody() {
           <div>
             <div className="qs-sd-kicker">
               <span className="qs-sd-kicker-bar is-purple" aria-hidden />
-              <span>Our Approach</span>
+              <span>{content.approach.kicker}</span>
             </div>
-            <h2>
-              Creative excellence meets{" "}
-              <span className="qs-sd-serif">strategic vision</span>
-            </h2>
-            <p className="qs-sd-prose">
-              We combine strategic thinking with exceptional design to create
-              brands that not only look beautiful but work hard for your
-              business. From logo design to full brand identity systems, every
-              element is crafted to tell your story and drive results.
-            </p>
+            <h2>{renderHeadingPair(content.approach.heading)}</h2>
+            <p className="qs-sd-prose">{content.approach.prose}</p>
             <div className="qs-sd-list-card is-approach">
-              <h3>Key highlights</h3>
-              {[
-                "Comprehensive Brand Audit",
-                "Strategic Creative Direction",
-                "End-to-End Design Solutions",
-                "Implementation Support",
-              ].map((t) => (
+              <h3>{content.approach.listTitle}</h3>
+              {content.approach.items.map((t) => (
                 <div key={t} className="qs-sd-list-row">
                   <span className="qs-sd-list-icon is-check" aria-hidden>
                     <ListIconCheck />
@@ -479,11 +290,7 @@ export function ServiceDetailsPageBody() {
       <section className="qs-sd-team-section">
         <div className="qs-inner">
           <div className="qs-sd-team-head">
-            <h2>
-              Meet the creative minds
-              <br />
-              behind <span className="qs-sd-serif">our success</span>
-            </h2>
+            <h2>{renderHeadingPair(content.teamHeading)}</h2>
           </div>
           <div className="qs-sd-team-grid">
             {[
@@ -508,40 +315,30 @@ export function ServiceDetailsPageBody() {
         </div>
       </section>
 
-      
-
-      
-
       <section className="qs-sd-impact">
         <div className="qs-inner">
           <div className="qs-sd-impact-card">
             <div className="qs-sd-impact-inner">
               <div className="qs-sd-impact-copy">
-                <h2>
-                  Measurable results for{" "}
-                  <span className="qs-sd-serif">every brand we build</span>
-                </h2>
-                <p>
-                  150+ brand strategies delivered. 94% client retention. We
-                  measure what matters and design for outcomes — not just
-                  aesthetics.
-                </p>
+                <h2>{renderHeadingPair(content.impact.heading)}</h2>
+                <p>{content.impact.body}</p>
               </div>
               <div className="qs-sd-impact-side">
                 <div className="qs-sd-impact-metrics">
-                  <div>
-                    <strong>3.2x</strong>
-                    <span>Brand value</span>
-                    <span>increase</span>
-                  </div>
-                  <div>
-                    <strong>94%</strong>
-                    <span>Client</span>
-                    <span>retention</span>
-                  </div>
+                  {content.impact.metrics.map((m) => (
+                    <div key={m.value}>
+                      <strong>{m.value}</strong>
+                      {m.labelLines.map((line) => (
+                        <span key={line}>{line}</span>
+                      ))}
+                    </div>
+                  ))}
                 </div>
-                <Link href="/case-studies" className="qs-sd-link-light w-inline-block">
-                  Explore Our Work
+                <Link
+                  href={content.impact.link.href}
+                  className="qs-sd-link-light w-inline-block"
+                >
+                  {content.impact.link.label}
                   <span className="qs-sd-icon-circle-sm" aria-hidden>
                     <ServiceArrowIcon variant="on-dark" />
                   </span>
@@ -552,27 +349,20 @@ export function ServiceDetailsPageBody() {
         </div>
       </section>
 
-      
-
       <section className="qs-sd-deliverables">
         <div className="qs-inner">
           <div className="qs-sd-deliverables-head">
             <div>
-              <h2>
-                What you <span className="qs-sd-serif">receive</span>
-              </h2>
-              <p>
-                Everything you need to launch and maintain a professional brand
-                identity that stands out and drives results.
-              </p>
+              <h2>{renderHeadingPair(content.deliverables.heading)}</h2>
+              <p>{content.deliverables.lede}</p>
             </div>
             <div className="qs-sd-pill-count">
-              <strong>6</strong>
-              <span>deliverables included</span>
+              <strong>{content.deliverables.items.length}</strong>
+              <span>{content.deliverables.pillLabel}</span>
             </div>
           </div>
           <div className="qs-sd-deliverables-grid">
-            {DELIVERABLES.map((x) => (
+            {content.deliverables.items.map((x) => (
               <div
                 key={x.n}
                 className="qs-sd-deliverable-card"
@@ -604,32 +394,11 @@ export function ServiceDetailsPageBody() {
       <section className="qs-sd-process">
         <div className="qs-inner">
           <div className="qs-sd-process-head">
-            <h2>How we work</h2>
-            <p>A proven methodology — built for strategic clarity</p>
+            <h2>{content.process.heading}</h2>
+            <p>{content.process.lede}</p>
           </div>
           <div className="qs-sd-process-grid">
-            {[
-              {
-                n: "01",
-                t: "Research",
-                p: "We dive deep into your market, competitors, and audience — turning insight into a clear creative brief.",
-              },
-              {
-                n: "02",
-                t: "Position",
-                p: "We define your brand's distinct place in the market and the promise you own.",
-              },
-              {
-                n: "03",
-                t: "Articulate",
-                p: "We build your messaging framework — distilling strategy into language your team can use everywhere.",
-              },
-              {
-                n: "04",
-                t: "Activate",
-                p: "We deliver a comprehensive brand strategy playbook with practical next steps for launch and scale.",
-              },
-            ].map((c) => (
+            {content.process.items.map((c) => (
               <div key={c.n} className="qs-sd-process-card">
                 <div className="big-num">{c.n}</div>
                 <h3>{c.t}</h3>
@@ -640,16 +409,10 @@ export function ServiceDetailsPageBody() {
         </div>
       </section>
 
-      
-
       <section className="qs-sd-foundations">
         <div className="qs-inner">
           <div className="qs-sd-foundations-cta">
-            <p>
-              Position Your Brand for Growth.
-              <br />
-              Let&apos;s Build Your Strategic Foundation!
-            </p>
+            <p>{renderWithBreaks(content.foundations.text)}</p>
             <div className="qs-sd-foundations-btns">
               <Link href="/contact" className="qs-sd-link-light w-inline-block">
                 Let&apos;s Collaborate
@@ -675,13 +438,8 @@ export function ServiceDetailsPageBody() {
         <div className="qs-inner">
           <div className="qs-sd-work-head">
             <div>
-              <h2>
-                Our work <span className="qs-sd-serif">in action</span>
-              </h2>
-              <p>
-                Real projects, real results — see how we&apos;ve helped leading
-                brands define their position and accelerate growth.
-              </p>
+              <h2>{renderHeadingPair(content.work.heading)}</h2>
+              <p>{content.work.lede}</p>
             </div>
             <Link href="/case-studies" className="qs-sd-explore-all w-inline-block">
               <span>View All Work</span>
@@ -691,76 +449,36 @@ export function ServiceDetailsPageBody() {
             </Link>
           </div>
           <div className="qs-sd-work-grid">
-            <Link href="/contact" className="qs-sd-work-card w-inline-block">
-              <div className="img">
-                <img src={`${WORK}/featured.jpg`} alt="" width={800} height={520} />
-                <span className="badge blue">Brand Strategy</span>
-              </div>
-              <div className="body">
-                <div className="row">
-                  <div>
-                    <h3>FlowBank</h3>
-                    <p className="sub">FlowBank Ltd · 2024</p>
-                  </div>
-                  <span className="qs-sd-arrow-36" aria-hidden>
-                    <ServiceArrowIcon variant="on-light" />
+            {content.work.cards.map((c) => (
+              <Link
+                key={c.title}
+                href="/contact"
+                className="qs-sd-work-card w-inline-block"
+              >
+                <div className="img">
+                  <img src={c.img} alt="" width={800} height={520} />
+                  <span className={`badge${c.badgeColor === "blue" ? " blue" : ""}`}>
+                    {c.badge}
                   </span>
                 </div>
-                <div className="qs-sd-work-tags">
-                  {["Brand Positioning", "Market Strategy", "Messaging"].map(
-                    (t) => (
+                <div className="body">
+                  <div className="row">
+                    <div>
+                      <h3>{c.title}</h3>
+                      <p className="sub">{c.sub}</p>
+                    </div>
+                    <span className="qs-sd-arrow-36" aria-hidden>
+                      <ServiceArrowIcon variant="on-light" />
+                    </span>
+                  </div>
+                  <div className="qs-sd-work-tags">
+                    {c.tags.map((t) => (
                       <span key={t}>{t}</span>
-                    ),
-                  )}
-                </div>
-              </div>
-            </Link>
-            <Link href="/contact" className="qs-sd-work-card w-inline-block">
-              <div className="img">
-                <img src={`${WORK}/project-0.jpg`} alt="" width={800} height={520} />
-                <span className="badge">Brand Identity</span>
-              </div>
-              <div className="body">
-                <div className="row">
-                  <div>
-                    <h3>Academy.co</h3>
-                    <p className="sub">Academy.co · 2024</p>
+                    ))}
                   </div>
-                  <span className="qs-sd-arrow-36" aria-hidden>
-                    <ServiceArrowIcon variant="on-light" />
-                  </span>
                 </div>
-                <div className="qs-sd-work-tags">
-                  {["Brand Identity", "Visual System", "Brand Guidelines"].map(
-                    (t) => (
-                      <span key={t}>{t}</span>
-                    ),
-                  )}
-                </div>
-              </div>
-            </Link>
-            <Link href="/contact" className="qs-sd-work-card w-inline-block">
-              <div className="img">
-                <img src={`${WORK}/project-1.jpg`} alt="" width={800} height={520} />
-                <span className="badge">UI/UX Design</span>
-              </div>
-              <div className="body">
-                <div className="row">
-                  <div>
-                    <h3>Genome Health</h3>
-                    <p className="sub">Genome Health · 2023</p>
-                  </div>
-                  <span className="qs-sd-arrow-36" aria-hidden>
-                    <ServiceArrowIcon variant="on-light" />
-                  </span>
-                </div>
-                <div className="qs-sd-work-tags">
-                  {["UI/UX Design", "User Research", "Design System"].map((t) => (
-                    <span key={t}>{t}</span>
-                  ))}
-                </div>
-              </div>
-            </Link>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
@@ -769,75 +487,51 @@ export function ServiceDetailsPageBody() {
         <div className="qs-inner">
           <div className="qs-sd-testimonials-head">
             <h2>
-              What our <span className="qs-sd-serif">customers</span>
-              <br />
-              are saying about us
+              {content.testimonials.heading.prefix}
+              <span className="qs-sd-serif">
+                {content.testimonials.heading.serif}
+              </span>
+              {content.testimonials.heading.suffix
+                ? renderWithBreaks(content.testimonials.heading.suffix)
+                : null}
             </h2>
           </div>
           <div className="qs-sd-testimonial-grid">
-            <div className="qs-sd-testimonial-card is-dark">
-              <p className="quote">
-                &ldquo;Awake helped us discover who we really are as a brand.
-                Their strategic process uncovered insights that transformed how we
-                position ourselves in the market.&rdquo;
-              </p>
-              <div className="qs-sd-testimonial-stat">
-                <strong>3.5x</strong>
-                <span>Brand awareness increase in 6 months</span>
-              </div>
-              <div className="qs-sd-testimonial-author">
-                <div className="qs-sd-avatar is-light" aria-hidden />
-                <div>
-                  <h4>Sarah Mitchell</h4>
-                  <p>CEO, FlowBank</p>
+            {content.testimonials.cards.map((t) => (
+              <div
+                key={t.name + t.role}
+                className={`qs-sd-testimonial-card ${
+                  testimonialVariantClass[t.variant]
+                }`}
+              >
+                <p className="quote">&ldquo;{t.quote}&rdquo;</p>
+                {t.stat ? (
+                  <div className="qs-sd-testimonial-stat">
+                    <strong>{t.stat.value}</strong>
+                    <span>{t.stat.label}</span>
+                  </div>
+                ) : null}
+                <div className="qs-sd-testimonial-author">
+                  <div
+                    className={`qs-sd-avatar${t.variant === "dark" ? " is-light" : ""}`}
+                    aria-hidden
+                  />
+                  <div>
+                    <h4>{t.name}</h4>
+                    <p>{t.role}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="qs-sd-testimonial-card is-cream">
-              <p className="quote">
-                &ldquo;The brand strategy work gave us absolute clarity on who we
-                are and what we stand for. Our entire team now speaks with one
-                voice.&rdquo;
-              </p>
-              <div className="qs-sd-testimonial-author">
-                <div className="qs-sd-avatar" aria-hidden />
-                <div>
-                  <h4>James Okafor</h4>
-                  <p>Founder, Academy.co</p>
-                </div>
-              </div>
-            </div>
-            <div className="qs-sd-testimonial-card is-sky">
-              <p className="quote">
-                &ldquo;The strategic foundation they built became our north star.
-                We&apos;ve seen a 42% increase in customer engagement since
-                implementing the new positioning.&rdquo;
-              </p>
-              <div className="qs-sd-testimonial-author">
-                <div className="qs-sd-avatar" aria-hidden />
-                <div>
-                  <h4>Priya Sharma</h4>
-                  <p>CMO, Hotto</p>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      
-
       <section className="qs-sd-faq-wrap">
         <div className="qs-inner qs-sd-faq-split">
           <div className="qs-sd-faq-lede">
-            <h2>
-              Simple answers to{" "}
-              <span className="qs-sd-serif">frequent questions</span>
-            </h2>
-            <p>
-              Questions about the brand strategy process, timelines, or
-              deliverables? We&apos;ve answered the most common ones below.
-            </p>
+            <h2>{renderHeadingPair(content.faq.heading)}</h2>
+            <p>{content.faq.lede}</p>
             <Link href="/contact" className="qs-sd-ask-btn w-inline-block">
               Ask us directly
               <span className="qs-sd-icon-circle-sm" aria-hidden>
@@ -851,7 +545,7 @@ export function ServiceDetailsPageBody() {
             </div>
           </div>
           <div>
-            {FAQ_ITEMS.map((item, i) => (
+            {content.faq.items.map((item, i) => (
               <div key={item.q} className="qs-sd-faq-item">
                 <button
                   type="button"
@@ -875,13 +569,9 @@ export function ServiceDetailsPageBody() {
           <div className="qs-sd-explore-head">
             <div>
               <h2 className="qs-sd-explore-title">
-                Explore our other{" "}
-                <span className="qs-sd-serif">services</span>
+                {renderHeadingPair(content.explore.heading)}
               </h2>
-              <p>
-                From strategy to execution, explore our comprehensive range of
-                creative services designed to elevate your brand.
-              </p>
+              <p>{content.explore.lede}</p>
             </div>
             <Link href="/services" className="qs-sd-explore-all w-inline-block">
               <span>All Services</span>
@@ -891,48 +581,7 @@ export function ServiceDetailsPageBody() {
             </Link>
           </div>
           <div className="qs-sd-explore-grid">
-            {[
-              {
-                tag: "Brand Identity",
-                tagBg: "rgba(186,129,238,0.15)",
-                tagColor: "#ba81ee",
-                cardBg: "rgba(186,129,238,0.05)",
-                title: "Brand Identity Design",
-                desc: "We bring your strategy to life visually — crafting distinctive identities with logos, typography, color systems, and comprehensive brand guidelines.",
-                chips: ["Logo Design", "Visual Systems", "Brand Guidelines"],
-                href: "/services",
-              },
-              {
-                tag: "UI/UX Design",
-                tagBg: "rgba(112,181,255,0.15)",
-                tagColor: "#70b5ff",
-                cardBg: "rgba(112,181,255,0.05)",
-                title: "UI/UX Design & Research",
-                desc: "We design digital experiences rooted in user empathy — blending research, wireframing, prototyping, and testing to create products people love.",
-                chips: ["User Research", "Interface Design", "Usability Testing"],
-                href: "/services",
-              },
-              {
-                tag: "Content Strategy",
-                tagBg: "rgba(255,175,104,0.15)",
-                tagColor: "#ffaf68",
-                cardBg: "rgba(255,175,104,0.05)",
-                title: "Content Strategy & Copywriting",
-                desc: "We craft compelling narratives that engage audiences — from web copy and campaign messaging to content frameworks that guide all brand communications.",
-                chips: ["Brand Copy", "Content Plans", "Storytelling"],
-                href: "/services",
-              },
-              {
-                tag: "Marketing",
-                tagBg: "rgba(121,212,94,0.15)",
-                tagColor: "#79d45e",
-                cardBg: "rgba(121,212,94,0.05)",
-                title: "Marketing Strategy & Campaigns",
-                desc: "We turn brand strategy into action — building go-to-market plans, integrated campaigns, and growth initiatives that drive measurable business results.",
-                chips: ["GTM Strategy", "Campaign Planning", "Growth Marketing"],
-                href: "/services",
-              },
-            ].map((c) => (
+            {content.explore.cards.map((c) => (
               <Link
                 key={c.title}
                 href={c.href}
@@ -975,31 +624,22 @@ export function ServiceDetailsPageBody() {
             <div className="qs-sd-final-left">
               <div className="qs-sd-final-kicker">
                 <i className="is-purple" aria-hidden />
-                <span>Start a project</span>
+                <span>{content.finalCta.kicker}</span>
               </div>
               <h2>
                 <span className="qs-sd-final-head-sans">
-                  Let&apos;s build something worth{" "}
+                  {content.finalCta.headingSans}
                 </span>
-                <span className="qs-sd-serif">remembering.</span>
+                <span className="qs-sd-serif">{content.finalCta.headingSerif}</span>
               </h2>
-              <p>
-                Tell us about your brand challenge. We&apos;ll respond within 4
-                hours with a clear path forward — no fluff, no hard sell.
-              </p>
+              <p>{content.finalCta.lede}</p>
               <div className="qs-sd-final-stats">
-                <div>
-                  <strong>150+</strong>
-                  <span>Brands launched</span>
-                </div>
-                <div>
-                  <strong>94%</strong>
-                  <span>Client retention</span>
-                </div>
-                <div>
-                  <strong>3.2x</strong>
-                  <span>Avg. growth</span>
-                </div>
+                {content.finalCta.stats.map((s) => (
+                  <div key={s.label}>
+                    <strong>{s.value}</strong>
+                    <span>{s.label}</span>
+                  </div>
+                ))}
               </div>
               <div className="qs-sd-final-contact">
                 <p className="qs-sd-final-contact-label">
@@ -1071,3 +711,5 @@ export function ServiceDetailsPageBody() {
     </div>
   );
 }
+
+export type { ServiceDetailsContent };

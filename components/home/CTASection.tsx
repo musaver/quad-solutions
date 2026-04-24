@@ -9,18 +9,15 @@ export function CTASection() {
         >
           <div className="c2a-wrapper">
             <h3 className="c2a-title">
-              Innovative Solutions for{" "}
-              <span className="text-span-17">bold brands</span>
+            Ready to Modernize{" "}
+              <span className="text-span-17">Your Business?</span>
             </h3>
             <p
               data-w-id="00518584-9f08-7d36-abc3-9d688e9e3190"
               style={{ opacity: 0 }}
               className="subtext"
             >
-              Looking to elevate your brand? We craft immersive experiences that
-              captivate, engage, and
-              <br />
-              make your business unforgettable in every interaction.
+              Connect with the specialist team assigned to your niche.
             </p>
             <a
               data-w-id="882d1aca-2a6a-f72e-8c3b-873acd9040c4"
@@ -28,7 +25,7 @@ export function CTASection() {
               href="/contact"
               className="back-to-home-btn w-inline-block"
             >
-              <div className="view-portfolio-txt">Let&apos;s craft together</div>
+              <div className="view-portfolio-txt">Start Your Project</div>
               <div className="div-block-23">
                 <img
                   src="/assets/wf/67a5fb8bc33c7f25ab4e52d9/67a9e2599fa438b2b5ca91b6_arrow-top-right.png"

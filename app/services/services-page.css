@@ -228,6 +228,19 @@
   color: #15151a;
 }
 
+.qs-feature-card-group-title-link {
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  transition: color 120ms ease;
+}
+
+.qs-feature-card-group-title-link:hover {
+  color: var(--card-accent, #5071b9);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .qs-feature-card-group-sub {
   font-family: var(--inter-tight, "Inter Tight", sans-serif);
   font-size: 11px;

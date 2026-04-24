@@ -9,6 +9,7 @@ type FeatureChipGroup = {
   sub?: string;
   chips: { label: string }[];
   topCount?: number;
+  href?: string;
 };
 
 type FeatureCard = {
@@ -155,6 +156,7 @@ const FEATURE_CARDS: FeatureCard[] = [
     groups: [
       {
         title: "Intelligent Automation",
+        href: "/service-details/intelligent-automation",
         chips: [
           { label: "Workflow Automation Systems" },
           { label: "Business Process Optimization" },
@@ -162,6 +164,7 @@ const FEATURE_CARDS: FeatureCard[] = [
       },
       {
         title: "AI Communication Tools",
+        href: "/service-details/ai-communication-tools",
         chips: [
           { label: "Custom AI Chatbots" },
           { label: "Intelligent Customer Support Systems" },
@@ -169,6 +172,7 @@ const FEATURE_CARDS: FeatureCard[] = [
       },
       {
         title: "Advanced AI Systems",
+        href: "/service-details/advanced-ai-systems",
         chips: [
           { label: "Autonomous AI Agents" },
           { label: "AI-Driven Data Insights" },
@@ -233,9 +237,18 @@ export function ServicesCardsSection() {
                   {card.groups.map((g) => (
                     <div key={g.title} className="qs-feature-card-group">
                       <div className="qs-feature-card-group-head">
-                        <span className="qs-feature-card-group-title">
-                          {g.title}
-                        </span>
+                        {g.href ? (
+                          <Link
+                            href={g.href}
+                            className="qs-feature-card-group-title qs-feature-card-group-title-link"
+                          >
+                            {g.title}
+                          </Link>
+                        ) : (
+                          <span className="qs-feature-card-group-title">
+                            {g.title}
+                          </span>
+                        )}
                         {g.sub ? (
                           <span className="qs-feature-card-group-sub">
                             {g.sub}

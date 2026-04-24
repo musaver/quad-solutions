@@ -117,6 +117,15 @@ body.body {
   }
 }
 
+/* Serve the hero gradient from our own origin instead of the Webflow CDN.
+   The CDN asset is slow and delays `document.readyState === "complete"`,
+   which is the event Webflow IX3 uses to fire hero load animations — a late
+   `readystate=complete` causes the animation to play after the user has
+   already seen the page settle. The same file already ships under /public. */
+.gradient-background {
+  background-image: url("/assets/wf/67a5fb8bc33c7f25ab4e52d9/68e4efa959606e9a7d41cc67_background-gradient.webp");
+}
+
 /* React-controlled mobile menu — slide in from right, smooth + reliable across
    client-side navigations (doesn't depend on Webflow IX3 re-binding). */
 .awake-menu-btn {
