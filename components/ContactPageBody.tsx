@@ -40,8 +40,8 @@ const CheckIcon = () => (
 const CHANNELS: { label: string; value: string; href: string; hint: string; icon: ReactNode }[] = [
   {
     label: "Email us",
-    value: "hello@awake.studio",
-    href: "mailto:hello@awake.studio",
+    value: "hello@quadsolutions.ai",
+    href: "mailto:hello@quadsolutions.ai",
     hint: "Replies within one business day",
     icon: <MailIcon />,
   },
@@ -386,7 +386,7 @@ export function ContactPageBody() {
               brief together.
             </p>
             <div className="qs-contact-cta-row">
-              <a href="mailto:hello@awake.studio" className="qs-btn-light">
+              <a href="mailto:hello@quadsolutions.ai" className="qs-btn-light">
                 <span>Email the Studio</span>
                 <span className="qs-btn-arrow" aria-hidden="true">
                   <img src={ARROW_LIGHT} alt="" />

@@ -650,9 +650,9 @@ export function ServiceDetailsPageBody({ slug }: ServiceDetailsPageBodyProps = {
                     <FinalCtaPhoneIcon />
                     +1 (307) 427-2883
                   </a>
-                  <a href="mailto:hello@awake.agency">
+                  <a href="mailto:hello@quadsolutions.ai">
                     <FinalCtaMailIcon />
-                    hello@awake.agency
+                    hello@quadsolutions.ai
                   </a>
                 </div>
               </div>

@@ -525,7 +525,7 @@ export function CaseStudyDetailsPageBody() {
                   +1 (307) 427-2883
                 </a>
                 <a
-                  href="mailto:hello@awake.agency"
+                  href="mailto:hello@quadsolutions.ai"
                   className="qs-csd-final-pill"
                 >
                   <Image
@@ -534,7 +534,7 @@ export function CaseStudyDetailsPageBody() {
                     width={16}
                     height={16}
                   />
-                  hello@awake.agency
+                  hello@quadsolutions.ai
                 </a>
               </div>
             </div>
