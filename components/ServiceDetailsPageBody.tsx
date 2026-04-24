@@ -646,9 +646,9 @@ export function ServiceDetailsPageBody({ slug }: ServiceDetailsPageBodyProps = {
                   Prefer to reach out directly?
                 </p>
                 <div className="qs-sd-final-links">
-                  <a href="tel:+9201051923556">
+                  <a href="tel:+13074272883">
                     <FinalCtaPhoneIcon />
-                    +92 0105 192 3556
+                    +1 (307) 427-2883
                   </a>
                   <a href="mailto:hello@awake.agency">
                     <FinalCtaMailIcon />

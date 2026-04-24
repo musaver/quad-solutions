@@ -515,14 +515,14 @@ export function CaseStudyDetailsPageBody() {
               </div>
               <div className="qs-csd-final-contact-label">Prefer to reach out directly?</div>
               <div className="qs-csd-final-pills">
-                <a href="tel:+9201051923556" className="qs-csd-final-pill">
+                <a href="tel:+13074272883" className="qs-csd-final-pill">
                   <Image
                     src={`${ASSET}/icon-phone.svg`}
                     alt=""
                     width={16}
                     height={16}
                   />
-                  +92 0105 192 3556
+                  +1 (307) 427-2883
                 </a>
                 <a
                   href="mailto:hello@awake.agency"
