@@ -3,8 +3,7 @@ export function TeamSection() {
     {
       name: "Mustafa Hassan",
       position: "Digital Marketing Specialist",
-      image:
-        "/assets/wf/67a5fb8bc33c7f25ab4e52d9/68e631bd49c794d742727dce_creative_img_1.webp",
+      image: "/assets/team/mustafa-hassan.png",
       dataWId: "b31a341f-0659-611a-378d-b9b299a4f9b7",
       imageWId: "56bb2451-170e-89ce-c69f-6cfb15fd42b5",
     },
