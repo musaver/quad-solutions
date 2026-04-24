@@ -225,7 +225,11 @@
 }
 
 .qs-feature-card-group-link:hover {
-  background-color: var(--card-bg, rgba(27, 29, 30, 0.04));
+  background-color: color-mix(
+    in srgb,
+    var(--card-bg, rgba(27, 29, 30, 0.04)) 40%,
+    transparent
+  );
 }
 
 .qs-feature-card-group-link:hover .qs-feature-card-group-title {
