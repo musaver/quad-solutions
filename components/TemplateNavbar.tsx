@@ -11,9 +11,12 @@ export function TemplateNavbar() {
 
   const onHome = pathname === "/";
   const onServices =
-    pathname === "/services" || pathname === "/service-details";
+    pathname === "/services" ||
+    pathname === "/service-details" ||
+    (pathname?.startsWith("/service-details/") ?? false);
   const onCaseStudies =
     pathname === "/case-studies" || pathname === "/case-study-details";
+  const onAbout = pathname === "/about-us";
 
   useEffect(() => {
     setMenuOpen(false);
@@ -119,6 +122,13 @@ export function TemplateNavbar() {
                 >
                   Case studies
                 </Link>
+                <Link
+                  href="/about-us"
+                  className={`nav-link-4${onAbout ? " w--current" : ""}`}
+                  aria-current={onAbout ? "page" : undefined}
+                >
+                  About us
+                </Link>
               </li>
             </ul>
             <div className="div-block-50">
@@ -212,6 +222,15 @@ export function TemplateNavbar() {
                   aria-current={onCaseStudies ? "page" : undefined}
                 >
                   Case studies
+                </Link>
+              </li>
+              <li className="list-item-12">
+                <Link
+                  href="/about-us"
+                  className={`link-6${onAbout ? " w--current" : ""}`}
+                  aria-current={onAbout ? "page" : undefined}
+                >
+                  About us
                 </Link>
               </li>
             </ul>
