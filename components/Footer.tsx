@@ -128,7 +128,7 @@ export function Footer() {
               <ul role="list" className="list-5 w-list-unstyled">
                 <li className="list-item-9">
                   <div className="text-block-32">
-                    81 Rivington Street London EC2A 3AY
+                    30 N Gould St Ste R, Sheridan, WY 82801
                   </div>
                 </li>
                 <li className="list-item-9">
@@ -142,11 +142,11 @@ export function Footer() {
                 </li>
                 <li className="list-item-9">
                   <a
-                    href="tel:01051923556"
+                    href="tel:+13074272883"
                     className="navigation-link for-footer w-inline-block"
                   >
-                    <div className="nav-text first">0105 192 3556</div>
-                    <div className="nav-text second">0105 192 3556</div>
+                    <div className="nav-text first">+1 (307) 427-2883</div>
+                    <div className="nav-text second">+1 (307) 427-2883</div>
                   </a>
                 </li>
               </ul>

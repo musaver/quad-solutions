@@ -1,40 +1,63 @@
 "use client";
 
 import Link from "next/link";
-import { useState, type FormEvent } from "react";
+import { useState, type FormEvent, type ReactNode } from "react";
 import { TemplateNavbar } from "@/components/TemplateNavbar";
 import { TemplateFooter } from "@/components/TemplateFooter";
 import { useHeroAnimation } from "@/hooks/useHeroAnimation";
 
 const ARROW_DARK = "/assets/wf/67a5fb8bc33c7f25ab4e52d9/67a9e2599fa438b2b5ca91b6_arrow-top-right.png";
 const ARROW_LIGHT = "/assets/figma-case-study-details/icon-arrow-on-dark.svg";
-const ICON_MAIL = "/assets/figma-case-study-details/icon-mail.svg";
-const ICON_PHONE = "/assets/figma-case-study-details/icon-phone.svg";
-const ICON_CHECK = "/assets/figma-case-study-details/icon-check-blue.svg";
 const ICON_LINKEDIN = "/assets/wf/67a5fb8bc33c7f25ab4e52d9/67b02256c742c6b7cb28f718_si-linkedin.svg";
 const ICON_TWITTER = "/assets/wf/67a5fb8bc33c7f25ab4e52d9/67b02255b31413b811c048ab_si-twitter.svg";
 
-const CHANNELS = [
+const MailIcon = () => (
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect x="3" y="5" width="18" height="14" rx="2.5" />
+    <path d="M3.5 7.5 L12 13 L20.5 7.5" />
+  </svg>
+);
+
+const PhoneIcon = () => (
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M5 4.5 A1.5 1.5 0 0 1 6.5 3 H9 L10.5 7 L8.5 8.5 C9.5 11 13 14.5 15.5 15.5 L17 13.5 L21 15 V17.5 A1.5 1.5 0 0 1 19.5 19 C11 19 5 13 5 4.5 Z" />
+  </svg>
+);
+
+const PinIcon = () => (
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M12 21s7-6.2 7-11.5A7 7 0 1 0 5 9.5C5 14.8 12 21 12 21Z" />
+    <circle cx="12" cy="9.5" r="2.6" />
+  </svg>
+);
+
+const CheckIcon = () => (
+  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M5 12.5 L10 17.5 L19.5 7" />
+  </svg>
+);
+
+const CHANNELS: { label: string; value: string; href: string; hint: string; icon: ReactNode }[] = [
   {
     label: "Email us",
     value: "hello@awake.studio",
     href: "mailto:hello@awake.studio",
     hint: "Replies within one business day",
-    icon: ICON_MAIL,
+    icon: <MailIcon />,
   },
   {
-    label: "Call the studio",
-    value: "+92 300 123 4567",
-    href: "tel:+923001234567",
-    hint: "Mon – Fri, 10:00–18:00 PKT",
-    icon: ICON_PHONE,
+    label: "Call us",
+    value: "+1 (307) 427-2883",
+    href: "tel:+13074272883",
+    hint: "Mon – Fri, 9:00–18:00 MT",
+    icon: <PhoneIcon />,
   },
   {
     label: "Visit us",
-    value: "Lahore, Pakistan",
-    href: "https://maps.google.com/?q=Lahore,Pakistan",
+    value: "30 N Gould St Ste R, Sheridan, WY 82801",
+    href: "https://maps.google.com/?q=30+N+Gould+St+Ste+R,+Sheridan,+WY+82801",
     hint: "By appointment only",
-    icon: ICON_CHECK,
+    icon: <PinIcon />,
   },
 ];
 
@@ -126,7 +149,7 @@ export function ContactPageBody() {
                 rel={c.href.startsWith("http") ? "noreferrer" : undefined}
               >
                 <span className="qs-contact-channel-icon" aria-hidden="true">
-                  <img src={c.icon} alt="" />
+                  {c.icon}
                 </span>
                 <div className="qs-contact-channel-text">
                   <p className="qs-contact-channel-label">{c.label}</p>
@@ -162,19 +185,19 @@ export function ContactPageBody() {
               <ul className="qs-contact-aside-list">
                 <li>
                   <span className="qs-contact-aside-check" aria-hidden="true">
-                    <img src={ICON_CHECK} alt="" />
+                    <CheckIcon />
                   </span>
                   Fixed-scope proposals, no hourly billing
                 </li>
                 <li>
                   <span className="qs-contact-aside-check" aria-hidden="true">
-                    <img src={ICON_CHECK} alt="" />
+                    <CheckIcon />
                   </span>
                   Senior team on every project
                 </li>
                 <li>
                   <span className="qs-contact-aside-check" aria-hidden="true">
-                    <img src={ICON_CHECK} alt="" />
+                    <CheckIcon />
                   </span>
                   Honest advice if we&apos;re not the right fit
                 </li>
@@ -208,7 +231,7 @@ export function ContactPageBody() {
               {submitted ? (
                 <div className="qs-contact-success" role="status">
                   <span className="qs-contact-success-icon" aria-hidden="true">
-                    <img src={ICON_CHECK} alt="" />
+                    <CheckIcon />
                   </span>
                   <h3 className="qs-contact-success-title">
                     Thanks — your message is on its way
