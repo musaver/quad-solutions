@@ -4,9 +4,9 @@ import { CaseStudyDetailsPageBody } from "@/components/CaseStudyDetailsPageBody"
 import "./case-study-details-page.css";
 
 export const metadata: Metadata = {
-  title: "Case Study | Awake",
+  title: "Case Study",
   description:
-    "How we partner with brands on strategy, identity, and digital — positioning, creative, and measurable outcomes.",
+    "A closer look at how Quad Solutions combined strategy, creative, and engineering to deliver measurable outcomes for a client engagement.",
 };
 
 export default function CaseStudyDetailsPage() {

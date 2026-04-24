@@ -22,9 +22,12 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Awake - Webflow HTML website template",
+  title: {
+    default: "Quad Solutions — Your Entire Digital Department Under One Roof",
+    template: "%s | Quad Solutions",
+  },
   description:
-    "A sleek and modern Webflow template designed for creative agencies, startups, and freelancers. Elevate your online presence with stunning animations, responsive design, and seamless user experience.",
+    "Stop managing five different agencies. Quad Solutions provides specialized teams for marketing, content, software, and AI — all working together to scale your business.",
   robots: { index: false, follow: false },
   icons: {
     icon: "/assets/wf/67a5fb8bc33c7f25ab4e52d9/68e3732f7782e21e4dbbc032_favicon.svg",

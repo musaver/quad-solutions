@@ -4,9 +4,9 @@ import { ServiceDetailsPageBody } from "@/components/ServiceDetailsPageBody";
 import "./service-details-page.css";
 
 export const metadata: Metadata = {
-  title: "Service Details | Awake",
+  title: "Service Details",
   description:
-    "Transform your brand with expert strategy — from brand strategy to visual identity, comprehensive creative services for lasting growth.",
+    "Explore how Quad Solutions delivers marketing, content, software, and AI automation services — scoped, staffed, and shipped by one integrated team.",
 };
 
 export default function ServiceDetailsPage() {

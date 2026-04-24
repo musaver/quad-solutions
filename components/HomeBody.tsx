@@ -30,7 +30,6 @@ export function HomeBody() {
       <TestimonialsSection />
       <PricingSection />
       <FAQSection />
-      <AwardsSection />
       <CTASection />
       <Footer />
     </div>

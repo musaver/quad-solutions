@@ -187,9 +187,9 @@ function paint(
 
 const BRAND_STRATEGY: ServiceDetailsContent = {
   slug: "brand-strategy",
-  documentTitle: "Service Details | Awake",
+  documentTitle: "Brand Strategy | Quad Solutions",
   metaDescription:
-    "Transform your brand with expert strategy — from brand strategy to visual identity, comprehensive creative services for lasting growth.",
+    "Transform your brand with expert strategy — from positioning to visual identity, comprehensive creative services for lasting growth.",
   hero: {
     line1: "Transform your brand",
     line2Prefix: "with ",
@@ -346,7 +346,7 @@ const BRAND_STRATEGY: ServiceDetailsContent = {
     cards: [
       {
         quote:
-          "Awake helped us discover who we really are as a brand. Their strategic process uncovered insights that transformed how we position ourselves in the market.",
+          "Quad Solutions helped us discover who we really are as a brand. Their strategic process uncovered insights that transformed how we position ourselves in the market.",
         stat: { value: "3.5x", label: "Brand awareness increase in 6 months" },
         name: "Sarah Mitchell",
         role: "CEO, FlowBank",
@@ -393,7 +393,7 @@ const BRAND_STRATEGY: ServiceDetailsContent = {
         a: "We align on KPIs up front — awareness, conversion, retention, or internal clarity — and define how we will track them post-launch.",
       },
       {
-        q: "How do I get started with Awake Agency?",
+        q: "How do I get started with Quad Solutions?",
         a: "Book a discovery call or use the form below. We will respond with next steps and a tailored scope within a few business days.",
       },
     ],

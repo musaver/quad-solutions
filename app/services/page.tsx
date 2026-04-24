@@ -4,9 +4,9 @@ import "../case-studies/case-studies-page.css";
 import "./services-page.css";
 
 export const metadata: Metadata = {
-  title: "Services | Awake",
+  title: "Services",
   description:
-    "Eight core disciplines — brand strategy, identity, UX, content, marketing, web, digital, and motion — one cohesive team.",
+    "Specialized teams across marketing, content, software, and AI automation — four disciplines working as one digital department for your business.",
 };
 
 export default function ServicesPage() {

@@ -3,9 +3,9 @@ import { AboutPageBody } from "@/components/AboutPageBody";
 import "./about-page.css";
 
 export const metadata: Metadata = {
-  title: "About Us | Awake",
+  title: "About Us",
   description:
-    "A studio built to create brands that matter. Strategic design, creative thinking, and digital experiences for ambitious businesses since 2012.",
+    "Quad Solutions unifies marketing, content, software, and AI under one roof so growing businesses can scale without juggling five different agencies.",
 };
 
 export default function AboutUsPage() {
