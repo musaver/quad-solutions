@@ -11,6 +11,8 @@ export const CASE_STUDY_ORDER = [
   "craft",
   "pulse",
   "mexivida",
+  "heyam",
+  "blends",
 ] as const;
 
 export type CaseStudyProjectId = (typeof CASE_STUDY_ORDER)[number];
@@ -517,6 +519,182 @@ const VARIANT_INPUTS: Record<CaseStudyProjectId, BaseVariantInput> = {
     servicesLine: "E-commerce Growth",
     metaTags: ["Meta Ads", "Amazon SEO", "Cultural Content"],
     heroImage: `${FIGMA_LIST}/mexivida.jpg`,
+  },
+  heyam: {
+    id: "heyam",
+    clientName: "Heyam.ae",
+    clientLegal: "Heyam.ae",
+    industry: "Luxury Fashion",
+    industryShort: "UAE Luxury",
+    year: "2025",
+    primaryBadge: "E-commerce Growth",
+    secondaryBadge: "Luxury Fashion",
+    lede: "Heyam needed to scale from a luxury fashion startup to a dominant market leader in the competitive UAE e-commerce landscape — building brand authority from zero while protecting premium positioning.",
+    challengeMarket:
+      "As a new luxury brand in the UAE, Heyam faced intense competition from established international and local labels.",
+    challengeStruggle:
+      "They needed to build high-end brand authority from scratch while maintaining a high conversion rate on their Shopify store — without diluting exclusivity as they scaled.",
+    approachLead:
+      "We deployed a comprehensive growth strategy focusing on social authority, influencer synergy, and conversion rate optimisation (CRO) — building brand equity and unit economics in parallel so scale didn't cheapen the brand.",
+    challengeItems: [
+      "Zero initial social media presence or brand following",
+      "High cart abandonment rates on the Shopify store",
+      'Need for a "premium" brand voice that resonated with UAE luxury buyers',
+      "Scaling sales without diluting brand exclusivity",
+    ],
+    approachItems: [
+      "Social Authority Building",
+      "Influencer & UGC Strategy",
+      "Shopify Conversion Optimisation",
+      "Data-Driven Meta Campaigns",
+    ],
+    processHeading: { strong: "How we ", serif: "scaled it" },
+    processSteps: [
+      {
+        num: "01",
+        title: "Social Authority Building",
+        body: "We grew the brand's Instagram following from 0 to 100K+ by focusing on high-end visual storytelling and consistent engagement with the UAE fashion community.",
+      },
+      {
+        num: "02",
+        title: "Influencer & UGC Strategy",
+        body: "By collaborating with key UAE influencers and leveraging user-generated content, we built immediate trust and social proof — making the brand a must-have in the region.",
+      },
+      {
+        num: "03",
+        title: "Shopify Conversion Optimisation",
+        body: "We overhauled the Shopify store, streamlining the checkout process and improving the mobile experience, resulting in a 4× improvement in conversion rates.",
+      },
+      {
+        num: "04",
+        title: "Data-Driven Meta Campaigns",
+        body: "We utilised advanced audience segmentation and retargeting strategies on Meta to drive high-intent traffic, significantly reducing cart abandonment.",
+      },
+    ],
+    resultsHeading: { strong: "The ", serif: "results" },
+    resultsLede:
+      "Measurable outcomes that demonstrate the real-world impact of our growth strategy.",
+    results: [
+      {
+        value: "$80K+",
+        label: "Monthly sales achieved from a $0 baseline",
+        tone: "dark",
+      },
+      {
+        value: "4x",
+        label: "Conversion rate improvement on Shopify",
+        tone: "tint",
+      },
+      {
+        value: "100K+",
+        label: "Organic social media following built in record time",
+        tone: "tint",
+      },
+    ],
+    testimonial: {
+      quote:
+        "By combining UGC marketing and data-driven ads, we turned a startup into a UAE fashion powerhouse.",
+      name: "Mustafa H.",
+      role: "Growth Strategist & E-commerce Consultant",
+    },
+    conclusionHeading: { strong: "A project built on ", serif: "precision" },
+    conclusionSubtitle: "in a crowded luxury market",
+    conclusionParagraphs: [
+      "The success of Heyam.ae proves that a well-executed digital strategy can disrupt even the most competitive luxury markets. We didn't just sell clothes — we built a brand that the UAE market now recognises as a leader.",
+      "From zero followers and no brand recognition to 100K+ organic audience, 4× Shopify conversion, and a consistent $80K+ monthly run-rate — Heyam.ae is now a luxury reference point in the region.",
+    ],
+    quoteSectorPhrase: "UAE fashion brand",
+    servicesLine: "E-commerce Growth",
+    metaTags: ["Shopify CRO", "Meta Ads", "Influencer & UGC"],
+    heroImage: `${FIGMA_LIST}/heyam.jpg`,
+  },
+  blends: {
+    id: "blends",
+    clientName: "Blends Barbershop",
+    clientLegal: "Blends Barbershop",
+    industry: "Grooming · Local Services",
+    industryShort: "Local Services",
+    year: "2025",
+    primaryBadge: "Local Growth",
+    secondaryBadge: "Grooming / AU",
+    lede: "Blends Barbershop needed to fill its appointment books and establish a dominant local presence in the competitive Australian grooming market — turning local attention into booked chairs, not just likes.",
+    challengeMarket:
+      "Starting a new barbershop in Australia, the owner struggled to attract consistent foot traffic and online bookings.",
+    challengeStruggle:
+      "With a high-quality service but low local visibility, the shop was operating well below capacity during its first few months — and generic marketing wasn't moving the needle.",
+    approachLead:
+      "We implemented a Hyper-Local Booking Engine strategy — using targeted ads and a frictionless booking funnel to turn local scrollers into confirmed appointments, then turning booked clients into a review and referral loop that compounds.",
+    challengeItems: [
+      "Empty appointment slots during weekdays",
+      "Low brand awareness in the local Australian community",
+      "Ineffective initial marketing efforts that didn't drive bookings",
+      "Need for a sustainable system to ensure repeat clientele",
+    ],
+    approachItems: [
+      "Hyper-Local Meta & Google Ads",
+      "Booking Funnel Optimisation",
+      "Social Proof & Review Generation",
+      "Scaling to Multiple Locations",
+    ],
+    processHeading: { strong: "How we ", serif: "booked it out" },
+    processSteps: [
+      {
+        num: "01",
+        title: "Hyper-Local Meta & Google Ads",
+        body: "We launched highly targeted campaigns within a specific radius of the shop, using 'Before & After' visuals to capture the attention of local men looking for premium grooming.",
+      },
+      {
+        num: "02",
+        title: "Booking Funnel Optimisation",
+        body: "We streamlined the online booking process, making it possible for a client to book a slot in under 30 seconds directly from an ad.",
+      },
+      {
+        num: "03",
+        title: "Social Proof & Review Generation",
+        body: "We implemented a system to encourage satisfied clients to leave reviews and share their cuts on social media, creating an organic growth loop.",
+      },
+      {
+        num: "04",
+        title: "Scaling to Multiple Locations",
+        body: "After 3 months of fully booked weeks, we transitioned the strategy to support the launch of the owner's second shop location.",
+      },
+    ],
+    resultsHeading: { strong: "The ", serif: "results" },
+    resultsLede:
+      "Measurable outcomes that demonstrate the real-world impact of our local growth strategy.",
+    results: [
+      {
+        value: "100%",
+        label: "Appointment slots filled every week after 3 months",
+        tone: "dark",
+      },
+      {
+        value: "2nd",
+        label: "Shop location launched due to rapid success",
+        tone: "tint",
+      },
+      {
+        value: "#1",
+        label: "Top-rated local barbershop in the target area",
+        tone: "tint",
+      },
+    ],
+    testimonial: {
+      quote:
+        "We turned a struggling new shop into a fully booked local sensation, paving the way for their second location.",
+      name: "Mustafa H.",
+      role: "Digital Marketing Expert",
+    },
+    conclusionHeading: { strong: "A project built on ", serif: "precision" },
+    conclusionSubtitle: "in the local market",
+    conclusionParagraphs: [
+      "Blends Barbershop is a perfect example of how targeted digital marketing can transform a local service business. By focusing on the booking as the ultimate metric, we gave the owner the financial stability to expand his brand.",
+      "From empty weekday slots to a fully booked chair and a second location — the system that got there (hyper-local ads, a 30-second booking flow, and a steady review loop) keeps compounding every week.",
+    ],
+    quoteSectorPhrase: "local service business",
+    servicesLine: "Local Growth Marketing",
+    metaTags: ["Hyper-Local Ads", "Booking Funnel", "Review Loops"],
+    heroImage: `${FIGMA_LIST}/blends.jpg`,
   },
 };
 
