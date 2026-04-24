@@ -18,10 +18,7 @@ export function LogoMarqueeSection() {
           <div className="right-divider"></div>
         </div>
         <div className="logo-section">
-          <div
-            data-w-id="64489176-8b33-5138-532b-2d14056b4b3e"
-            className="marquee_wrap"
-          >
+          <div className="marquee_wrap qs-marquee-animate">
             <div className="static-marquee_logos">
               {[...logos, ...logos.slice(0, 3)].map((logo, index) => (
                 <img

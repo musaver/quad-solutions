@@ -1,18 +1,11 @@
 const FIGMA_LIST = "/assets/figma-case-studies";
-const FIGMA_DETAIL = "/assets/figma-case-study-details";
 
 export const CASE_STUDY_ORDER = [
-  "flowbank",
-  "academy",
-  "genome",
-  "hotto",
-  "verdant",
-  "nova",
-  "craft",
-  "pulse",
-  "mexivida",
   "heyam",
+  "mexivida",
   "blends",
+  "home-services",
+  "wellness",
 ] as const;
 
 export type CaseStudyProjectId = (typeof CASE_STUDY_ORDER)[number];
@@ -65,372 +58,94 @@ export type CaseStudyVariant = {
   heroImage: string;
 };
 
-const DEFAULT_CHALLENGE_ITEMS: string[] = [
-  "Limited brand recognition in competitive market",
-  "Inconsistent visual identity across touchpoints",
-  "Unclear positioning and messaging strategy",
-  "Low customer engagement and retention rates",
-];
-
-const DEFAULT_APPROACH_ITEMS: string[] = [
-  "Discovery & Immersion",
-  "Competitive Positioning",
-  "Positioning Workshop",
-  "Strategy Playbook",
-];
-
-const DEFAULT_PROCESS_STEPS: CaseStudyProcessStep[] = [
-  {
-    num: "01",
-    title: "Discovery & Immersion",
-    body: "Deep-dive interviews with 40+ customers and 12 stakeholders to map brand perception gaps and market opportunities.",
-  },
-  {
-    num: "02",
-    title: "Competitive Positioning",
-    body: "Mapped competitors across strategic dimensions to identify the white space the brand could uniquely own.",
-  },
-  {
-    num: "03",
-    title: "Positioning Workshop",
-    body: "Facilitated a 2-day leadership workshop to define the brand essence, promise, and personality pillars.",
-  },
-  {
-    num: "04",
-    title: "Strategy Playbook",
-    body: "Delivered a 60-page brand strategy document with messaging framework, tone of voice, and implementation roadmap.",
-  },
-];
-
-const DEFAULT_RESULTS: CaseStudyResult[] = [
-  {
-    value: "3.5x",
-    label: "Brand awareness increase in 6 months",
-    tone: "dark",
-  },
-  {
-    value: "40%",
-    label: "New customer acquisition growth",
-    tone: "tint",
-  },
-  {
-    value: "+185%",
-    label: "Brand value increase post-launch",
-    tone: "tint",
-  },
-];
-
-const DEFAULT_TESTIMONIAL: CaseStudyTestimonial = {
-  quote:
-    "Awake helped us discover who we really are as a brand. Their strategic process uncovered insights that transformed how we position ourselves in the market. We went from being just another {sector} to a brand people genuinely connect with.",
-  name: "Michael Chen",
-  role: "CEO",
-};
-
-const DEFAULT_CONCLUSION_PARAGRAPHS = (clientLegal: string): string[] => [
-  `The work we delivered for ${clientLegal} represents exactly the kind of impact we pursue with every engagement — strategic clarity translated into measurable commercial outcomes.`,
-  "From initial discovery through to final delivery, every decision was guided by a single question: what will genuinely move this brand forward? The results speak for themselves.",
-];
-
-type BaseVariantInput = Omit<
-  CaseStudyVariant,
-  | "challengeItems"
-  | "approachItems"
-  | "processSteps"
-  | "processHeading"
-  | "results"
-  | "resultsHeading"
-  | "resultsLede"
-  | "testimonial"
-  | "conclusionHeading"
-  | "conclusionSubtitle"
-  | "conclusionParagraphs"
-> &
-  Partial<
-    Pick<
-      CaseStudyVariant,
-      | "challengeItems"
-      | "approachItems"
-      | "processSteps"
-      | "processHeading"
-      | "results"
-      | "resultsHeading"
-      | "resultsLede"
-      | "testimonial"
-      | "conclusionHeading"
-      | "conclusionSubtitle"
-      | "conclusionParagraphs"
-    >
-  >;
-
-function fill(v: BaseVariantInput): CaseStudyVariant {
-  const testimonial: CaseStudyTestimonial = v.testimonial ?? {
-    ...DEFAULT_TESTIMONIAL,
-    role: `${DEFAULT_TESTIMONIAL.role}, ${v.clientName}`,
-  };
-  return {
-    ...v,
-    challengeItems: v.challengeItems ?? DEFAULT_CHALLENGE_ITEMS,
-    approachItems: v.approachItems ?? DEFAULT_APPROACH_ITEMS,
-    processHeading:
-      v.processHeading ?? { strong: "How we ", serif: "approached it" },
-    processSteps: v.processSteps ?? DEFAULT_PROCESS_STEPS,
-    results: v.results ?? DEFAULT_RESULTS,
-    resultsHeading:
-      v.resultsHeading ?? { strong: "The ", serif: "results" },
+export const CASE_STUDY_VARIANTS: Record<CaseStudyProjectId, CaseStudyVariant> = {
+  heyam: {
+    id: "heyam",
+    clientName: "Heyam.ae",
+    clientLegal: "Heyam.ae",
+    industry: "Luxury Fashion",
+    industryShort: "UAE Luxury",
+    year: "2025",
+    primaryBadge: "E-commerce Growth",
+    secondaryBadge: "Luxury Fashion",
+    lede: "Heyam needed to scale from a luxury fashion startup to a dominant market leader in the competitive UAE e-commerce landscape — building brand authority from zero while protecting premium positioning.",
+    challengeMarket:
+      "As a new luxury brand in the UAE, Heyam faced intense competition from established international and local labels.",
+    challengeStruggle:
+      "They needed to build high-end brand authority from scratch while maintaining a high conversion rate on their Shopify store — without diluting exclusivity as they scaled.",
+    approachLead:
+      "We deployed a comprehensive growth strategy focusing on social authority, influencer synergy, and conversion rate optimisation (CRO) — building brand equity and unit economics in parallel so scale didn't cheapen the brand.",
+    challengeItems: [
+      "Zero initial social media presence or brand following",
+      "High cart abandonment rates on the Shopify store",
+      'Need for a "premium" brand voice that resonated with UAE luxury buyers',
+      "Scaling sales without diluting brand exclusivity",
+    ],
+    approachItems: [
+      "Social Authority Building",
+      "Influencer & UGC Strategy",
+      "Shopify Conversion Optimisation",
+      "Data-Driven Meta Campaigns",
+    ],
+    processHeading: { strong: "How we ", serif: "scaled it" },
+    processSteps: [
+      {
+        num: "01",
+        title: "Social Authority Building",
+        body: "We grew the brand's Instagram following from 0 to 100K+ by focusing on high-end visual storytelling and consistent engagement with the UAE fashion community.",
+      },
+      {
+        num: "02",
+        title: "Influencer & UGC Strategy",
+        body: "By collaborating with key UAE influencers and leveraging user-generated content, we built immediate trust and social proof — making the brand a must-have in the region.",
+      },
+      {
+        num: "03",
+        title: "Shopify Conversion Optimisation",
+        body: "We overhauled the Shopify store, streamlining the checkout process and improving the mobile experience, resulting in a 4× improvement in conversion rates.",
+      },
+      {
+        num: "04",
+        title: "Data-Driven Meta Campaigns",
+        body: "We utilised advanced audience segmentation and retargeting strategies on Meta to drive high-intent traffic, significantly reducing cart abandonment.",
+      },
+    ],
+    resultsHeading: { strong: "The ", serif: "results" },
     resultsLede:
-      v.resultsLede ??
-      "Measurable outcomes that demonstrate the real-world impact of strategic thinking.",
-    testimonial,
-    conclusionHeading:
-      v.conclusionHeading ??
-      { strong: "A project built on ", serif: "precision" },
-    conclusionSubtitle: v.conclusionSubtitle ?? "and lasting impact",
-    conclusionParagraphs:
-      v.conclusionParagraphs ?? DEFAULT_CONCLUSION_PARAGRAPHS(v.clientLegal),
-  };
-}
-
-const VARIANT_INPUTS: Record<CaseStudyProjectId, BaseVariantInput> = {
-  flowbank: {
-    id: "flowbank",
-    clientName: "FlowBank",
-    clientLegal: "FlowBank Ltd",
-    industry: "FinTech",
-    industryShort: "FinTech",
-    year: "2024",
-    primaryBadge: "Brand Strategy",
-    secondaryBadge: "FinTech",
-    lede: "FlowBank needed to carve out a distinct identity in an increasingly crowded fintech space — moving from a generic digital bank to a trusted financial partner with a clear strategic narrative.",
-    challengeMarket:
-      "The fintech market had become saturated with similar-looking brands all promising the same values: speed, simplicity, and security.",
-    challengeStruggle:
-      "FlowBank struggled to communicate what made them genuinely different — their human-first approach to digital banking.",
-    approachLead:
-      "We began with a comprehensive market audit and stakeholder immersion, interviewing 40+ customers to uncover what they truly valued in a financial partner. This research revealed an underserved emotional need: people didn't just want fast banking — they wanted to feel financially empowered.",
-    processSteps: DEFAULT_PROCESS_STEPS.map((s, i) =>
-      i === 1
-        ? {
-            ...s,
-            body:
-              "Mapped 24 fintech competitors across 8 strategic dimensions to identify the white space FlowBank could uniquely own.",
-          }
-        : s,
-    ),
-    quoteSectorPhrase: "fintech",
-    servicesLine: "Brand Positioning",
-    metaTags: ["Brand Positioning", "Market Strategy", "Messaging"],
-    heroImage: `${FIGMA_DETAIL}/hero-terminal.jpg`,
-  },
-  academy: {
-    id: "academy",
-    clientName: "Academy.co",
-    clientLegal: "Academy.co",
-    industry: "Education",
-    industryShort: "EdTech",
-    year: "2024",
-    primaryBadge: "Brand Identity",
-    secondaryBadge: "Education",
-    lede: "Academy.co needed a cohesive visual language that matched the quality of their programs — replacing fragmented touchpoints with one confident brand system.",
-    challengeMarket:
-      "The online education category was crowded with dated identities and noisy messaging.",
-    challengeStruggle:
-      "Academy.co struggled to look as credible and modern as the outcomes they delivered for learners.",
-    approachLead:
-      "We audited every channel, convened stakeholders, and defined a bold visual and verbal system that could scale across digital and in-person experiences.",
-    processSteps: DEFAULT_PROCESS_STEPS.map((s, i) =>
-      i === 1
-        ? {
-            ...s,
-            body:
-              "Mapped education competitors across positioning and design cues to find a memorable space Academy.co could own.",
-          }
-        : s,
-    ),
-    quoteSectorPhrase: "education brand",
-    servicesLine: "Brand Identity",
-    metaTags: ["Brand Identity", "Visual System", "Brand Guidelines"],
-    heroImage: `${FIGMA_LIST}/project-0.jpg`,
-  },
-  genome: {
-    id: "genome",
-    clientName: "Genome Health",
-    clientLegal: "Genome Health",
-    industry: "Healthcare",
-    industryShort: "Health",
-    year: "2023",
-    primaryBadge: "UI/UX Design",
-    secondaryBadge: "Healthcare",
-    lede: "Genome Health needed a digital experience that felt as precise and trustworthy as their clinical offering — simplifying complex journeys without dumbing them down.",
-    challengeMarket:
-      "Health-tech products often feel cold or confusing, especially when users are under stress.",
-    challengeStruggle:
-      "Genome Health needed clearer information architecture and interface patterns that worked across web and mobile.",
-    approachLead:
-      "We ran research with patients and clinicians, prototyped critical flows, and stress-tested accessibility and comprehension at every step.",
-    processSteps: DEFAULT_PROCESS_STEPS.map((s, i) =>
-      i === 1
-        ? {
-            ...s,
-            body:
-              "Benchmarked leading health products to define interaction patterns Genome Health could adopt and improve on.",
-          }
-        : s,
-    ),
-    quoteSectorPhrase: "clinical app",
-    servicesLine: "Product & UX",
-    metaTags: ["UI/UX Design", "User Research", "Design System"],
-    heroImage: `${FIGMA_LIST}/project-1.jpg`,
-  },
-  hotto: {
-    id: "hotto",
-    clientName: "Hotto",
-    clientLegal: "Hotto Inc.",
-    industry: "Consumer",
-    industryShort: "Consumer",
-    year: "2024",
-    primaryBadge: "Marketing",
-    secondaryBadge: "Consumer",
-    lede: "Hotto wanted campaigns that felt culturally relevant — not generic performance creative — while still hitting aggressive growth targets.",
-    challengeMarket:
-      "The category was noisy and promotion-led; breakthrough creative was quickly copied.",
-    challengeStruggle:
-      "Hotto needed a sharper narrative and channel mix to sustain attention beyond launch spikes.",
-    approachLead:
-      "We reframed the story around real customer moments, built modular campaign assets, and aligned paid, organic, and lifecycle around one message.",
-    processSteps: DEFAULT_PROCESS_STEPS.map((s, i) =>
-      i === 1
-        ? {
-            ...s,
-            body:
-              "Mapped competitor narratives and offers to find whitespace Hotto could own in the market.",
-          }
-        : s,
-    ),
-    quoteSectorPhrase: "consumer brand",
-    servicesLine: "Growth Marketing",
-    metaTags: ["Marketing Strategy", "Campaign Design", "Brand Narrative"],
-    heroImage: `${FIGMA_LIST}/project-2.jpg`,
-  },
-  verdant: {
-    id: "verdant",
-    clientName: "Verdant Co.",
-    clientLegal: "Verdant Co.",
-    industry: "CPG",
-    industryShort: "CPG",
-    year: "2023",
-    primaryBadge: "Brand Identity",
-    secondaryBadge: "Sustainability",
-    lede: "Verdant Co. needed packaging and identity that signaled sustainability without looking like every other green label on the shelf.",
-    challengeMarket:
-      "Eco claims had become wallpaper; shoppers were skeptical of lookalike earthy palettes.",
-    challengeStruggle:
-      "Verdant needed a distinctive visual system that still felt premium and shelf-ready.",
-    approachLead:
-      "We built a tactile, ownable illustration language and packaging hierarchy tested in retail mockups and shopper interviews.",
-    processSteps: DEFAULT_PROCESS_STEPS.map((s, i) =>
-      i === 1
-        ? {
-            ...s,
-            body:
-              "Audited shelf sets and competitor codes to position Verdant away from cliché sustainability tropes.",
-          }
-        : s,
-    ),
-    quoteSectorPhrase: "CPG brand",
-    servicesLine: "Visual Identity",
-    metaTags: ["Packaging Design", "Visual Identity", "Logo Design"],
-    heroImage: `${FIGMA_LIST}/project-3.jpg`,
-  },
-  nova: {
-    id: "nova",
-    clientName: "Nova Labs",
-    clientLegal: "Nova Labs",
-    industry: "SaaS",
-    industryShort: "SaaS",
-    year: "2024",
-    primaryBadge: "UI/UX Design",
-    secondaryBadge: "B2B SaaS",
-    lede: "Nova Labs needed a product experience that could onboard technical and business users alike — fast, without a manual.",
-    challengeMarket:
-      "SaaS buyers expect speed; complex configuration often killed activation.",
-    challengeStruggle:
-      "Nova's UI hid powerful features behind dense settings and inconsistent patterns.",
-    approachLead:
-      "We simplified primary journeys, introduced progressive disclosure, and shipped a component library engineering could adopt quickly.",
-    processSteps: DEFAULT_PROCESS_STEPS.map((s, i) =>
-      i === 1
-        ? {
-            ...s,
-            body:
-              "Reviewed comparable SaaS flows to align Nova with best-in-class onboarding while keeping their differentiators visible.",
-          }
-        : s,
-    ),
-    quoteSectorPhrase: "SaaS product",
-    servicesLine: "Product Design",
-    metaTags: ["Product Design", "Design System", "Prototyping"],
-    heroImage: `${FIGMA_LIST}/project-4.jpg`,
-  },
-  craft: {
-    id: "craft",
-    clientName: "Craft Studio",
-    clientLegal: "Craft Studio",
-    industry: "Creative",
-    industryShort: "Studio",
-    year: "2023",
-    primaryBadge: "Brand Strategy",
-    secondaryBadge: "Creative",
-    lede: "Craft Studio needed a sharper positioning story — moving from generalist creative shop to a specialist partner with a clear promise.",
-    challengeMarket:
-      "Small studios often compete on price; Craft needed a narrative that justified premium engagements.",
-    challengeStruggle:
-      "Messaging was broad and interchangeable with dozens of local competitors.",
-    approachLead:
-      "We interviewed past clients, codified proof points, and built a messaging spine the whole team could use in pitches and proposals.",
-    processSteps: DEFAULT_PROCESS_STEPS.map((s, i) =>
-      i === 1
-        ? {
-            ...s,
-            body:
-              "Mapped adjacent studios and positioning territories so Craft could claim a defensible niche.",
-          }
-        : s,
-    ),
-    quoteSectorPhrase: "creative studio",
-    servicesLine: "Brand Strategy",
-    metaTags: ["Content Strategy", "Brand Voice", "Copywriting"],
-    heroImage: `${FIGMA_LIST}/project-5.jpg`,
-  },
-  pulse: {
-    id: "pulse",
-    clientName: "Pulse Media",
-    clientLegal: "Pulse Media Group",
-    industry: "Media",
-    industryShort: "Media",
-    year: "2023",
-    primaryBadge: "Marketing",
-    secondaryBadge: "Media",
-    lede: "Pulse Media needed a growth engine that connected content, distribution, and monetisation — not siloed channel reports.",
-    challengeMarket:
-      "Media buyers were fragmented across platforms; attribution was messy.",
-    challengeStruggle:
-      "Pulse struggled to show clients a single story of performance and creative impact.",
-    approachLead:
-      "We unified reporting, rebuilt funnel content, and launched test-and-learn campaigns with clear learning agendas.",
-    processSteps: DEFAULT_PROCESS_STEPS.map((s, i) =>
-      i === 1
-        ? {
-            ...s,
-            body:
-              "Compared agency and in-house models to define where Pulse should double down for scale.",
-          }
-        : s,
-    ),
-    quoteSectorPhrase: "media group",
-    servicesLine: "Integrated Marketing",
-    metaTags: ["Digital Marketing", "Growth Strategy", "Content Marketing"],
-    heroImage: `${FIGMA_LIST}/project-6.jpg`,
+      "Measurable outcomes that demonstrate the real-world impact of our growth strategy.",
+    results: [
+      {
+        value: "$80K+",
+        label: "Monthly sales achieved from a $0 baseline",
+        tone: "dark",
+      },
+      {
+        value: "4x",
+        label: "Conversion rate improvement on Shopify",
+        tone: "tint",
+      },
+      {
+        value: "100K+",
+        label: "Organic social media following built in record time",
+        tone: "tint",
+      },
+    ],
+    testimonial: {
+      quote:
+        "By combining UGC marketing and data-driven ads, we turned a startup into a UAE fashion powerhouse.",
+      name: "Mustafa H.",
+      role: "Growth Strategist & E-commerce Consultant",
+    },
+    conclusionHeading: { strong: "A project built on ", serif: "precision" },
+    conclusionSubtitle: "in a crowded luxury market",
+    conclusionParagraphs: [
+      "The success of Heyam.ae proves that a well-executed digital strategy can disrupt even the most competitive luxury markets. We didn't just sell clothes — we built a brand that the UAE market now recognises as a leader.",
+      "From zero followers and no brand recognition to 100K+ organic audience, 4× Shopify conversion, and a consistent $80K+ monthly run-rate — Heyam.ae is now a luxury reference point in the region.",
+    ],
+    quoteSectorPhrase: "UAE fashion brand",
+    servicesLine: "E-commerce Growth",
+    metaTags: ["Shopify CRO", "Meta Ads", "Influencer & UGC"],
+    heroImage: `${FIGMA_LIST}/heyam.jpg`,
   },
   mexivida: {
     id: "mexivida",
@@ -520,94 +235,6 @@ const VARIANT_INPUTS: Record<CaseStudyProjectId, BaseVariantInput> = {
     metaTags: ["Meta Ads", "Amazon SEO", "Cultural Content"],
     heroImage: `${FIGMA_LIST}/mexivida.jpg`,
   },
-  heyam: {
-    id: "heyam",
-    clientName: "Heyam.ae",
-    clientLegal: "Heyam.ae",
-    industry: "Luxury Fashion",
-    industryShort: "UAE Luxury",
-    year: "2025",
-    primaryBadge: "E-commerce Growth",
-    secondaryBadge: "Luxury Fashion",
-    lede: "Heyam needed to scale from a luxury fashion startup to a dominant market leader in the competitive UAE e-commerce landscape — building brand authority from zero while protecting premium positioning.",
-    challengeMarket:
-      "As a new luxury brand in the UAE, Heyam faced intense competition from established international and local labels.",
-    challengeStruggle:
-      "They needed to build high-end brand authority from scratch while maintaining a high conversion rate on their Shopify store — without diluting exclusivity as they scaled.",
-    approachLead:
-      "We deployed a comprehensive growth strategy focusing on social authority, influencer synergy, and conversion rate optimisation (CRO) — building brand equity and unit economics in parallel so scale didn't cheapen the brand.",
-    challengeItems: [
-      "Zero initial social media presence or brand following",
-      "High cart abandonment rates on the Shopify store",
-      'Need for a "premium" brand voice that resonated with UAE luxury buyers',
-      "Scaling sales without diluting brand exclusivity",
-    ],
-    approachItems: [
-      "Social Authority Building",
-      "Influencer & UGC Strategy",
-      "Shopify Conversion Optimisation",
-      "Data-Driven Meta Campaigns",
-    ],
-    processHeading: { strong: "How we ", serif: "scaled it" },
-    processSteps: [
-      {
-        num: "01",
-        title: "Social Authority Building",
-        body: "We grew the brand's Instagram following from 0 to 100K+ by focusing on high-end visual storytelling and consistent engagement with the UAE fashion community.",
-      },
-      {
-        num: "02",
-        title: "Influencer & UGC Strategy",
-        body: "By collaborating with key UAE influencers and leveraging user-generated content, we built immediate trust and social proof — making the brand a must-have in the region.",
-      },
-      {
-        num: "03",
-        title: "Shopify Conversion Optimisation",
-        body: "We overhauled the Shopify store, streamlining the checkout process and improving the mobile experience, resulting in a 4× improvement in conversion rates.",
-      },
-      {
-        num: "04",
-        title: "Data-Driven Meta Campaigns",
-        body: "We utilised advanced audience segmentation and retargeting strategies on Meta to drive high-intent traffic, significantly reducing cart abandonment.",
-      },
-    ],
-    resultsHeading: { strong: "The ", serif: "results" },
-    resultsLede:
-      "Measurable outcomes that demonstrate the real-world impact of our growth strategy.",
-    results: [
-      {
-        value: "$80K+",
-        label: "Monthly sales achieved from a $0 baseline",
-        tone: "dark",
-      },
-      {
-        value: "4x",
-        label: "Conversion rate improvement on Shopify",
-        tone: "tint",
-      },
-      {
-        value: "100K+",
-        label: "Organic social media following built in record time",
-        tone: "tint",
-      },
-    ],
-    testimonial: {
-      quote:
-        "By combining UGC marketing and data-driven ads, we turned a startup into a UAE fashion powerhouse.",
-      name: "Mustafa H.",
-      role: "Growth Strategist & E-commerce Consultant",
-    },
-    conclusionHeading: { strong: "A project built on ", serif: "precision" },
-    conclusionSubtitle: "in a crowded luxury market",
-    conclusionParagraphs: [
-      "The success of Heyam.ae proves that a well-executed digital strategy can disrupt even the most competitive luxury markets. We didn't just sell clothes — we built a brand that the UAE market now recognises as a leader.",
-      "From zero followers and no brand recognition to 100K+ organic audience, 4× Shopify conversion, and a consistent $80K+ monthly run-rate — Heyam.ae is now a luxury reference point in the region.",
-    ],
-    quoteSectorPhrase: "UAE fashion brand",
-    servicesLine: "E-commerce Growth",
-    metaTags: ["Shopify CRO", "Meta Ads", "Influencer & UGC"],
-    heroImage: `${FIGMA_LIST}/heyam.jpg`,
-  },
   blends: {
     id: "blends",
     clientName: "Blends Barbershop",
@@ -696,23 +323,194 @@ const VARIANT_INPUTS: Record<CaseStudyProjectId, BaseVariantInput> = {
     metaTags: ["Hyper-Local Ads", "Booking Funnel", "Review Loops"],
     heroImage: `${FIGMA_LIST}/blends.jpg`,
   },
+  "home-services": {
+    id: "home-services",
+    clientName: "US Home Services",
+    clientLegal: "US Home Services (anonymised)",
+    industry: "Home Services",
+    industryShort: "Home Services",
+    year: "2025",
+    primaryBadge: "Lead Generation",
+    secondaryBadge: "Home Services / US",
+    lede: "A US-based home services provider needed a high-volume, high-intent lead generation system for 15+ specialised services — including roofing, solar, and ADU installation — with consistent daily flow and real sales-team ROI.",
+    challengeMarket:
+      "Managing lead generation for 15+ different services (roofing, solar, ADU, and more) across the US is complex by default — each service has its own buyer psychology, seasonality, and unit economics.",
+    challengeStruggle:
+      "The client was receiving low-quality leads that didn't convert, leading to wasted ad spend and a frustrated sales team chasing window shoppers instead of closing deals.",
+    approachLead:
+      "We built a Service-Specific Lead Engine that qualified prospects before they ever reached the client's sales team — so sales only spoke to high-intent homeowners, and every ad dollar compounded toward booked appointments, not noise.",
+    challengeItems: [
+      "High competition in the US home services market",
+      'Low lead quality and high "no-show" rates for appointments',
+      "Difficulty in tracking ROI across 15+ different service lines",
+      "High Cost Per Acquisition (CPA) for premium services like Solar and ADU",
+    ],
+    approachItems: [
+      "Multi-Channel Lead Funnels",
+      "Advanced Lead Qualification",
+      "Dynamic Ad Creative Strategy",
+      "Real-Time CRM Integration",
+    ],
+    processHeading: { strong: "How we ", serif: "engineered the engine" },
+    processSteps: [
+      {
+        num: "01",
+        title: "Multi-Channel Lead Funnels",
+        body: "We deployed tailored funnels for each service line — ensuring a Roofing prospect saw a completely different journey than a Solar prospect, with creative, questions, and pricing cues matched to intent.",
+      },
+      {
+        num: "02",
+        title: "Advanced Lead Qualification",
+        body: "We implemented multi-step forms and AI-driven qualification to filter out window shoppers — so the sales team only spoke to high-intent homeowners ready to book.",
+      },
+      {
+        num: "03",
+        title: "Dynamic Ad Creative Strategy",
+        body: "Using a mix of UGC, educational videos, and Problem/Solution imagery, we addressed specific homeowner pain points for each of the 15+ services — at the scale paid media requires.",
+      },
+      {
+        num: "04",
+        title: "Real-Time CRM Integration",
+        body: "We synchronised all lead data directly into the client's CRM, allowing for immediate follow-up — critical in home services, where speed-to-lead often decides the sale.",
+      },
+    ],
+    resultsHeading: { strong: "The ", serif: "results" },
+    resultsLede:
+      "Measurable outcomes that demonstrate the real-world impact of our lead gen strategy.",
+    results: [
+      {
+        value: "3.2x",
+        label: "Average increase in lead-to-appointment conversion rate",
+        tone: "dark",
+      },
+      {
+        value: "-40%",
+        label: "Reduction in Cost Per Lead (CPL) across premium services",
+        tone: "tint",
+      },
+      {
+        value: "15+",
+        label: "Service lines scaled with consistent daily lead flow",
+        tone: "tint",
+      },
+    ],
+    testimonial: {
+      quote:
+        "We didn't just generate leads; we generated high-intent appointments that moved the needle for their sales team.",
+      name: "Mustafa H.",
+      role: "Lead Generation Specialist",
+    },
+    conclusionHeading: { strong: "A project built on ", serif: "precision" },
+    conclusionSubtitle: "and lead-gen psychology",
+    conclusionParagraphs: [
+      "Scaling 15+ home services requires a deep understanding of both the ad platform and the homeowner's psychology. Our integrated approach gave the client a predictable, scalable system for long-term growth — not a campaign that works until it doesn't.",
+      "The engine treats each service line as its own economy — bespoke funnels, creative, qualification, and CRM flow — while sharing one operational layer. That's what makes it compound across 15+ offerings without drowning the sales team.",
+    ],
+    quoteSectorPhrase: "home services lead engine",
+    servicesLine: "Lead Generation",
+    metaTags: ["Lead Funnels", "CRM Integration", "Paid Media"],
+    heroImage: `${FIGMA_LIST}/home-services.jpg`,
+  },
+  wellness: {
+    id: "wellness",
+    clientName: "Aesthetics & Health",
+    clientLegal: "Multiple UK clinics & Balanze Training",
+    industry: "Aesthetics & Fitness",
+    industryShort: "Wellness",
+    year: "2025",
+    primaryBadge: "Lead Generation",
+    secondaryBadge: "Wellness / UK",
+    lede: "Aesthetics clinics in the UK and fitness centres like Balanze Training needed a consistent flow of high-value clients in a saturated wellness market — without burning budget on price shoppers or running afoul of strict medical ad policies.",
+    challengeMarket:
+      "The aesthetics and fitness industries are highly visual and trust-dependent — a market where authority and proof sell far more than discounts.",
+    challengeStruggle:
+      "Clients in the UK and globally were struggling to stand out among local competitors, often relying on word-of-mouth that wasn't enough to sustain growth — and compliance rules on Meta and Google made persuasive advertising harder than in other verticals.",
+    approachLead:
+      "We focused on Trust-First Marketing — using educational content, social proof, and compliance-safe ad formats to pre-sell the expertise of the clinics and gyms before the first call ever happened.",
+    challengeItems: [
+      'High "price-shopping" behaviour among local prospects',
+      "Strict ad policies for medical/aesthetic services on Meta/Google",
+      "Low show-up rates for initial consultations",
+      'Need for a "premium" brand perception to justify service costs',
+    ],
+    approachItems: [
+      "Compliance-First Ad Strategy",
+      "Educational Content Funnels",
+      "Automated Appointment Reminders",
+      "Hyper-Local Targeting",
+    ],
+    processHeading: { strong: "How we ", serif: "built trust" },
+    processSteps: [
+      {
+        num: "01",
+        title: "Compliance-First Ad Strategy",
+        body: "We navigated the complex ad policies for aesthetics and health services, ensuring all campaigns remained active while still being highly persuasive.",
+      },
+      {
+        num: "02",
+        title: "Educational Content Funnels",
+        body: "Instead of just discounts, we used content that explained the benefits and safety of treatments (Aesthetics) or the science of the training (Balanze Fitness), building authority before the first consultation.",
+      },
+      {
+        num: "03",
+        title: "Automated Appointment Reminders",
+        body: "We implemented automated SMS and email sequences to nurture leads from the moment they signed up until they walked through the door, drastically improving show-up rates.",
+      },
+      {
+        num: "04",
+        title: "Hyper-Local Targeting",
+        body: "By focusing on a tight radius around the physical locations in Birmingham and other UK cities, we ensured every ad dollar was spent on people who could actually visit the clinic or gym.",
+      },
+    ],
+    resultsHeading: { strong: "The ", serif: "results" },
+    resultsLede:
+      "Measurable outcomes that demonstrate the real-world impact of our wellness growth strategy.",
+    results: [
+      {
+        value: "50%",
+        label: "Average increase in consultation show-up rates",
+        tone: "dark",
+      },
+      {
+        value: "#1",
+        label:
+          'Local search ranks for "Aesthetics Birmingham" and "Aesthetics UK"',
+        tone: "tint",
+      },
+      {
+        value: "Consistent",
+        label: "Daily flow of high-value leads for Balanze Training and UK clinics",
+        tone: "tint",
+      },
+    ],
+    testimonial: {
+      quote:
+        "We built a bridge of trust between the clinics and their local communities, turning scrollers into loyal clients.",
+      name: "Mustafa H.",
+      role: "Growth & Lead Gen Specialist",
+    },
+    conclusionHeading: { strong: "A project built on ", serif: "precision" },
+    conclusionSubtitle: "and a trust-first engine",
+    conclusionParagraphs: [
+      "Whether it's a beauty clinic in the UK or a gym like Balanze, the secret to growth is combining high-end visuals with a frictionless booking experience. We provided both, ensuring long-term sustainability for our clients.",
+      "Trust-first marketing isn't slower than discount-first marketing — it compounds. Educational content pre-sells, compliant ads stay live, and SMS nurture turns a scroll into a walk-in. That's how these clinics got to consistent daily lead flow and #1 local search ranks.",
+    ],
+    quoteSectorPhrase: "wellness brand",
+    servicesLine: "Lead Generation",
+    metaTags: ["Compliance Ads", "Educational Funnels", "Appointment Nurture"],
+    heroImage: `${FIGMA_LIST}/wellness.jpg`,
+  },
 };
 
-export const CASE_STUDY_VARIANTS: Record<CaseStudyProjectId, CaseStudyVariant> =
-  Object.fromEntries(
-    (Object.keys(VARIANT_INPUTS) as CaseStudyProjectId[]).map((id) => [
-      id,
-      fill(VARIANT_INPUTS[id]),
-    ]),
-  ) as Record<CaseStudyProjectId, CaseStudyVariant>;
+const DEFAULT_ID: CaseStudyProjectId = "heyam";
 
 export function normalizeCaseStudyProjectId(
   raw: string | null | undefined,
 ): CaseStudyProjectId {
-  if (!raw) return "flowbank";
+  if (!raw) return DEFAULT_ID;
   const key = raw.toLowerCase().trim();
   if (key in CASE_STUDY_VARIANTS) return key as CaseStudyProjectId;
-  return "flowbank";
+  return DEFAULT_ID;
 }
 
 export function getCaseStudyVariant(

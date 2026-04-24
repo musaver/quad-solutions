@@ -11,12 +11,9 @@ const ASSET = "/assets/figma-case-studies";
 
 type FilterId =
   | "all"
-  | "brand-strategy"
-  | "brand-identity"
-  | "ui-ux"
-  | "marketing"
   | "ecommerce"
-  | "local-business";
+  | "local-business"
+  | "lead-gen";
 
 type ProjectCategory = Exclude<FilterId, "all">;
 
@@ -32,12 +29,9 @@ type Project = {
 
 const FILTERS: { id: FilterId; label: string }[] = [
   { id: "all", label: "All" },
-  { id: "brand-strategy", label: "Brand Strategy" },
-  { id: "brand-identity", label: "Brand Identity" },
-  { id: "ui-ux", label: "UI/UX Design" },
-  { id: "marketing", label: "Marketing" },
   { id: "ecommerce", label: "E-commerce" },
   { id: "local-business", label: "Local Business" },
+  { id: "lead-gen", label: "Lead Generation" },
 ];
 
 const CATEGORY_CARDS: {
@@ -46,42 +40,6 @@ const CATEGORY_CARDS: {
   desc: string;
   style: { background: string; borderColor: string };
 }[] = [
-  {
-    category: "brand-strategy",
-    title: "Brand Strategy",
-    desc: "Positioning & messaging",
-    style: {
-      background: "rgba(73,40,253,0.03)",
-      borderColor: "rgba(73,40,253,0.19)",
-    },
-  },
-  {
-    category: "brand-identity",
-    title: "Brand Identity",
-    desc: "Logo & visual systems",
-    style: {
-      background: "rgba(186,129,238,0.03)",
-      borderColor: "rgba(186,129,238,0.19)",
-    },
-  },
-  {
-    category: "ui-ux",
-    title: "UI/UX Design",
-    desc: "Digital experiences",
-    style: {
-      background: "rgba(112,181,255,0.03)",
-      borderColor: "rgba(112,181,255,0.19)",
-    },
-  },
-  {
-    category: "marketing",
-    title: "Marketing",
-    desc: "Campaigns & growth",
-    style: {
-      background: "rgba(121,212,94,0.03)",
-      borderColor: "rgba(121,212,94,0.19)",
-    },
-  },
   {
     category: "ecommerce",
     title: "E-commerce",
@@ -100,72 +58,18 @@ const CATEGORY_CARDS: {
       borderColor: "rgba(244,136,154,0.22)",
     },
   },
+  {
+    category: "lead-gen",
+    title: "Lead Generation",
+    desc: "Funnels, qualification & CRM",
+    style: {
+      background: "rgba(73,40,253,0.03)",
+      borderColor: "rgba(73,40,253,0.2)",
+    },
+  },
 ];
 
 const PROJECTS: Project[] = [
-  {
-    id: "academy",
-    title: "Academy.co",
-    subtitle: "Academy.co · 2024",
-    badge: "Brand Identity",
-    category: "brand-identity",
-    image: `${ASSET}/project-0.jpg`,
-    tags: ["Brand Identity", "Visual System", "Brand Guidelines"],
-  },
-  {
-    id: "genome",
-    title: "Genome Health",
-    subtitle: "Genome Health · 2023",
-    badge: "UI/UX Design",
-    category: "ui-ux",
-    image: `${ASSET}/project-1.jpg`,
-    tags: ["UI/UX Design", "User Research", "Design System"],
-  },
-  {
-    id: "hotto",
-    title: "Hotto",
-    subtitle: "Hotto Inc. · 2024",
-    badge: "Marketing",
-    category: "marketing",
-    image: `${ASSET}/project-2.jpg`,
-    tags: ["Marketing Strategy", "Campaign Design", "Brand Narrative"],
-  },
-  {
-    id: "verdant",
-    title: "Verdant Co.",
-    subtitle: "Verdant Co. · 2023",
-    badge: "Brand Identity",
-    category: "brand-identity",
-    image: `${ASSET}/project-3.jpg`,
-    tags: ["Packaging Design", "Visual Identity", "Logo Design"],
-  },
-  {
-    id: "nova",
-    title: "Nova Labs",
-    subtitle: "Nova Labs SaaS · 2024",
-    badge: "UI/UX Design",
-    category: "ui-ux",
-    image: `${ASSET}/project-4.jpg`,
-    tags: ["Product Design", "Design System", "Prototyping"],
-  },
-  {
-    id: "craft",
-    title: "Craft Studio",
-    subtitle: "Craft Studio · 2023",
-    badge: "Brand Strategy",
-    category: "brand-strategy",
-    image: `${ASSET}/project-5.jpg`,
-    tags: ["Content Strategy", "Brand Voice", "Copywriting"],
-  },
-  {
-    id: "pulse",
-    title: "Pulse Media",
-    subtitle: "Pulse Media Group · 2023",
-    badge: "Marketing",
-    category: "marketing",
-    image: `${ASSET}/project-6.jpg`,
-    tags: ["Digital Marketing", "Growth Strategy", "Content Marketing"],
-  },
   {
     id: "mexivida",
     title: "MexiVida",
@@ -192,6 +96,24 @@ const PROJECTS: Project[] = [
     category: "local-business",
     image: `${ASSET}/blends.jpg`,
     tags: ["Hyper-Local Ads", "Booking Funnel", "Review Loops"],
+  },
+  {
+    id: "home-services",
+    title: "US Home Services",
+    subtitle: "Home Services · US · 2025",
+    badge: "Lead Generation",
+    category: "lead-gen",
+    image: `${ASSET}/home-services.jpg`,
+    tags: ["Lead Funnels", "CRM Integration", "Paid Media"],
+  },
+  {
+    id: "wellness",
+    title: "Aesthetics & Health",
+    subtitle: "UK Clinics & Balanze · 2025",
+    badge: "Lead Generation",
+    category: "lead-gen",
+    image: `${ASSET}/wellness.jpg`,
+    tags: ["Compliance Ads", "Educational Funnels", "Appointment Nurture"],
   },
 ];
 
@@ -288,7 +210,7 @@ export function CaseStudiesPageBody() {
               <p className="qs-case-section-label-text">Latest Project</p>
             </div>
             <Link
-              href="/case-study-details?project=flowbank"
+              href="/case-study-details?project=heyam"
               className="qs-case-link-pill w-inline-block"
             >
               Open case study
@@ -298,12 +220,12 @@ export function CaseStudiesPageBody() {
             </Link>
           </div>
           <Link
-            href="/case-study-details?project=flowbank"
+            href="/case-study-details?project=heyam"
             className="qs-case-featured w-inline-block"
           >
             <div className="qs-case-featured-bg" aria-hidden>
               <img
-                src={`${ASSET}/featured.jpg`}
+                src={`${ASSET}/heyam.jpg`}
                 alt=""
                 width={1920}
                 height={1280}
@@ -312,18 +234,20 @@ export function CaseStudiesPageBody() {
             </div>
             <div className="qs-case-featured-top">
               <span className="qs-case-pill-glass">Featured Project</span>
-              <span className="qs-case-pill-glass is-regular">Brand Strategy</span>
+              <span className="qs-case-pill-glass is-regular">
+                E-commerce Growth
+              </span>
             </div>
             <div className="qs-case-featured-bottom">
               <div>
-                <p className="qs-case-featured-name">FlowBank</p>
+                <p className="qs-case-featured-name">Heyam.ae</p>
                 <p className="qs-case-featured-meta">
-                  FlowBank Ltd · FinTech · 2024
+                  Heyam.ae · UAE Luxury Fashion · 2025
                 </p>
                 <div className="qs-case-featured-tags">
-                  <span className="qs-case-tag-glass">Brand Positioning</span>
-                  <span className="qs-case-tag-glass">Market Strategy</span>
-                  <span className="qs-case-tag-glass">Messaging</span>
+                  <span className="qs-case-tag-glass">Shopify CRO</span>
+                  <span className="qs-case-tag-glass">Meta Ads</span>
+                  <span className="qs-case-tag-glass">Influencer &amp; UGC</span>
                 </div>
               </div>
               <span className="qs-case-featured-btn">
