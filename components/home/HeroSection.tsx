@@ -1,17 +1,61 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+
 export function HeroSection() {
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const paraRef = useRef<HTMLParagraphElement>(null);
+  const [ix3Ready, setIx3Ready] = useState(false);
+
+  useEffect(() => {
+    const heading = headingRef.current;
+    if (!heading) return;
+
+    // Webflow IX3 sets inline `style` (opacity/transform) on data-w-id elements
+    // the moment it binds. Treat that as the signal to swap skeleton → real text.
+    const checkBound = () => heading.getAttribute("style") !== null;
+    if (checkBound()) {
+      setIx3Ready(true);
+      return;
+    }
+
+    const observer = new MutationObserver(() => {
+      if (checkBound()) {
+        setIx3Ready(true);
+        observer.disconnect();
+      }
+    });
+    observer.observe(heading, { attributes: true, attributeFilter: ["style"] });
+
+    // Safety: reveal anyway after 3s in case IX3 never binds (script blocked, etc.)
+    const safety = window.setTimeout(() => {
+      setIx3Ready(true);
+      observer.disconnect();
+    }, 3000);
+
+    return () => {
+      observer.disconnect();
+      window.clearTimeout(safety);
+    };
+  }, []);
+
+  const skeletonClass = ix3Ready ? "" : "qs-hero-skeleton";
+
   return (
     <section id="home" className="section">
       <div className="w-layout-blockcontainer container-main w-container">
         <h1
+          ref={headingRef}
           data-w-id="6d188073-2487-31fa-c36a-0d1621970df1"
-          className="hero-heading-h1"
+          className={`hero-heading-h1${skeletonClass ? ` ${skeletonClass}` : ""}`}
         >
           Building bold brands with{" "}
           <span className="italic-span typing-text">thoughtful design</span>
         </h1>
         <p
+          ref={paraRef}
           data-w-id="aca08924-3373-f5fc-69ef-f496c3c5cc2e"
-          className="para-txt"
+          className={`para-txt${skeletonClass ? ` qs-para-skeleton` : ""}`}
         >
           At Awake, we help small startups tackle the world&apos;s biggest
           challenges with tailored solutions, guiding you from strategy to

@@ -48,6 +48,75 @@ body.body {
   font-family: var(--font-instrument-serif), "Instrument Serif", serif;
 }
 
+/* Hero text skeleton — shown until Webflow IX3 binds the heading/paragraph,
+   so users don't see a flash of unanimated text before the reveal animation. */
+.qs-hero-skeleton,
+.qs-para-skeleton {
+  color: transparent !important;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.qs-hero-skeleton *,
+.qs-para-skeleton * {
+  color: transparent !important;
+}
+.qs-hero-skeleton::before,
+.qs-hero-skeleton::after,
+.qs-para-skeleton::before,
+.qs-para-skeleton::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  border-radius: 8px;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.06) 0%,
+    rgba(0, 0, 0, 0.14) 50%,
+    rgba(0, 0, 0, 0.06) 100%
+  );
+  background-size: 200% 100%;
+  animation: qs-skeleton-shimmer 1.4s ease-in-out infinite;
+}
+.qs-hero-skeleton::before {
+  top: 0.18em;
+  height: 0.78em;
+  width: 95%;
+}
+.qs-hero-skeleton::after {
+  top: 1.32em;
+  height: 0.78em;
+  width: 70%;
+}
+.qs-para-skeleton::before {
+  top: 0.15em;
+  height: 0.85em;
+  width: 92%;
+  border-radius: 4px;
+}
+.qs-para-skeleton::after {
+  top: 1.55em;
+  height: 0.85em;
+  width: 60%;
+  border-radius: 4px;
+}
+@keyframes qs-skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .qs-hero-skeleton::before,
+  .qs-hero-skeleton::after,
+  .qs-para-skeleton::before,
+  .qs-para-skeleton::after {
+    animation: none;
+  }
+}
+
 /* React-controlled mobile menu — slide in from right, smooth + reliable across
    client-side navigations (doesn't depend on Webflow IX3 re-binding). */
 .awake-menu-btn {
