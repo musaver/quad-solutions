@@ -148,6 +148,27 @@ body.body {
   justify-content: center;
 }
 
+/* Home logo marquee: continuous left-scroll loop. The wrap is 200vw and holds
+   two identical 100vw rows, so translating by -100vw lands the 2nd row where
+   the 1st started — the reset is seamless. */
+.qs-marquee-animate {
+  animation: qs-marquee-scroll 40s linear infinite;
+  will-change: transform;
+}
+@keyframes qs-marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100vw);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .qs-marquee-animate {
+    animation: none;
+  }
+}
+
 @media screen and (max-width: 991px) {
   .awake-menu-btn {
     display: inline-flex;

@@ -37,6 +37,12 @@ const CheckIcon = () => (
   </svg>
 );
 
+const ArrowUpRightIcon = () => (
+  <svg viewBox="0 0 10 11" fill="none" stroke="currentColor" strokeWidth="1.42857" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M0.832 1.3335H9.1654M9.1654 1.3335V9.6668M9.1654 1.3335L0.832 9.6668" />
+  </svg>
+);
+
 const CHANNELS: { label: string; value: string; href: string; hint: string; icon: ReactNode }[] = [
   {
     label: "Email us",
@@ -157,7 +163,7 @@ export function ContactPageBody() {
                   <p className="qs-contact-channel-hint">{c.hint}</p>
                 </div>
                 <span className="qs-contact-channel-arrow" aria-hidden="true">
-                  <img src={ARROW_DARK} alt="" />
+                  <ArrowUpRightIcon />
                 </span>
               </a>
             ))}

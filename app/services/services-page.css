@@ -214,6 +214,29 @@
   gap: 8px;
 }
 
+.qs-feature-card-group-link {
+  text-decoration: none;
+  color: inherit;
+  border-radius: 12px;
+  margin: -6px -8px;
+  padding: 6px 8px;
+  transition: background-color 150ms ease, transform 150ms ease;
+  cursor: pointer;
+}
+
+.qs-feature-card-group-link:hover {
+  background-color: var(--card-bg, rgba(27, 29, 30, 0.04));
+}
+
+.qs-feature-card-group-link:hover .qs-feature-card-group-title {
+  color: var(--card-accent, #5071b9);
+}
+
+.qs-feature-card-group-link:focus-visible {
+  outline: 2px solid var(--card-accent, #5071b9);
+  outline-offset: 2px;
+}
+
 .qs-feature-card-group-head {
   display: flex;
   align-items: center;
@@ -226,6 +249,7 @@
   font-size: 15px;
   font-weight: 500;
   color: #15151a;
+  transition: color 120ms ease;
 }
 
 .qs-feature-card-group-title-link {

@@ -234,33 +234,44 @@ export function ServicesCardsSection() {
               </div>
               <div className="qs-feature-card-body">
                 <div className="qs-feature-card-groups">
-                  {card.groups.map((g) => (
-                    <div key={g.title} className="qs-feature-card-group">
+                  {card.groups.map((g) => {
+                    const head = (
                       <div className="qs-feature-card-group-head">
-                        {g.href ? (
-                          <Link
-                            href={g.href}
-                            className="qs-feature-card-group-title qs-feature-card-group-title-link"
-                          >
-                            {g.title}
-                          </Link>
-                        ) : (
-                          <span className="qs-feature-card-group-title">
-                            {g.title}
-                          </span>
-                        )}
+                        <span className="qs-feature-card-group-title">
+                          {g.title}
+                        </span>
                         {g.sub ? (
                           <span className="qs-feature-card-group-sub">
                             {g.sub}
                           </span>
                         ) : null}
                       </div>
+                    );
+                    const chipRow = (
                       <FeatureCardChipRow
                         chips={g.chips}
                         topCount={g.topCount}
                       />
-                    </div>
-                  ))}
+                    );
+                    if (g.href) {
+                      return (
+                        <Link
+                          key={g.title}
+                          href={g.href}
+                          className="qs-feature-card-group qs-feature-card-group-link"
+                        >
+                          {head}
+                          {chipRow}
+                        </Link>
+                      );
+                    }
+                    return (
+                      <div key={g.title} className="qs-feature-card-group">
+                        {head}
+                        {chipRow}
+                      </div>
+                    );
+                  })}
                 </div>
                 <Link href={card.href} className="qs-feature-card-link">
                   <span>Learn more</span>

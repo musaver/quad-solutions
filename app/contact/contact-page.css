@@ -218,25 +218,23 @@
   height: 36px;
   border-radius: 999px;
   background: rgba(27, 29, 30, 0.04);
+  color: #1b1d1e;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
 .qs-contact-channel:hover .qs-contact-channel-arrow {
   background: #4928fd;
+  color: #fff;
   transform: translate(2px, -2px);
 }
 
-.qs-contact-channel-arrow img {
-  width: 14px;
-  height: 14px;
-  transition: filter 0.2s ease;
-}
-
-.qs-contact-channel:hover .qs-contact-channel-arrow img {
-  filter: brightness(0) invert(1);
+.qs-contact-channel-arrow svg {
+  width: 13px;
+  height: 13px;
+  display: block;
 }
 
 @media (max-width: 900px) {
