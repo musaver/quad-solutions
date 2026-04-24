@@ -15,7 +15,8 @@ type FilterId =
   | "brand-identity"
   | "ui-ux"
   | "marketing"
-  | "ecommerce";
+  | "ecommerce"
+  | "local-business";
 
 type ProjectCategory = Exclude<FilterId, "all">;
 
@@ -36,6 +37,7 @@ const FILTERS: { id: FilterId; label: string }[] = [
   { id: "ui-ux", label: "UI/UX Design" },
   { id: "marketing", label: "Marketing" },
   { id: "ecommerce", label: "E-commerce" },
+  { id: "local-business", label: "Local Business" },
 ];
 
 const CATEGORY_CARDS: {
@@ -87,6 +89,15 @@ const CATEGORY_CARDS: {
     style: {
       background: "rgba(255,175,104,0.04)",
       borderColor: "rgba(255,175,104,0.22)",
+    },
+  },
+  {
+    category: "local-business",
+    title: "Local Business",
+    desc: "Hyper-local growth & bookings",
+    style: {
+      background: "rgba(244,136,154,0.04)",
+      borderColor: "rgba(244,136,154,0.22)",
     },
   },
 ];
@@ -163,6 +174,24 @@ const PROJECTS: Project[] = [
     category: "ecommerce",
     image: `${ASSET}/mexivida.jpg`,
     tags: ["Meta Ads", "Amazon SEO", "Cultural Content"],
+  },
+  {
+    id: "heyam",
+    title: "Heyam.ae",
+    subtitle: "Heyam.ae · UAE Luxury · 2025",
+    badge: "E-commerce Growth",
+    category: "ecommerce",
+    image: `${ASSET}/heyam.jpg`,
+    tags: ["Shopify CRO", "Meta Ads", "Influencer & UGC"],
+  },
+  {
+    id: "blends",
+    title: "Blends Barbershop",
+    subtitle: "Blends Barbershop · AU · 2025",
+    badge: "Local Growth",
+    category: "local-business",
+    image: `${ASSET}/blends.jpg`,
+    tags: ["Hyper-Local Ads", "Booking Funnel", "Review Loops"],
   },
 ];
 
