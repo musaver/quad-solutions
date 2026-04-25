@@ -1,4 +1,5 @@
 export { HeroSection } from "./HeroSection";
+export { HeroVideoScroll } from "./HeroVideoScroll";
 export { LogoMarqueeSection } from "./LogoMarqueeSection";
 export { AboutSection } from "./AboutSection";
 export { ServicesSection } from "./ServicesSection";

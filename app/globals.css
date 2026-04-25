@@ -201,3 +201,283 @@ body.body {
     transform: translateX(0) !important;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Hero CTA + scroll-grow video
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* Move button + reviews to the left of the hero (was centered). */
+.qs-hero-cta-row {
+  width: 100%;
+  align-self: stretch;
+  justify-content: flex-start;
+}
+
+/* Anchor that defines the initial (thumbnail) position of the floating video.
+   Hidden on mobile — the floater locks straight to the final anchor. */
+.qs-hero-video-thumb-anchor {
+  display: none;
+}
+
+@media screen and (min-width: 992px) {
+  .qs-hero-video-thumb-anchor {
+    display: block;
+    width: 220px;
+    height: 130px;
+    margin-left: auto;
+    border-radius: 14px;
+    /* Subtle stand-in until JS measures and the floater fades in. */
+    background: rgba(0, 0, 0, 0.04);
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .qs-hero-video-thumb-anchor {
+    width: 260px;
+    height: 150px;
+  }
+}
+
+/* Section that reserves the vertical space for the video's final, full-width
+   resting position (between hero and the logo marquee). */
+.qs-hero-video-section {
+  width: 100%;
+  padding: 40px 20px 60px;
+  display: flex;
+  justify-content: center;
+}
+
+.qs-hero-video-final-anchor {
+  width: 100%;
+  max-width: 1232px;
+  aspect-ratio: 16 / 9;
+}
+
+/* The single fixed-positioned video element. JS interpolates its top/left/
+   width/height between the thumbnail anchor and the final anchor based on
+   scroll. Pointer-events stay on so the user can interact with the video. */
+.qs-hero-video-floater {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  z-index: 5;
+  overflow: hidden;
+  border-radius: 24px;
+  background: #000;
+  box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  will-change: top, left, width, height;
+}
+
+.qs-hero-video-floater.qs-ready {
+  opacity: 1;
+}
+
+.qs-hero-video-el {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Unmute button overlay — opens the modal with sound.
+   - Idle: subtle "breathing" ring to invite the click
+   - Hover/focus: scales up, color shifts to accent, two-pulse sonar rings */
+.qs-hero-video-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 64px;
+  height: 64px;
+  margin: -32px 0 0 -32px;
+  border: 0;
+  padding: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.94);
+  color: #1b1d1e;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transition:
+    transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.22s ease;
+}
+
+.qs-hero-video-play::before,
+.qs-hero-video-play::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(1);
+}
+
+/* Idle: a single soft pulse to draw the eye */
+.qs-hero-video-play::before {
+  animation: qs-ring-idle 2.4s ease-out infinite;
+}
+
+@keyframes qs-ring-idle {
+  0% {
+    transform: scale(1);
+    opacity: 0.45;
+  }
+  80%,
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+/* Hover: faster sonar with two staggered rings + brand accent */
+.qs-hero-video-play:hover,
+.qs-hero-video-play:focus-visible {
+  transform: scale(1.12);
+  background: #fff;
+  color: #6b46ff;
+  box-shadow:
+    0 14px 40px rgba(107, 70, 255, 0.45),
+    0 0 0 6px rgba(107, 70, 255, 0.12);
+  outline: none;
+}
+
+.qs-hero-video-play:hover::before,
+.qs-hero-video-play:focus-visible::before {
+  animation: qs-ring-pulse 1.4s ease-out infinite;
+}
+
+.qs-hero-video-play:hover::after,
+.qs-hero-video-play:focus-visible::after {
+  animation: qs-ring-pulse 1.4s ease-out 0.7s infinite;
+}
+
+@keyframes qs-ring-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
+.qs-hero-video-play:active {
+  transform: scale(1.04);
+  transition-duration: 0.08s;
+}
+
+.qs-hero-video-play svg {
+  width: 26px;
+  height: 26px;
+  fill: currentColor;
+  position: relative;
+  z-index: 1;
+  margin-left: 3px;
+  transition: transform 0.18s ease;
+}
+
+.qs-hero-video-play:hover svg,
+.qs-hero-video-play:focus-visible svg {
+  transform: scale(1.06);
+}
+
+@media screen and (max-width: 991px) {
+  .qs-hero-video-play {
+    width: 56px;
+    height: 56px;
+    margin: -28px 0 0 -28px;
+  }
+  .qs-hero-video-play svg {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qs-hero-video-play::before,
+  .qs-hero-video-play::after,
+  .qs-hero-video-play:hover::before,
+  .qs-hero-video-play:hover::after {
+    animation: none;
+  }
+}
+
+/* Modal: fullscreen darkened overlay with the video centered, unmuted, with
+   native controls. Closes on backdrop click, the close button, or Escape. */
+.qs-video-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: qs-video-modal-fade 0.2s ease-out;
+}
+
+@keyframes qs-video-modal-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.qs-video-modal-inner {
+  width: 100%;
+  max-width: 1100px;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+}
+
+.qs-video-modal-video {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.qs-video-modal-close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  padding: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s ease;
+}
+
+.qs-video-modal-close:hover,
+.qs-video-modal-close:focus-visible {
+  background: rgba(255, 255, 255, 0.24);
+  outline: none;
+}
+
+.qs-video-modal-close svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+}

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import { FeatureCardChipRow } from "@/components/FeatureCardChipRow";
 import { ServiceArrowIcon } from "@/components/ServiceArrowIcon";
 
@@ -184,6 +185,28 @@ const FEATURE_CARDS: FeatureCard[] = [
 ];
 
 export function ServicesCardsSection() {
+  const rowRef = useRef<HTMLDivElement>(null);
+  const [revealed, setRevealed] = useState(false);
+
+  useEffect(() => {
+    const el = rowRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            setRevealed(true);
+            io.disconnect();
+            break;
+          }
+        }
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -10% 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
     <section className="section qs-feature-card-section qs-section-pad">
       <div className="qs-inner">
@@ -203,8 +226,11 @@ export function ServicesCardsSection() {
           </div>
         </div>
 
-        <div className="qs-feature-card-row">
-          {FEATURE_CARDS.map((card) => (
+        <div
+          ref={rowRef}
+          className={`qs-feature-card-row${revealed ? " is-revealed" : ""}`}
+        >
+          {FEATURE_CARDS.map((card, i) => (
             <div
               key={card.num}
               className="qs-feature-card"
@@ -213,10 +239,12 @@ export function ServicesCardsSection() {
                   "--card-bg": card.bg,
                   "--card-tile": card.tile,
                   "--card-accent": card.accent,
+                  "--reveal-i": i,
+                  "--reveal-total": card.groups.length,
                 } as React.CSSProperties
               }
             >
-              <div className="qs-feature-card-top">
+              <Link href={card.href} className="qs-feature-card-top">
                 <div className="qs-feature-card-head">
                   <h3 className="heading-25">{card.title}</h3>
                 </div>
@@ -231,10 +259,13 @@ export function ServicesCardsSection() {
                     />
                   </div>
                 </div>
-              </div>
+              </Link>
               <div className="qs-feature-card-body">
                 <div className="qs-feature-card-groups">
-                  {card.groups.map((g) => {
+                  {card.groups.map((g, gi) => {
+                    const groupStyle = {
+                      "--group-i": gi,
+                    } as React.CSSProperties;
                     const head = (
                       <div className="qs-feature-card-group-head">
                         <span className="qs-feature-card-group-title">
@@ -259,6 +290,7 @@ export function ServicesCardsSection() {
                           key={g.title}
                           href={g.href}
                           className="qs-feature-card-group qs-feature-card-group-link"
+                          style={groupStyle}
                         >
                           {head}
                           {chipRow}
@@ -266,7 +298,11 @@ export function ServicesCardsSection() {
                       );
                     }
                     return (
-                      <div key={g.title} className="qs-feature-card-group">
+                      <div
+                        key={g.title}
+                        className="qs-feature-card-group"
+                        style={groupStyle}
+                      >
                         {head}
                         {chipRow}
                       </div>
