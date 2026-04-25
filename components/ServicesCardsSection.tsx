@@ -189,8 +189,30 @@ export function ServicesCardsSection() {
   const [revealed, setRevealed] = useState(false);
 
   useEffect(() => {
-    const el = rowRef.current;
-    if (!el) return;
+    const row = rowRef.current;
+    if (!row) return;
+
+    // Mobile/tablet: animate each card as it scrolls into view.
+    // Desktop: animate the whole row in one staggered pass.
+    const isMobile = window.matchMedia("(max-width: 900px)").matches;
+
+    if (isMobile) {
+      const cards = row.querySelectorAll<HTMLElement>(".qs-feature-card");
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add("is-in-view");
+              io.unobserve(e.target);
+            }
+          }
+        },
+        { threshold: 0.15, rootMargin: "0px 0px -10% 0px" },
+      );
+      cards.forEach((c) => io.observe(c));
+      return () => io.disconnect();
+    }
+
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
@@ -203,7 +225,7 @@ export function ServicesCardsSection() {
       },
       { threshold: 0.15, rootMargin: "0px 0px -10% 0px" },
     );
-    io.observe(el);
+    io.observe(row);
     return () => io.disconnect();
   }, []);
 
