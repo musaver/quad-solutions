@@ -30,7 +30,7 @@ export function HomeBody() {
       <WorkSection />
       <TeamSection />
       <TestimonialsSection />
-      <PricingSection />
+      {/*<PricingSection />*/}
       <FAQSection />
       <CTASection />
       <Footer />
