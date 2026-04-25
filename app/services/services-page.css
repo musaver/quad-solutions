@@ -132,6 +132,14 @@
   flex-direction: row;
   align-items: center;
   gap: 12px;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.qs-feature-card-top:focus-visible {
+  outline: 2px solid var(--card-accent, #5071b9);
+  outline-offset: -2px;
 }
 
 .qs-feature-card-head {
@@ -391,6 +399,140 @@
   width: 12px;
   height: 12px;
   display: block;
+}
+
+/* ---------------------------------------------------------------
+   Reveal + hover animations (mobile-first, motion-safe)
+   --------------------------------------------------------------- */
+
+/* Mobile defaults: lighter motion, shorter distance, tighter stagger.
+   Cards start hidden; the JS adds .is-revealed on the row when the
+   section enters view, which kicks off a per-card stagger driven by
+   --reveal-i, then a per-group stagger inside each card via --group-i. */
+.qs-feature-card {
+  /* Mobile baseline; desktop overrides --rise-y below. */
+  --rise-y: 14px;
+  --rise-scale: 0.985;
+  opacity: 0;
+  transform: translate3d(0, var(--rise-y), 0) scale(var(--rise-scale));
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease;
+  will-change: transform, opacity;
+}
+
+.qs-feature-card-row.is-revealed .qs-feature-card {
+  animation: qs-card-rise 620ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  animation-delay: calc(var(--reveal-i, 0) * 80ms);
+}
+
+@keyframes qs-card-rise {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, var(--rise-y, 14px), 0)
+      scale(var(--rise-scale, 0.985));
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+/* Sub-service groups fade up after their parent card starts moving. */
+.qs-feature-card-group {
+  opacity: 0;
+  transform: translate3d(0, 8px, 0);
+}
+
+.qs-feature-card-row.is-revealed .qs-feature-card-group {
+  animation: qs-group-fade 460ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  animation-delay: calc(
+    var(--reveal-i, 0) * 80ms + var(--group-i, 0) * 70ms + 180ms
+  );
+}
+
+@keyframes qs-group-fade {
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Desktop: longer travel + a bit more breathing room between cards. */
+@media (min-width: 900px) {
+  .qs-feature-card {
+    --rise-y: 28px;
+    --rise-scale: 0.975;
+  }
+  .qs-feature-card-row.is-revealed .qs-feature-card {
+    animation-delay: calc(var(--reveal-i, 0) * 110ms);
+  }
+  .qs-feature-card-row.is-revealed .qs-feature-card-group {
+    animation-delay: calc(
+      var(--reveal-i, 0) * 110ms + var(--group-i, 0) * 80ms + 220ms
+    );
+  }
+}
+
+/* Hover interactions — desktop / pointer devices only. Touch devices skip
+   the lift so a tap doesn't leave a stuck hover state on the card. */
+@media (hover: hover) and (pointer: fine) {
+  .qs-feature-card {
+    transition:
+      transform 320ms cubic-bezier(0.22, 0.61, 0.36, 1),
+      box-shadow 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  .qs-feature-card-row.is-revealed .qs-feature-card:hover {
+    transform: translate3d(0, -6px, 0);
+    box-shadow: 0 22px 50px rgba(27, 29, 30, 0.12);
+  }
+  .qs-feature-card-icon {
+    transition: transform 360ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  .qs-feature-card:hover .qs-feature-card-icon {
+    transform: rotate(-6deg) scale(1.06);
+  }
+  .qs-feature-card-arrow {
+    transition:
+      transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      background-color 200ms ease;
+  }
+  .qs-feature-card:hover .qs-feature-card-arrow {
+    transform: translateX(3px) scale(1.08);
+    background: var(--card-accent, #1b1d1e);
+  }
+  .qs-feature-card-chip {
+    transition:
+      transform 220ms ease,
+      background-color 220ms ease;
+  }
+  .qs-feature-card-group:hover .qs-feature-card-chip,
+  .qs-feature-card-group-link:hover .qs-feature-card-chip {
+    background: color-mix(
+      in srgb,
+      var(--card-tile, #e2e9f9) 70%,
+      transparent
+    );
+  }
+}
+
+/* Honor reduced-motion: keep things visible, drop the choreography. */
+@media (prefers-reduced-motion: reduce) {
+  .qs-feature-card,
+  .qs-feature-card-group {
+    opacity: 1;
+    transform: none;
+    animation: none !important;
+  }
+  .qs-feature-card,
+  .qs-feature-card-icon,
+  .qs-feature-card-arrow,
+  .qs-feature-card-chip {
+    transition: none !important;
+  }
 }
 
 /* Services header row */

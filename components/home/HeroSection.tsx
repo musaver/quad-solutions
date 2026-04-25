@@ -153,7 +153,7 @@ export function HeroSection() {
   const skeletonClass = ix3Ready ? "" : "qs-hero-skeleton";
 
   return (
-    <section id="home" className="section">
+    <section id="home" className="section qs-hero-section">
       <div className="w-layout-blockcontainer container-main w-container">
         <h1
           ref={headingRef}
@@ -168,10 +168,10 @@ export function HeroSection() {
           data-w-id="aca08924-3373-f5fc-69ef-f496c3c5cc2e"
           className={`para-txt${skeletonClass ? ` qs-para-skeleton` : ""}`}
         >
-          Stop managing five different agencies. We provide specialized teams for marketing, 
+          Stop managing five different agencies. We provide specialized teams for marketing,
           content, software, and Al—all working together to scale your business.
         </p>
-        <div className="w-layout-grid grid-21">
+        <div className="w-layout-grid grid-21 qs-hero-cta-row">
           <div className="getstarted-btn">
             <a
               data-w-id="eecee728-f47b-6730-11f5-5b63546b3fc7"
@@ -254,6 +254,7 @@ export function HeroSection() {
               <p className="trusted-text">Trusted by 200+ clients</p>
             </div>
           </div>
+          <div className="qs-hero-video-thumb-anchor" aria-hidden="true" />
         </div>
       </div>
     </section>
