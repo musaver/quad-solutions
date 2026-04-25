@@ -1,24 +1,67 @@
+import Link from "next/link";
+
 export function Footer() {
   return (
     <footer className="footer">
       <div className="w-layout-blockcontainer container-14 w-container">
         <div className="w-layout-hflex grid-19">
           <div className="footer-column-1">
-            <div>
+            <Link
+              href="/"
+              className="footer-brand"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 0,
+                textDecoration: "none",
+                marginBottom: "16px",
+              }}
+            >
               <img
-                src="/assets/wf/67a5fb8bc33c7f25ab4e52d9/67a5fbb8c1bbd60c8bd785ca_Frame%202.png"
                 loading="lazy"
-                alt=""
+                src="/assets/logo/pastel_tiles_v3.svg"
+                alt="QUAD Solutions"
+                style={{
+                  height: "44px",
+                  width: "auto",
+                  display: "block",
+                  opacity: "0.8",
+                  marginRight: "-3px",
+                }}
               />
-            </div>
+              <span
+                style={{
+                  display: "inline-flex",
+                  flexDirection: "column",
+                  lineHeight: 1,
+                  color: "var(--black-100)",
+                }}
+              >
+                <span style={{ fontSize: 23, lineHeight: 1, fontWeight: 500 }}>
+                  QUAD
+                </span>
+                <span
+                  className="italic-span"
+                  style={{
+                    fontSize: 18.5,
+                    lineHeight: 1,
+                    letterSpacing: 0,
+                    fontWeight: 400,
+                  }}
+                >
+                  Solutions
+                </span>
+              </span>
+            </Link>
             <div className="text-block-32">
-              Empowering businesses with innovative solutions. Let&apos;s create
-              something amazing together.
+              Empowering businesses with innovative AI and digital solutions.
+              Let&apos;s create something amazing together.
             </div>
             <div className="div-block-42">
               <a
-                href="https://x.com/wrappixel"
+                href="https://x.com/quadsolutions"
                 className="footer-social-icon w-inline-block"
+                aria-label="Twitter / X"
               >
                 <img
                   src="/assets/wf/67a5fb8bc33c7f25ab4e52d9/67b02255b31413b811c048ab_si-twitter.svg"
@@ -27,8 +70,9 @@ export function Footer() {
                 />
               </a>
               <a
-                href="https://www.linkedin.com/company/wrappixel"
+                href="https://www.linkedin.com/company/quadsolutions"
                 className="footer-social-icon w-inline-block"
+                aria-label="LinkedIn"
               >
                 <img
                   src="/assets/wf/67a5fb8bc33c7f25ab4e52d9/67b02256c742c6b7cb28f718_si-linkedin.svg"
@@ -37,8 +81,9 @@ export function Footer() {
                 />
               </a>
               <a
-                href="https://www.instagram.com/wrappixel/#"
+                href="https://www.instagram.com/quadsolutions"
                 className="footer-social-icon w-inline-block"
+                aria-label="Instagram"
               >
                 <img
                   src="/assets/wf/67a5fb8bc33c7f25ab4e52d9/67b02256f67a8cad36930a39_si-insta.svg"
@@ -47,8 +92,9 @@ export function Footer() {
                 />
               </a>
               <a
-                href="https://dribbble.com/wrappixel"
+                href="https://dribbble.com/quadsolutions"
                 className="footer-social-icon w-inline-block"
+                aria-label="Dribbble"
               >
                 <img
                   src="/assets/wf/67a5fb8bc33c7f25ab4e52d9/67b02255fd7da562e4e9dd7a_si-dribbble.svg"
@@ -63,63 +109,72 @@ export function Footer() {
               <div className="title">Sitemap</div>
               <ul role="list" className="list-5 w-list-unstyled">
                 <li className="list-item-9">
-                  <a
-                    href="/#about-us"
+                  <Link
+                    href="/"
                     className="navigation-link for-footer w-inline-block"
                   >
-                    <div className="nav-text first">About us</div>
-                    <div className="nav-text second">About us</div>
-                  </a>
+                    <div className="nav-text first">Home</div>
+                    <div className="nav-text second">Home</div>
+                  </Link>
                 </li>
                 <li className="list-item-9">
-                  <a
-                    href="/#work"
-                    className="navigation-link for-footer w-inline-block"
-                  >
-                    <div className="nav-text first">Work</div>
-                    <div className="nav-text second">Work</div>
-                  </a>
-                </li>
-                <li className="list-item-9">
-                  <a
+                  <Link
                     href="/services"
                     className="navigation-link for-footer w-inline-block"
                   >
                     <div className="nav-text first">Services</div>
                     <div className="nav-text second">Services</div>
-                  </a>
+                  </Link>
                 </li>
                 <li className="list-item-9">
-                  <a
-                    href="/#pricing"
+                  <Link
+                    href="/case-studies"
                     className="navigation-link for-footer w-inline-block"
                   >
-                    <div className="nav-text first">Pricing</div>
-                    <div className="nav-text second">Pricing</div>
-                  </a>
+                    <div className="nav-text first">Case Studies</div>
+                    <div className="nav-text second">Case Studies</div>
+                  </Link>
+                </li>
+                <li className="list-item-9">
+                  <Link
+                    href="/about-us"
+                    className="navigation-link for-footer w-inline-block"
+                  >
+                    <div className="nav-text first">About Us</div>
+                    <div className="nav-text second">About Us</div>
+                  </Link>
                 </li>
               </ul>
             </div>
             <div className="footer-column-3">
-              <div className="title">Other Pages</div>
+              <div className="title">Company</div>
               <ul role="list" className="list-5 w-list-unstyled">
                 <li className="list-item-9">
-                  <a
+                  <Link
                     href="/contact"
                     className="navigation-link for-footer w-inline-block"
                   >
                     <div className="nav-text first">Contact Us</div>
                     <div className="nav-text second">Contact Us</div>
-                  </a>
+                  </Link>
                 </li>
                 <li className="list-item-9">
-                  <a
-                    href="/404"
+                  <Link
+                    href="/privacy-policy"
                     className="navigation-link for-footer w-inline-block"
                   >
-                    <div className="nav-text first">Error 404</div>
-                    <div className="nav-text second">Error 404</div>
-                  </a>
+                    <div className="nav-text first">Privacy Policy</div>
+                    <div className="nav-text second">Privacy Policy</div>
+                  </Link>
+                </li>
+                <li className="list-item-9">
+                  <Link
+                    href="/terms"
+                    className="navigation-link for-footer w-inline-block"
+                  >
+                    <div className="nav-text first">Terms of Service</div>
+                    <div className="nav-text second">Terms of Service</div>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -157,33 +212,30 @@ export function Footer() {
           <div className="w-layout-blockcontainer container-15 w-container">
             <div className="div-block-209">
               <div className="text-block-33">
-                ©2025 Awake. All Rights Reserved. Powered by{" "}
-                <a href="https://webflow.com/" className="webflow-link">
-                  Webflow
-                </a>
+                © {new Date().getFullYear()} QUAD Solutions. All Rights Reserved.
               </div>
               <div className="div-block-210">
-                <a
-                  href="/style-guide"
+                <Link
+                  href="/privacy-policy"
                   className="navigation-link for-footer w-inline-block"
                 >
-                  <div className="nav-text first">Style Guide</div>
-                  <div className="nav-text second">Style Guide</div>
-                </a>
-                <a
-                  href="/licenses"
+                  <div className="nav-text first">Privacy Policy</div>
+                  <div className="nav-text second">Privacy Policy</div>
+                </Link>
+                <Link
+                  href="/terms"
                   className="navigation-link for-footer w-inline-block"
                 >
-                  <div className="nav-text first">Licenses</div>
-                  <div className="nav-text second">Licenses</div>
-                </a>
-                <a
-                  href="/changelog"
+                  <div className="nav-text first">Terms</div>
+                  <div className="nav-text second">Terms</div>
+                </Link>
+                <Link
+                  href="/contact"
                   className="navigation-link for-footer w-inline-block"
                 >
-                  <div className="nav-text first">Changelog</div>
-                  <div className="nav-text second">Changelog</div>
-                </a>
+                  <div className="nav-text first">Contact</div>
+                  <div className="nav-text second">Contact</div>
+                </Link>
               </div>
             </div>
           </div>
