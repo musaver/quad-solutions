@@ -1,34 +1,36 @@
+import Link from "next/link";
+
 export function WorkSection() {
   const projects = [
     {
-      name: "FlowBank",
-      image:
-        "/assets/wf/67a5fb8bc33c7f25ab4e52d9/67adb22b6801ba1be2c8816a_flowbank.jpg",
-      tags: ["UX Research", "Interface Design"],
+      id: "heyam",
+      name: "Heyam.ae",
+      image: "/assets/figma-case-studies/heyam.jpg",
+      tags: ["Shopify CRO", "Meta Ads", "Influencer & UGC"],
       cardClass: "card-1",
       dataWId: "4c59f5ea-8902-3ed7-f744-beb222178250",
     },
     {
-      name: "Academy.co",
-      image:
-        "/assets/wf/67a5fb8bc33c7f25ab4e52d9/67adb22bbb6dbd85f5b9fc07_academy.jpg",
-      tags: ["Product Design", "Interaction Design"],
+      id: "mexivida",
+      name: "MexiVida",
+      image: "/assets/figma-case-studies/mexivida.jpg",
+      tags: ["Meta Ads", "Amazon SEO", "Cultural Content"],
       cardClass: "card-2",
       dataWId: "04bc2df1-16f2-23e8-1ce0-9f38f46ad20c",
     },
     {
-      name: "Genome",
-      image:
-        "/assets/wf/67a5fb8bc33c7f25ab4e52d9/67adb22b8be398062d992b05_genome.jpg",
-      tags: ["Brand identity design", "UX Research"],
+      id: "blends",
+      name: "Blends Barbershop",
+      image: "/assets/figma-case-studies/blends.jpg",
+      tags: ["Hyper-Local Ads", "Booking Funnel", "Review Loops"],
       cardClass: "card-3",
       dataWId: "5daca492-060a-69d8-58c2-f7617508d084",
     },
     {
-      name: "Hotto",
-      image:
-        "/assets/wf/67a5fb8bc33c7f25ab4e52d9/67adb22cde7bb305cec8b740_hotto.jpg",
-      tags: ["Visual Story telling", "Web & Mobile Design"],
+      id: "home-services",
+      name: "US Home Services",
+      image: "/assets/figma-case-studies/home-services.jpg",
+      tags: ["Lead Funnels", "CRM Integration", "Paid Media"],
       cardClass: "card-4",
       dataWId: "f3b16a16-0c4c-a740-a426-e15765d9f019",
     },
@@ -44,8 +46,8 @@ export function WorkSection() {
               style={{ opacity: 0 }}
               className="our-work-heading"
             >
-              How we transformed a small business&apos;s{" "}
-              <span className="span-italic-txt">online presence</span>
+              How we drive real growth for{" "}
+              <span className="span-italic-txt">ambitious brands</span>
             </h2>
           </div>
           <div className="div-block-214">
@@ -65,14 +67,11 @@ export function WorkSection() {
                       <img
                         src={project.image}
                         loading="lazy"
-                        alt=""
-                        sizes="(max-width: 624px) 100vw, 624px"
-                        srcSet={`${project.image.replace(".jpg", "-p-500.jpg")} 500w, ${project.image} 624w`}
+                        alt={project.name}
                         className="avatar"
                       />
-                      <a
-                        href="https://www.wrappixel.com/"
-                        target="_blank"
+                      <Link
+                        href={`/case-study-details?project=${project.id}`}
                         className="div-block-197 w-inline-block"
                       >
                         <div className="div-block-198">
@@ -83,19 +82,19 @@ export function WorkSection() {
                             className="image-30"
                           />
                         </div>
-                      </a>
+                      </Link>
                     </div>
                     <p className="heading-7">{project.name}</p>
                   </div>
                   <div className="chips">
                     {project.tags.map((tag, tagIndex) => (
-                      <a
+                      <Link
                         key={tagIndex}
-                        href="#"
+                        href={`/case-study-details?project=${project.id}`}
                         className="link-block-2 w-inline-block"
                       >
                         <div>{tag}</div>
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -117,14 +116,11 @@ export function WorkSection() {
                       <img
                         src={project.image}
                         loading="lazy"
-                        alt=""
-                        sizes="(max-width: 624px) 100vw, 624px"
-                        srcSet={`${project.image.replace(".jpg", "-p-500.jpg")} 500w, ${project.image} 624w`}
+                        alt={project.name}
                         className="avatar"
                       />
-                      <a
-                        href="https://www.wrappixel.com/"
-                        target="_blank"
+                      <Link
+                        href={`/case-study-details?project=${project.id}`}
                         className="div-block-197 w-inline-block"
                       >
                         <div className="div-block-198">
@@ -135,19 +131,19 @@ export function WorkSection() {
                             className="image-30"
                           />
                         </div>
-                      </a>
+                      </Link>
                     </div>
                     <p className="heading-7">{project.name}</p>
                   </div>
                   <div className="chips">
                     {project.tags.map((tag, tagIndex) => (
-                      <a
+                      <Link
                         key={tagIndex}
-                        href="#"
+                        href={`/case-study-details?project=${project.id}`}
                         className="link-block-2 w-inline-block"
                       >
                         <div>{tag}</div>
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>

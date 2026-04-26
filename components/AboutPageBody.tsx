@@ -4,6 +4,7 @@ import Link from "next/link";
 import { TemplateNavbar } from "@/components/TemplateNavbar";
 import { TemplateFooter } from "@/components/TemplateFooter";
 import { useHeroAnimation } from "@/hooks/useHeroAnimation";
+import { TEAM_MEMBERS } from "@/lib/team";
 
 const ARROW_DARK = "/assets/wf/67a5fb8bc33c7f25ab4e52d9/67a9e2599fa438b2b5ca91b6_arrow-top-right.png";
 const ARROW_LIGHT = "/assets/figma-case-study-details/icon-arrow-on-dark.svg";
@@ -21,32 +22,31 @@ const STATS = [
 const VALUES = [
   {
     num: "01",
-    title: "Strategy First",
-    text: "Every visual decision we make is rooted in strategic thinking. We don't start designing until we understand your business, your audience, and your competitive landscape.",
+    title: "Specialists, Not Generalists",
+    text: "Every engagement is staffed by senior experts in the exact discipline you need — Growth, Creative, Digital, or AI. No junior hand-offs, no generalists pretending to be specialists.",
   },
   {
     num: "02",
-    title: "Craft & Rigour",
-    text: "We hold ourselves to an unusually high standard of execution. Details matter — in the kerning of a headline, the rhythm of a layout, and the precision of a copyline.",
+    title: "One Unified Roof",
+    text: "You get the depth of multiple specialist agencies and the simplicity of one partner. A single project manager keeps every division aligned, eliminating silos and miscommunication.",
   },
   {
     num: "03",
-    title: "Honest Partnership",
-    text: "We tell clients what they need to hear, not what they want to hear. Honest feedback builds better work and stronger long-term relationships.",
+    title: "ROI-Focused, Always",
+    text: "We define clear KPIs before any project begins — CPA for ad campaigns, conversion rates for stores, hours saved through automation. Outcomes, not vanity metrics.",
   },
   {
     num: "04",
-    title: "Lasting Impact",
-    text: "We design for the long term. Our goal is to build brands that age well — not trendy aesthetics that need refreshing every two years.",
+    title: "Built for Scale",
+    text: "Our model is engineered for ambitious businesses. We deploy the exact specialists you need, when you need them, so growth never bottlenecks on agency capacity.",
   },
 ];
 
-const TEAM = [
-  { name: "Musawir", role: "CEO & Co-Founder", image: "/assets/about/team-musawir.jpg" },
-  { name: "Hamzah", role: "Business Operations & Co-Founder", image: "/assets/about/team-hamzah.jpg" },
-  { name: "Shabal", role: "Digital Manager", image: "/assets/about/team-shabal.jpg" },
-  { name: "Umer", role: "UI-UX Specialist", image: "/assets/about/team-umer.jpg" },
-];
+const TEAM = TEAM_MEMBERS.map((m) => ({
+  name: m.name,
+  role: m.position,
+  image: m.image,
+}));
 
 export function AboutPageBody() {
   const heroRef = useHeroAnimation();
@@ -59,13 +59,16 @@ export function AboutPageBody() {
       <header className="qs-about-hero">
         <div className="qs-inner">
           <h1 ref={heroRef} className="qs-about-title">
-            A studio built to create brands that{" "}
-            <span className="qs-about-italic">matter</span>
+            The power of specialists.{" "}
+            <span className="qs-about-italic">
+              The simplicity of one partner.
+            </span>
           </h1>
           <p className="qs-about-lede">
-            Based in Lahore, Pakistan — we partner with ambitious businesses to
-            build meaningful brands through strategic design, creative thinking,
-            and digital experiences.
+            We are QUAD Solutions — a premium digital collective. We partner
+            with ambitious businesses worldwide to deliver specialized
+            expertise in Growth, Creative, Digital, and AI, all managed under
+            one unified roof.
           </p>
           <div className="qs-about-cta-row">
             <Link href="/case-studies" className="qs-btn-primary">
@@ -84,7 +87,7 @@ export function AboutPageBody() {
           <div className="qs-about-trust">
             <span className="qs-about-trust-line" />
             <p className="qs-about-trust-text">
-              Trusted by 1000+ clients worldwide
+              Four specialized divisions. One unified point of contact.
             </p>
             <span className="qs-about-trust-line is-right" />
           </div>
@@ -118,30 +121,32 @@ export function AboutPageBody() {
           </div>
           <div className="qs-about-story-grid">
             <h2 className="qs-about-story-title">
-              Where strategy meets{" "}
-              <span className="qs-about-italic">creative ambition</span>
+              Built for the modern{" "}
+              <span className="qs-about-italic">business landscape</span>
             </h2>
             <div className="qs-about-story-copy">
               <p>
-                Founded in 2012, Awake Studio was built on one conviction — that
-                great design is never just aesthetic. It&apos;s strategic,
-                intentional, and always in service of real business outcomes.
+                The digital world has become too complex for generalist
+                agencies. Businesses today need deep, niche expertise — but
+                managing multiple specialized vendors is a logistical
+                nightmare.
               </p>
               <p>
-                Over a decade later, we&apos;ve helped more than 1,000
-                businesses — from early-stage startups to established
-                enterprises — build brands that stand for something. We&apos;re a
-                small, senior team and we intend to stay that way.
+                That&apos;s why we built QUAD Solutions. We brought together
+                top-tier specialists across four core disciplines — Growth
+                Marketing, Creative Production, Digital Products, and AI &amp;
+                Automation. Our unique structure allows us to deploy the exact
+                experts you need, while providing you with a single, seamless
+                point of contact.
               </p>
               <p>
-                Every project we take on gets our full attention. No hand-offs
-                to junior staff. No templated thinking. Just rigorous strategy
-                and craft, delivered with care.
+                No silos. No miscommunication. Just integrated, high-performance
+                results — delivered by senior specialists who own their craft.
               </p>
             </div>
           </div>
           <div className="qs-about-story-image">
-            <img src="/assets/about/story.jpg" alt="The Awake Studio team at work" loading="lazy" />
+            <img src="/assets/about/story.jpg" alt="The QUAD Solutions team at work" loading="lazy" />
           </div>
         </div>
       </section>
@@ -151,11 +156,11 @@ export function AboutPageBody() {
         <div className="qs-inner">
           <div className="qs-about-values-head">
             <h2 className="qs-about-values-title">
-              How we <span className="qs-about-italic">think &amp; work</span>
+              How we <span className="qs-about-italic">operate</span>
             </h2>
             <p className="qs-about-values-sub">
-              Four principles guide every project we take on — regardless of
-              size, industry, or scope.
+              Four principles shape every engagement — from a one-off campaign
+              to a multi-division partnership.
             </p>
           </div>
           <div className="qs-about-values-grid">
@@ -178,15 +183,16 @@ export function AboutPageBody() {
           <div className="qs-about-team-head">
             <div>
               <h2 className="qs-about-team-title">
-                The people behind <span className="qs-about-italic">the work</span>
+                Meet your{" "}
+                <span className="qs-about-italic">specialist leaders</span>
               </h2>
               <p className="qs-about-team-sub">
-                A small senior team, each a specialist in their discipline —
-                working together on every project.
+                Our divisions are led by industry experts who ensure every
+                project is executed with precision and deep domain knowledge.
               </p>
             </div>
             <span className="qs-about-team-chip">
-              <strong>{TEAM.length}</strong> core members
+              <strong>{TEAM.length}</strong> division leads
             </span>
           </div>
           <div className="qs-about-team-grid">

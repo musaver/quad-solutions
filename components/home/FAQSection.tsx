@@ -3,40 +3,34 @@
 export function FAQSection() {
   const faqs = [
     {
-      question: "What services does Awake Agency offer?",
+      question: "What services does QUAD Solutions offer?",
       answer:
-        "Yes, we provide post-launch support to ensure smooth implementation and offer ongoing maintenance packages for clients needing regular updates or technical assistance.",
+        "We operate across four specialized divisions: Growth Marketing (Paid & Organic), Creative Production (Visuals & Video), Digital Products (Web & App Development), and AI & Automation (Chatbots & Workflows).",
       dataWId: "69f3e81b-e3ab-9564-a29d-1592c3d0da66",
     },
     {
-      question: "How long does a typical project take?",
+      question: 'How does your "Specialized Umbrella" model work?',
       answer:
-        "Yes, we provide post-launch support to ensure smooth implementation and offer ongoing maintenance packages for clients needing regular updates or technical assistance.",
+        "Instead of a generalist team trying to do everything, we assign dedicated specialists to your specific needs. However, you only ever deal with one unified project manager, ensuring seamless integration across all services without the headache of managing multiple agencies.",
       dataWId: "69f3e81b-e3ab-9564-a29d-1592c3d0da70",
     },
     {
-      question: "How is pricing structured at Awake Agency?",
+      question: "Do you work with specific industries?",
       answer:
-        "Yes, we provide post-launch support to ensure smooth implementation and offer ongoing maintenance packages for clients needing regular updates or technical assistance.",
+        "Yes, we have deep niche expertise. We have dedicated teams that specialize in E-commerce, Real Estate, Healthcare/Aesthetics, SaaS, and Local Service businesses.",
       dataWId: "69f3e81b-e3ab-9564-a29d-1592c3d0da7a",
     },
     {
-      question: "Do you offer ongoing support after project completion?",
+      question: "How do you measure success?",
       answer:
-        "Yes, we provide post-launch support to ensure smooth implementation and offer ongoing maintenance packages for clients needing regular updates or technical assistance.",
+        "We are fiercely ROI-focused. Whether it's tracking Cost Per Acquisition (CPA) for ad campaigns, conversion rates for e-commerce stores, or operational hours saved through AI automation, we define clear KPIs before any project begins.",
       dataWId: "69f3e81b-e3ab-9564-a29d-1592c3d0da84",
     },
     {
-      question: "How often will I receive updates on my project?",
+      question: "How do I get started?",
       answer:
-        "Yes, we provide post-launch support to ensure smooth implementation and offer ongoing maintenance packages for clients needing regular updates or technical assistance.",
+        "It starts with a 45-minute Discovery Call. We'll discuss your current bottlenecks and determine which of our specialist teams are required to build your custom growth strategy.",
       dataWId: "69f3e81b-e3ab-9564-a29d-1592c3d0da8e",
-    },
-    {
-      question: "How do I get started with Awake Agency?",
-      answer:
-        "Yes, we provide post-launch support to ensure smooth implementation and offer ongoing maintenance packages for clients needing regular updates or technical assistance.",
-      dataWId: "69f3e81b-e3ab-9564-a29d-1592c3d0da98",
     },
   ];
 

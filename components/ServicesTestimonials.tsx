@@ -18,30 +18,40 @@ type Testimonial = {
 const TESTIMONIALS: Testimonial[] = [
   {
     quote:
-      "Awake didn't just rebrand us — they helped us understand who we actually are. The strategy work gave our whole team clarity we'd never had before.",
-    name: "Sarah Mitchell",
-    role: "CEO, Northlight Co.",
-    initials: "SM",
+      "QUAD Solutions transformed our single-product brand into a market leader. By combining cultural insights with technical ad optimization, they scaled our orders by 26× and helped us hit $50K+ in monthly revenue.",
+    name: "MexiVida",
+    role: "E-commerce Brand",
+    initials: "MV",
     avatarBg: "rgba(73,40,253,0.12)",
     avatarColor: "#4928fd",
     iconWrapBg: "rgba(73, 40, 253, 0.12)",
   },
   {
     quote:
-      "The brand identity they created has completely transformed how clients perceive us. We went from a scrappy startup to a company people take seriously overnight.",
-    name: "James Okafor",
-    role: "Founder, Vectra Labs",
-    initials: "JO",
+      "By combining UGC marketing and data-driven ads, they turned our startup into a UAE fashion powerhouse. We saw a 4× improvement in conversion rates and hit $80K+ in monthly sales from a standing start.",
+    name: "Heyam.ae",
+    role: "Luxury Fashion (UAE)",
+    initials: "HA",
     avatarBg: "rgba(186,129,238,0.15)",
     avatarColor: "#ba81ee",
     iconWrapBg: "rgba(186, 129, 238, 0.15)",
   },
   {
     quote:
-      "Their UI/UX work reduced our onboarding drop-off by 40%. It wasn't just beautiful — it was precise, thoughtful, and backed by real user research.",
-    name: "Priya Sharma",
-    role: "Head of Product, Meridian Health",
-    initials: "PS",
+      "We went from struggling to get foot traffic to having 100% of our appointment slots filled every week. Their hyper-local ad strategy paved the way for us to open our second location.",
+    name: "Blends Barbershop",
+    role: "Local Business (Australia)",
+    initials: "BB",
+    avatarBg: "rgba(255,175,104,0.15)",
+    avatarColor: "#ea580c",
+    iconWrapBg: "rgba(255, 175, 104, 0.15)",
+  },
+  {
+    quote:
+      "They didn't just generate leads; they generated high-intent appointments. Their service-specific funnels increased our lead-to-appointment conversion rate by 3.2× across 15 different service lines.",
+    name: "US Home Services",
+    role: "Lead Generation",
+    initials: "HS",
     avatarBg: "rgba(121,212,94,0.2)",
     avatarColor: "#79d45e",
     iconWrapBg: "rgba(121, 212, 94, 0.15)",

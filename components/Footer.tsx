@@ -19,14 +19,14 @@ export function Footer() {
             >
               <img
                 loading="lazy"
-                src="/assets/logo/pastel_tiles_v3.svg"
+                src="/assets/logo/quad-solutions-logo.jpg"
                 alt="QUAD Solutions"
                 style={{
                   height: "44px",
                   width: "auto",
                   display: "block",
-                  opacity: "0.8",
-                  marginRight: "-3px",
+                  marginRight: "8px",
+                  mixBlendMode: "multiply",
                 }}
               />
               <span
