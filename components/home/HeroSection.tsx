@@ -169,7 +169,7 @@ export function HeroSection() {
           className={`para-txt${skeletonClass ? ` qs-para-skeleton` : ""}`}
         >
           Stop managing five different agencies. We provide specialized teams for marketing,
-          content, software, and Al—all working together to scale your business.
+          content, software, and Al all working together to scale your business.
         </p>
         <div className="w-layout-grid grid-21 qs-hero-cta-row">
           <div className="getstarted-btn">

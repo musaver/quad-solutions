@@ -17,6 +17,7 @@ export function TemplateNavbar() {
   const onCaseStudies =
     pathname === "/case-studies" || pathname === "/case-study-details";
   const onAbout = pathname === "/about-us";
+  const onSpecialists = pathname === "/specialists";
 
   useEffect(() => {
     setMenuOpen(false);
@@ -63,14 +64,14 @@ export function TemplateNavbar() {
               >
                 <img
                   loading="lazy"
-                  src="/assets/logo/pastel_tiles_v3.svg"
-                  alt=""
+                  src="/assets/logo/quad-solutions-logo.jpg"
+                  alt="QUAD Solutions"
                   style={{
                     height: "44px",
                     width: "auto",
                     display: "block",
-                    opacity: "0.8",
-                    marginRight: "-3px",
+                    marginRight: "4px",
+                    mixBlendMode: "multiply",
                   }}
                 />
                 <span
@@ -121,6 +122,13 @@ export function TemplateNavbar() {
                   aria-current={onCaseStudies ? "page" : undefined}
                 >
                   Case studies
+                </Link>
+                <Link
+                  href="/specialists"
+                  className={`nav-link-4${onSpecialists ? " w--current" : ""}`}
+                  aria-current={onSpecialists ? "page" : undefined}
+                >
+                  Specialists
                 </Link>
                 <Link
                   href="/about-us"
@@ -222,6 +230,15 @@ export function TemplateNavbar() {
                   aria-current={onCaseStudies ? "page" : undefined}
                 >
                   Case studies
+                </Link>
+              </li>
+              <li className="list-item-12">
+                <Link
+                  href="/specialists"
+                  className={`link-6${onSpecialists ? " w--current" : ""}`}
+                  aria-current={onSpecialists ? "page" : undefined}
+                >
+                  Specialists
                 </Link>
               </li>
               <li className="list-item-12">
