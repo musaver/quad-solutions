@@ -643,7 +643,7 @@ export function ServiceDetailsPageBody({ slug }: ServiceDetailsPageBodyProps = {
               </div>
               <div className="qs-sd-final-contact">
                 <p className="qs-sd-final-contact-label">
-                  Prefer to reach out directly?
+                Talk to a Specialist?
                 </p>
                 <div className="qs-sd-final-links">
                   <a href="tel:+13074272883">
@@ -693,7 +693,7 @@ export function ServiceDetailsPageBody({ slug }: ServiceDetailsPageBodyProps = {
                   />
                 </div>
                 <button type="submit" className="qs-sd-submit">
-                  Send message
+                Talk to a Specialist
                   <span className="qs-sd-icon-circle-sm" aria-hidden>
                     <ServiceArrowIcon variant="on-light" />
                   </span>

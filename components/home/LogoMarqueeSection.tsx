@@ -13,7 +13,7 @@ export function LogoMarqueeSection() {
         <div className="brand-txt">
           <div className="left-divider"></div>
           <p className="divider-with-text">
-            Loved by 100,00+ big and small brands around the worlds
+            Loved by 100+ big and small brands around the worlds
           </p>
           <div className="right-divider"></div>
         </div>

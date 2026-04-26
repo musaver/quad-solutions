@@ -446,7 +446,7 @@ export function CaseStudiesPageBody() {
                     />
                   </label>
                   <button type="submit" className="qs-csd-form-submit">
-                    <span>Send message</span>
+                    <span>Talk to a Specialist</span>
                     <span className="qs-csd-form-submit-icon" aria-hidden>
                       <ServiceArrowIcon variant="on-light" />
                     </span>

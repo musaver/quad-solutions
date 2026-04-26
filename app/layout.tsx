@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     template: "%s | Quad Solutions",
   },
   description:
-    "Stop managing five different agencies. Quad Solutions provides specialized teams for marketing, content, software, and AI — all working together to scale your business.",
+    "Tired of juggling multiple agencies? We bring together specialized teams in Growth, Creative, Digital, and Al—all working as one to scale your business and simplify your life.",
   robots: { index: false, follow: false },
   icons: {
     icon: "/assets/wf/67a5fb8bc33c7f25ab4e52d9/68e3732f7782e21e4dbbc032_favicon.svg",

@@ -168,8 +168,9 @@ export function HeroSection() {
           data-w-id="aca08924-3373-f5fc-69ef-f496c3c5cc2e"
           className={`para-txt${skeletonClass ? ` qs-para-skeleton` : ""}`}
         >
-          Stop managing five different agencies. We provide specialized teams for marketing,
-          content, software, and Al all working together to scale your business.
+          Tired of juggling multiple agencies? We bring together <strong>specialized teams</strong> in 
+          Growth, Creative, Digital, and Al all working as one to <strong>scale your business</strong> and 
+          simplify your life.
         </p>
         <div className="w-layout-grid grid-21 qs-hero-cta-row">
           <div className="getstarted-btn">
@@ -251,7 +252,7 @@ export function HeroSection() {
                 alt="star-icon"
                 className="star-half-icon"
               />
-              <p className="trusted-text">Trusted by 200+ clients</p>
+              <p className="trusted-text">Trusted by <strong>100+ ambitious brands</strong> worldwide.</p>
             </div>
           </div>
           <div className="qs-hero-video-thumb-anchor" aria-hidden="true" />

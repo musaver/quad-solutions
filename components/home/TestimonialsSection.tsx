@@ -17,10 +17,8 @@ export function TestimonialsSection() {
             <div className="text-block-15">E-commerce Growth</div>
             <div className="div-block-28">
               <p className="heading-11">
-                &quot;QUAD Solutions transformed our single-product brand into a
-                market leader. By combining cultural insights with technical ad
-                optimization, they scaled our orders by 26× and helped us hit
-                $50K+ in monthly revenue.&quot;
+                QUAD scaled our orders 26× and helped us hit $50K+ in monthly
+                revenue — they understood our audience better than we did.
               </p>
               <div>
                 <div className="text-block-16">MexiVida</div>
@@ -37,8 +35,7 @@ export function TestimonialsSection() {
             <div className="div-block-30">
               <p className="heading-12">3.2×</p>
               <p className="heading-13">
-                lead-to-appointment conversion rate increase across 15
-                different service lines.
+                lead-to-appointment conversion lift across 15 service lines.
               </p>
             </div>
           </div>
@@ -51,12 +48,8 @@ export function TestimonialsSection() {
           >
             <div className="text-block-19">Local Business Scale</div>
             <p className="heading-14">
-              &quot;We went from struggling to get foot traffic to having 100%
-              of our appointment slots filled every week. Their hyper-local ad
-              strategy paved the way for us to open our second location.&quot;
-              <br />
-              <br />
-              <strong>— Blends Barbershop (Australia)</strong>
+              100% of our appointment slots filled every week — and we just
+              opened a second location.
             </p>
             <img
               src="/assets/wf/67a5fb8bc33c7f25ab4e52d9/68e6406dcd9a5a5b917efa2d_image%205.png"
@@ -74,10 +67,9 @@ export function TestimonialsSection() {
           >
             <div className="text-block-20">Luxury Fashion</div>
             <h3 className="heading-15">
-              &quot;By combining UGC marketing and data-driven ads, they turned
-              our startup into a UAE fashion powerhouse. We saw a 4× improvement
-              in conversion rates and hit $80K+ in monthly sales from a standing
-              start.&quot;
+              &quot;UGC marketing and data-driven ads turned our startup into a
+              UAE fashion powerhouse — 4× conversion lift and $80K+ a month
+              from a standing start.&quot;
             </h3>
             <div className="div-block-32">
               <p className="heading-16">Heyam.ae</p>
