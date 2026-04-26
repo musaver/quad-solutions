@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { ServicesTestimonials } from "@/components/ServicesTestimonials";
 import { TemplateFooter } from "@/components/TemplateFooter";
 import { TemplateNavbar } from "@/components/TemplateNavbar";
@@ -33,6 +34,7 @@ const FAQ_ITEMS: { q: string; a: string }[] = [
 
 export function ServicesPageBody() {
   const heroRef = useHeroAnimation();
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
     <div className="main qs-services-page qs-case-studies-page">
@@ -150,37 +152,65 @@ export function ServicesPageBody() {
 
             <div className="qs-faq-aside">
               <div className="div-block-41 qs-faq-list">
-                {FAQ_ITEMS.map((item, i) => (
-                  <div
-                    key={item.q}
-                    data-hover="false"
-                    data-delay="0"
-                    data-w-id={`qs-faq-${i}`}
-                    className="accordian-item w-dropdown qs-faq-item"
-                  >
-                    <div className="accordion-toggle w-dropdown-toggle">
-                      <p className="qs-faq-q">{item.q}</p>
-                      <span className="qs-faq-plus-wrap" aria-hidden>
-                        <svg
-                          className="qs-faq-plus"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M12 5V19M5 12H19"
-                            stroke="currentColor"
-                            strokeWidth="1.5"
-                            strokeLinecap="round"
-                          />
-                        </svg>
-                      </span>
+                {FAQ_ITEMS.map((item, i) => {
+                  const isOpen = openFaq === i;
+                  return (
+                    <div
+                      key={item.q}
+                      data-hover="false"
+                      data-delay="0"
+                      className={`accordian-item w-dropdown qs-faq-item${
+                        isOpen ? " w--open" : ""
+                      }`}
+                    >
+                      <button
+                        type="button"
+                        aria-expanded={isOpen}
+                        onClick={() => setOpenFaq(isOpen ? null : i)}
+                        className={`accordion-toggle w-dropdown-toggle${
+                          isOpen ? " w--open" : ""
+                        }`}
+                        style={{
+                          background: "transparent",
+                          border: 0,
+                          width: "100%",
+                          textAlign: "left",
+                          cursor: "pointer",
+                          font: "inherit",
+                          color: "inherit",
+                        }}
+                      >
+                        <p className="qs-faq-q">{item.q}</p>
+                        <span className="qs-faq-plus-wrap" aria-hidden>
+                          <svg
+                            className="qs-faq-plus"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            style={{
+                              transform: isOpen ? "rotate(45deg)" : "none",
+                              transition: "transform 0.2s ease",
+                            }}
+                          >
+                            <path
+                              d="M12 5V19M5 12H19"
+                              stroke="currentColor"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                            />
+                          </svg>
+                        </span>
+                      </button>
+                      <nav
+                        className={`dropdown-list w-dropdown-list${
+                          isOpen ? " w--open" : ""
+                        }`}
+                      >
+                        <div className="text-block-34 qs-faq-a">{item.a}</div>
+                      </nav>
                     </div>
-                    <nav className="dropdown-list w-dropdown-list">
-                      <div className="text-block-34 qs-faq-a">{item.a}</div>
-                    </nav>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -288,7 +318,7 @@ export function ServicesPageBody() {
                     />
                   </label>
                   <button type="submit" className="qs-csd-form-submit">
-                    <span>Send message</span>
+                    <span>Talk to a Specialist</span>
                     <span className="qs-csd-form-submit-icon" aria-hidden>
                       <ServiceArrowIcon variant="on-light" />
                     </span>

@@ -9,9 +9,27 @@ export function AboutSection() {
               style={{ opacity: 0 }}
               className="crafting-heading"
             >
-              Crafting exceptional, well experienced &amp; technology driven
-              strategies to drive impactful results with
+              Precision-Engineered Growth. Human-Powered Creativity.
             </h2>
+            <p
+              className="crafting-subheading"
+              style={{
+                color: "var(--black-100)",
+                opacity: 0.72,
+                textAlign: "center",
+                fontSize: "18px",
+                lineHeight: 1.5,
+                fontWeight: 400,
+                marginTop: "16px",
+                maxWidth: "720px",
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+            >
+              We combine deep expertise with cutting-edge technology to deliver
+              strategies that don&apos;t just look good — they drive measurable
+              results.
+            </p>
             <div className="bedges-wrapper">
               <div
                 data-w-id="605f3009-4698-5cc4-9b79-9a841729b944"

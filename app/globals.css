@@ -206,6 +206,20 @@ body.body {
    Hero CTA + scroll-grow video
    ───────────────────────────────────────────────────────────────────────── */
 
+/* Hero CTA "See Our Results" button — the template's fixed 256px width was
+   sized for "Get Started" and clips longer copy mid-hover-animation. Switch to
+   intrinsic width with a min-width floor and lock the label to a single line
+   so the icon-swap animation never crops the text. */
+.qs-hero-cta-row .getstarted-btn .button {
+  width: auto;
+  min-width: 256px;
+  padding-right: 20px;
+}
+
+.qs-hero-cta-row .getstarted-btn .button .text-block-6 {
+  white-space: nowrap;
+}
+
 /* Move button + reviews to the left of the hero (was centered).
    The hero heading has max-width: 1100px and is centered in a wider container.
    To align the button with the heading's left edge — instead of slamming it to
@@ -490,3 +504,4 @@ body.body {
   height: 22px;
   fill: none;
 }
+

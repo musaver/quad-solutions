@@ -446,11 +446,11 @@ const BRAND_STRATEGY: ServiceDetailsContent = {
   },
   finalCta: {
     kicker: "Start a project",
-    headingSans: "Let's build something worth ",
-    headingSerif: "remembering.",
-    lede: "Tell us about your brand challenge. We'll respond within 4 hours with a clear path forward — no fluff, no hard sell.",
+    headingSans: "Ready to Simplify  ",
+    headingSerif: "Your Growth?",
+    lede: "Let's discuss your challenges and build a unified strategy for success.",
     stats: [
-      { value: "150+", label: "Brands launched" },
+      { value: "100+", label: "Brands launched" },
       { value: "94%", label: "Client retention" },
       { value: "3.2x", label: "Avg. growth" },
     ],

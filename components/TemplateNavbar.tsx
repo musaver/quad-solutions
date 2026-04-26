@@ -159,7 +159,7 @@ export function TemplateNavbar() {
                 href="/contact"
                 className="c2a-button w-inline-block"
               >
-                <div className="text-block-5">Let&apos;s Collaborate</div>
+                <div className="text-block-5">Talk to a Specialist</div>
                 <div className="btn-icon">
                   <img
                     src="/assets/wf/67a5fb8bc33c7f25ab4e52d9/67a9e2599fa438b2b5ca91b6_arrow-top-right.png"
