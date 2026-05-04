@@ -137,6 +137,15 @@ export function Footer() {
                 </li>
                 <li className="list-item-9">
                   <Link
+                    href="/specialists"
+                    className="navigation-link for-footer w-inline-block"
+                  >
+                    <div className="nav-text first">Specialists</div>
+                    <div className="nav-text second">Specialists</div>
+                  </Link>
+                </li>
+                <li className="list-item-9">
+                  <Link
                     href="/about-us"
                     className="navigation-link for-footer w-inline-block"
                   >
