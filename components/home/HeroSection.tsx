@@ -44,7 +44,7 @@ export function HeroSection() {
       if (para) para.style.cssText = "";
 
       if (win.SplitText) {
-        split = new win.SplitText(heading, { type: "chars" });
+        split = new win.SplitText(heading, { type: "words,chars" });
         gsap.set(split.chars, { opacity: 0, x: 100 });
         gsap.to(split.chars, {
           opacity: 1,
