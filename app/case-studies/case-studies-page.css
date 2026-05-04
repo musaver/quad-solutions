@@ -167,8 +167,13 @@
 }
 
 @media (max-width: 991px) {
+  .qs-case-process-inner {
+    flex-direction: column;
+  }
+
   .qs-case-process-steps {
     flex-wrap: wrap;
+    width: 100%;
   }
 
   .qs-case-process-step {

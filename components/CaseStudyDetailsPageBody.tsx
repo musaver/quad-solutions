@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { TemplateFooter } from "@/components/TemplateFooter";
 import { TemplateNavbar } from "@/components/TemplateNavbar";
 import { ServiceArrowIcon } from "@/components/ServiceArrowIcon";
+import { CTASection } from "@/components/home";
 import {
   getCaseStudyVariant,
   getOtherCaseStudies,
@@ -475,141 +476,7 @@ export function CaseStudyDetailsPageBody() {
 
       
 
-      <section className="qs-csd-final-cta">
-        <div className="qs-inner">
-          <div className="qs-csd-final-card">
-            <div className="qs-csd-final-glow qs-csd-final-glow--1" aria-hidden />
-            <div className="qs-csd-final-glow qs-csd-final-glow--2" aria-hidden />
-            <div className="qs-csd-final-glow qs-csd-final-glow--3" aria-hidden />
-            <div className="qs-csd-final-left">
-              <div className="qs-csd-final-kicker">
-                <span className="qs-csd-final-kicker-bar" aria-hidden />
-                <span>Start a project</span>
-              </div>
-              <h2 className="qs-csd-final-title">
-                Let&apos;s build something
-                <br />
-                <span className="qs-csd-final-title-serif qs-csd-serif">
-                  worth remembering.
-                </span>
-              </h2>
-              <p className="qs-csd-final-lede">
-                Tell us about your brand challenge. We&apos;ll respond within 4
-                hours with a clear path forward — no fluff, no hard sell.
-              </p>
-              <div className="qs-csd-final-stats">
-                <div className="qs-csd-final-stat">
-                  <p className="qs-csd-final-stat-num">150+</p>
-                  <p className="qs-csd-final-stat-label">Brands launched</p>
-                </div>
-                <span className="qs-csd-final-stat-sep" aria-hidden />
-                <div className="qs-csd-final-stat">
-                  <p className="qs-csd-final-stat-num">94%</p>
-                  <p className="qs-csd-final-stat-label">Client retention</p>
-                </div>
-                <span className="qs-csd-final-stat-sep" aria-hidden />
-                <div className="qs-csd-final-stat">
-                  <p className="qs-csd-final-stat-num">3.2×</p>
-                  <p className="qs-csd-final-stat-label">Avg. growth</p>
-                </div>
-              </div>
-              <div className="qs-csd-final-contact-label">Prefer to reach out directly?</div>
-              <div className="qs-csd-final-pills">
-                <a href="tel:+13074272883" className="qs-csd-final-pill">
-                  <Image
-                    src={`${ASSET}/icon-phone.svg`}
-                    alt=""
-                    width={16}
-                    height={16}
-                  />
-                  +1 (307) 427-2883
-                </a>
-                <a
-                  href="mailto:hello@quadsolutions.ai"
-                  className="qs-csd-final-pill"
-                >
-                  <Image
-                    src={`${ASSET}/icon-mail.svg`}
-                    alt=""
-                    width={16}
-                    height={16}
-                  />
-                  hello@quadsolutions.ai
-                </a>
-              </div>
-            </div>
-            <div className="qs-csd-final-form-wrap">
-              <div className="qs-csd-final-form">
-                <div className="qs-csd-final-form-head">
-                  <h3 className="qs-csd-final-form-title">Start your project</h3>
-                  <p className="qs-csd-final-form-sub">
-                    Free consultation · No commitment required
-                  </p>
-                </div>
-                <form className="qs-csd-form" action="/contact" method="get">
-                  <div className="qs-csd-form-row">
-                    <label className="qs-csd-field">
-                      <span className="qs-csd-field-label">Your name</span>
-                      <input
-                        type="text"
-                        name="name"
-                        placeholder="e.g. Sara Ahmed"
-                        className="qs-csd-input"
-                        autoComplete="name"
-                      />
-                    </label>
-                    <label className="qs-csd-field">
-                      <span className="qs-csd-field-label">Company</span>
-                      <input
-                        type="text"
-                        name="company"
-                        placeholder="Your company"
-                        className="qs-csd-input"
-                      />
-                    </label>
-                  </div>
-                  <label className="qs-csd-field qs-csd-field--full">
-                    <span className="qs-csd-field-label">Email address</span>
-                    <input
-                      type="email"
-                      name="email"
-                      placeholder="you@company.com"
-                      className="qs-csd-input"
-                      autoComplete="email"
-                    />
-                  </label>
-                  <label className="qs-csd-field qs-csd-field--full">
-                    <span className="qs-csd-field-label">
-                      Tell us about your project
-                    </span>
-                    <textarea
-                      name="message"
-                      placeholder="What are you looking to achieve? Any challenges you're facing?"
-                      className="qs-csd-textarea"
-                      rows={4}
-                    />
-                  </label>
-                  <button type="submit" className="qs-csd-form-submit">
-                    <span>Talk to a Specialist</span>
-                    <span className="qs-csd-form-submit-icon" aria-hidden>
-                      <ServiceArrowIcon variant="on-light" />
-                    </span>
-                  </button>
-                </form>
-                <p className="qs-csd-form-foot">
-                  <Image
-                    src={`${ASSET}/icon-lock.svg`}
-                    alt=""
-                    width={12}
-                    height={12}
-                  />
-                  We reply within 4 hours · 100% confidential
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <CTASection className="qs-csd-final-cta" />
       <TemplateFooter />
     </div>
   );
