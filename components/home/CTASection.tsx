@@ -1,8 +1,39 @@
+"use client";
+
+import { useState, type FormEvent } from "react";
 import { ServiceArrowIcon } from "@/components/ServiceArrowIcon";
 
-export function CTASection() {
+const SERVICES = [
+  "Brand Strategy",
+  "Brand Identity",
+  "UX / UI Design",
+  "Web Design & Build",
+  "Content & Copy",
+  "Marketing",
+];
+
+const BUDGETS = [
+  "Under $5k",
+  "$5k – $15k",
+  "$15k – $50k",
+  "$50k+",
+  "Not sure yet",
+];
+
+type CTASectionProps = {
+  className?: string;
+};
+
+export function CTASection({ className = "qs-svc-final-cta" }: CTASectionProps) {
+  const [submitted, setSubmitted] = useState(false);
+
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
+
   return (
-    <section className="qs-svc-final-cta">
+    <section className={className}>
       <div className="qs-inner">
         <div className="qs-csd-final-card">
           <div className="qs-csd-final-glow qs-csd-final-glow--1" aria-hidden />
@@ -60,56 +91,102 @@ export function CTASection() {
                   Free consultation · No commitment required
                 </p>
               </div>
-              <form className="qs-csd-form" action="/contact" method="get">
-                <div className="qs-csd-form-row">
-                  <label className="qs-csd-field">
-                    <span className="qs-csd-field-label">Your name</span>
-                    <input
-                      type="text"
-                      name="name"
-                      placeholder="e.g. Sara Ahmed"
-                      className="qs-csd-input"
-                      autoComplete="name"
-                    />
-                  </label>
-                  <label className="qs-csd-field">
-                    <span className="qs-csd-field-label">Company</span>
-                    <input
-                      type="text"
-                      name="company"
-                      placeholder="Your company"
-                      className="qs-csd-input"
-                    />
-                  </label>
+              {submitted ? (
+                <div className="qs-csd-form-success" role="status">
+                  <h4 className="qs-csd-form-success-title">
+                    Thanks — your message is on its way
+                  </h4>
+                  <p className="qs-csd-form-success-text">
+                    We&apos;ll reply within 4 hours.
+                  </p>
                 </div>
-                <label className="qs-csd-field qs-csd-field--full">
-                  <span className="qs-csd-field-label">Email address</span>
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="you@company.com"
-                    className="qs-csd-input"
-                    autoComplete="email"
-                  />
-                </label>
-                <label className="qs-csd-field qs-csd-field--full">
-                  <span className="qs-csd-field-label">
-                    Tell us about your project
-                  </span>
-                  <textarea
-                    name="message"
-                    placeholder="What are you looking to achieve? Any challenges you're facing?"
-                    className="qs-csd-textarea"
-                    rows={4}
-                  />
-                </label>
-                <button type="submit" className="qs-csd-form-submit">
-                  <span>Talk to a Specialist</span>
-                  <span className="qs-csd-form-submit-icon" aria-hidden>
-                    <ServiceArrowIcon variant="on-light" />
-                  </span>
-                </button>
-              </form>
+              ) : (
+                <form className="qs-csd-form" onSubmit={onSubmit} noValidate>
+                  <div className="qs-csd-form-row">
+                    <label className="qs-csd-field">
+                      <span className="qs-csd-field-label">Company</span>
+                      <input
+                        type="text"
+                        name="company"
+                        placeholder="Company name"
+                        className="qs-csd-input"
+                        autoComplete="organization"
+                      />
+                    </label>
+                    <label className="qs-csd-field">
+                      <span className="qs-csd-field-label">Website</span>
+                      <input
+                        type="url"
+                        name="website"
+                        placeholder="https://"
+                        className="qs-csd-input"
+                        autoComplete="url"
+                      />
+                    </label>
+                  </div>
+                  <div className="qs-csd-form-row">
+                    <label className="qs-csd-field">
+                      <span className="qs-csd-field-label">Your name</span>
+                      <input
+                        type="text"
+                        name="name"
+                        placeholder="Jane Smith"
+                        className="qs-csd-input"
+                        autoComplete="name"
+                      />
+                    </label>
+                    <label className="qs-csd-field">
+                      <span className="qs-csd-field-label">Work email</span>
+                      <input
+                        type="email"
+                        name="email"
+                        placeholder="jane@company.com"
+                        className="qs-csd-input"
+                        autoComplete="email"
+                      />
+                    </label>
+                  </div>
+                  <div className="qs-csd-field qs-csd-field--full">
+                    <span className="qs-csd-field-label">What do you need?</span>
+                    <div className="qs-csd-chip-row">
+                      {SERVICES.map((s) => (
+                        <label key={s} className="qs-csd-chip">
+                          <input type="checkbox" name="services" value={s} />
+                          <span>{s}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="qs-csd-field qs-csd-field--full">
+                    <span className="qs-csd-field-label">Estimated budget</span>
+                    <div className="qs-csd-chip-row">
+                      {BUDGETS.map((b) => (
+                        <label key={b} className="qs-csd-chip">
+                          <input type="radio" name="budget" value={b} />
+                          <span>{b}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                  <label className="qs-csd-field qs-csd-field--full">
+                    <span className="qs-csd-field-label">
+                      Tell us about your project
+                    </span>
+                    <textarea
+                      name="message"
+                      placeholder="What are you looking to achieve? Any challenges you're facing?"
+                      className="qs-csd-textarea"
+                      rows={4}
+                    />
+                  </label>
+                  <button type="submit" className="qs-csd-form-submit">
+                    <span>Talk to a Specialist</span>
+                    <span className="qs-csd-form-submit-icon" aria-hidden>
+                      <ServiceArrowIcon variant="on-light" />
+                    </span>
+                  </button>
+                </form>
+              )}
               <p className="qs-csd-form-foot">
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden><rect x="1" y="5" width="10" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.2"/><path d="M3.5 5V3.5a2.5 2.5 0 0 1 5 0V5" stroke="currentColor" strokeWidth="1.2"/></svg>
                 We reply within 4 hours · 100% confidential
