@@ -1146,6 +1146,21 @@
   color: #1b1d1e;
   box-sizing: border-box;
 }
+
+.qs-csd-final-teaser {
+  width: 100%; background: #fff; border-radius: 20px;
+  padding: 28px 24px 24px; color: #1b1d1e; box-sizing: border-box;
+}
+.qs-csd-final-teaser-trust {
+  list-style: none; padding: 0; margin: 4px 0 18px;
+  display: flex; flex-direction: column; gap: 6px;
+  font-size: 13px; color: rgba(27,29,30,0.6);
+}
+.qs-csd-final-teaser-trust li { display: flex; align-items: center; gap: 8px; }
+.qs-csd-final-teaser-trust svg { color: #4928fd; flex-shrink: 0; }
+.qs-csd-final-teaser .qs-csd-form { gap: 12px; }
+.qs-csd-final-teaser .qs-csd-field { margin-bottom: 0; }
+.qs-csd-final-teaser .qs-csd-form-submit { margin-top: 4px; }
 .qs-csd-final-form-head { margin-bottom: 20px; }
 .qs-csd-final-form-title {
   margin: 0;
@@ -1260,8 +1275,10 @@
   .qs-csd-final-pills { flex-direction: column; gap: 8px; }
   .qs-csd-final-pill { width: 100%; justify-content: center; padding: 12px 16px; }
 
-  .qs-csd-final-form { padding: 24px 18px 20px; border-radius: 18px; }
+  .qs-csd-final-form,
+  .qs-csd-final-teaser { padding: 24px 18px 20px; border-radius: 18px; }
   .qs-csd-final-form-head { margin-bottom: 16px; }
+  .qs-csd-final-teaser-trust { font-size: 12px; margin-bottom: 14px; }
   .qs-csd-final-form-title { font-size: 20px; }
   .qs-csd-final-form-sub { font-size: 13px; }
 

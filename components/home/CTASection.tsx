@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { ServiceArrowIcon } from "@/components/ServiceArrowIcon";
 
 const SERVICES = [
@@ -25,12 +25,48 @@ type CTASectionProps = {
 };
 
 export function CTASection({ className = "qs-svc-final-cta" }: CTASectionProps) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const continueButtonRef = useRef<HTMLButtonElement>(null);
+  const modalCloseRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!modalOpen) return;
+    const triggerButton = continueButtonRef.current;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setModalOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const focusTimer = window.setTimeout(() => {
+      modalCloseRef.current?.focus();
+    }, 0);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+      window.clearTimeout(focusTimer);
+      triggerButton?.focus();
+    };
+  }, [modalOpen]);
+
+  const onTeaserSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!name.trim() || !email.trim()) return;
+    setModalOpen(true);
+  };
+
+  const onDetailsSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitted(true);
   };
+
+  const closeModal = () => setModalOpen(false);
+  const editContact = () => setModalOpen(false);
 
   return (
     <section className={className}>
@@ -74,7 +110,7 @@ export function CTASection({ className = "qs-svc-final-cta" }: CTASectionProps) 
             <div className="qs-csd-final-contact-label">Prefer to reach out directly?</div>
             <div className="qs-csd-final-pills">
               <a href="tel:+13074272883" className="qs-csd-final-pill">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden><path d="M14.6 11.267c0 .24-.053.474-.166.7a2.74 2.74 0 0 1-.454.633c-.306.34-.64.514-1 .52-.254 0-.527-.067-.82-.206a8.42 8.42 0 0 1-.82-.467 13.28 13.28 0 0 1-.82-.633 13.5 13.5 0 0 1-.787-.754 13.04 13.04 0 0 1-.633-.82 8.79 8.79 0 0 1-.467-.82c-.14-.293-.206-.567-.206-.82 0-.247.053-.48.16-.7.106-.22.266-.42.493-.6.274-.213.567-.32.874-.32.12 0 .24.027.347.08.113.053.213.133.293.247l1.014 1.427c.08.107.14.207.18.3.04.094.063.18.063.26 0 .1-.027.2-.08.293a1.3 1.3 0 0 1-.22.294l-.3.313a.21.21 0 0 0-.06.153c0 .033.006.06.013.094.013.033.027.06.04.086.08.147.213.34.4.573.193.234.4.474.62.707.227.233.447.44.674.633.233.187.426.314.58.394.02.013.046.027.073.04.034.013.067.02.107.02a.22.22 0 0 0 .16-.067l.3-.293c.1-.1.2-.174.294-.22a.536.536 0 0 1 .293-.08c.08 0 .166.02.26.067.093.046.193.106.3.186l1.44 1.027c.114.08.194.173.247.286.046.114.073.227.073.354Z" stroke="currentColor" strokeWidth="1.2"/></svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 +1 (307) 427-2883
               </a>
               <a href="mailto:hello@quadsolutions.ai" className="qs-csd-final-pill">
@@ -84,24 +120,135 @@ export function CTASection({ className = "qs-svc-final-cta" }: CTASectionProps) 
             </div>
           </div>
           <div className="qs-csd-final-form-wrap">
-            <div className="qs-csd-final-form">
+            <div className="qs-csd-final-teaser">
               <div className="qs-csd-final-form-head">
                 <h3 className="qs-csd-final-form-title">Start your project</h3>
                 <p className="qs-csd-final-form-sub">
                   Free consultation · No commitment required
                 </p>
               </div>
-              {submitted ? (
-                <div className="qs-csd-form-success" role="status">
-                  <h4 className="qs-csd-form-success-title">
-                    Thanks — your message is on its way
-                  </h4>
-                  <p className="qs-csd-form-success-text">
-                    We&apos;ll reply within 4 hours.
+              <form className="qs-csd-form" onSubmit={onTeaserSubmit} noValidate>
+                <label className="qs-csd-field">
+                  <span className="qs-csd-field-label">Your name</span>
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Jane Smith"
+                    className="qs-csd-input"
+                    autoComplete="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                  />
+                </label>
+                <label className="qs-csd-field qs-csd-field--full">
+                  <span className="qs-csd-field-label">Work email</span>
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="jane@company.com"
+                    className="qs-csd-input"
+                    autoComplete="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </label>
+                <label className="qs-csd-field qs-csd-field--full">
+                  <span className="qs-csd-field-label">
+                    Phone <span className="qs-csd-field-optional">(optional)</span>
+                  </span>
+                  <input
+                    type="tel"
+                    name="phone"
+                    placeholder="+1 (555) 000-0000"
+                    className="qs-csd-input"
+                    autoComplete="tel"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                  />
+                </label>
+                <button
+                  ref={continueButtonRef}
+                  type="submit"
+                  className="qs-csd-form-submit"
+                  disabled={!name.trim() || !email.trim()}
+                >
+                  <span>Continue</span>
+                  <span className="qs-csd-form-submit-icon" aria-hidden>
+                    <ServiceArrowIcon variant="on-light" />
+                  </span>
+                </button>
+              </form>
+              <p className="qs-csd-form-foot">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden><rect x="1" y="5" width="10" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.2"/><path d="M3.5 5V3.5a2.5 2.5 0 0 1 5 0V5" stroke="currentColor" strokeWidth="1.2"/></svg>
+                100% confidential · No spam
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {modalOpen && (
+        <div
+          className="qs-cta-modal"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="qs-cta-modal-title"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) closeModal();
+          }}
+        >
+          <div className="qs-cta-modal-card">
+            <button
+              ref={modalCloseRef}
+              type="button"
+              className="qs-cta-modal-close"
+              aria-label="Close"
+              onClick={closeModal}
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              </svg>
+            </button>
+            {submitted ? (
+              <div className="qs-csd-form-success" role="status">
+                <h4 className="qs-csd-form-success-title">
+                  Thanks — your message is on its way
+                </h4>
+                <p className="qs-csd-form-success-text">
+                  We&apos;ll reply within 4 hours.
+                </p>
+              </div>
+            ) : (
+              <>
+                <div className="qs-cta-modal-head">
+                  <h3 id="qs-cta-modal-title" className="qs-cta-modal-title">
+                    Tell us a bit more
+                  </h3>
+                  <p className="qs-cta-modal-sub">
+                    The more we know, the sharper our reply.
                   </p>
                 </div>
-              ) : (
-                <form className="qs-csd-form" onSubmit={onSubmit} noValidate>
+                <div className="qs-cta-modal-summary">
+                  <div>
+                    <span className="qs-cta-modal-summary-label">From</span>
+                    <span className="qs-cta-modal-summary-value">
+                      {name} · {email}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    className="qs-cta-modal-summary-edit"
+                    onClick={editContact}
+                  >
+                    Edit
+                  </button>
+                </div>
+                <form className="qs-csd-form" onSubmit={onDetailsSubmit} noValidate>
+                  <input type="hidden" name="name" value={name} />
+                  <input type="hidden" name="email" value={email} />
+                  <input type="hidden" name="phone" value={phone} />
                   <div className="qs-csd-form-row">
                     <label className="qs-csd-field">
                       <span className="qs-csd-field-label">Company</span>
@@ -121,28 +268,6 @@ export function CTASection({ className = "qs-svc-final-cta" }: CTASectionProps) 
                         placeholder="https://"
                         className="qs-csd-input"
                         autoComplete="url"
-                      />
-                    </label>
-                  </div>
-                  <div className="qs-csd-form-row">
-                    <label className="qs-csd-field">
-                      <span className="qs-csd-field-label">Your name</span>
-                      <input
-                        type="text"
-                        name="name"
-                        placeholder="Jane Smith"
-                        className="qs-csd-input"
-                        autoComplete="name"
-                      />
-                    </label>
-                    <label className="qs-csd-field">
-                      <span className="qs-csd-field-label">Work email</span>
-                      <input
-                        type="email"
-                        name="email"
-                        placeholder="jane@company.com"
-                        className="qs-csd-input"
-                        autoComplete="email"
                       />
                     </label>
                   </div>
@@ -175,8 +300,8 @@ export function CTASection({ className = "qs-svc-final-cta" }: CTASectionProps) 
                     <textarea
                       name="message"
                       placeholder="What are you looking to achieve? Any challenges you're facing?"
-                      className="qs-csd-textarea"
-                      rows={4}
+                      className="qs-csd-textarea qs-csd-textarea--compact"
+                      rows={2}
                     />
                   </label>
                   <button type="submit" className="qs-csd-form-submit">
@@ -186,15 +311,15 @@ export function CTASection({ className = "qs-svc-final-cta" }: CTASectionProps) 
                     </span>
                   </button>
                 </form>
-              )}
-              <p className="qs-csd-form-foot">
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden><rect x="1" y="5" width="10" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.2"/><path d="M3.5 5V3.5a2.5 2.5 0 0 1 5 0V5" stroke="currentColor" strokeWidth="1.2"/></svg>
-                We reply within 4 hours · 100% confidential
-              </p>
-            </div>
+                <p className="qs-csd-form-foot">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden><rect x="1" y="5" width="10" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.2"/><path d="M3.5 5V3.5a2.5 2.5 0 0 1 5 0V5" stroke="currentColor" strokeWidth="1.2"/></svg>
+                  We reply within 4 hours · 100% confidential
+                </p>
+              </>
+            )}
           </div>
         </div>
-      </div>
+      )}
     </section>
   );
 }
