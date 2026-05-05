@@ -242,48 +242,6 @@ export function CaseStudyDetailsPageBody() {
         </div>
       </section>
 
-      <section className="qs-csd-section qs-csd-gallery-section">
-        <div className="qs-inner">
-          <div className="qs-csd-gallery-head">
-            <div className="qs-csd-label-row">
-              <span className="qs-csd-label-bar" aria-hidden />
-              <span className="qs-csd-label-text">Project Gallery</span>
-            </div>
-            <span className="qs-csd-gallery-count">3 Images</span>
-          </div>
-          <div className="qs-csd-gallery-grid">
-            <div className="qs-csd-gallery-main">
-              <Image
-                src={`${ASSET}/gallery-main.jpg`}
-                alt=""
-                width={843}
-                height={520}
-                className="qs-csd-gallery-img"
-                sizes="(max-width: 991px) 100vw, 66%"
-              />
-            </div>
-            <div className="qs-csd-gallery-stack">
-              <Image
-                src={`${ASSET}/gallery-top.jpg`}
-                alt=""
-                width={413}
-                height={252}
-                className="qs-csd-gallery-img"
-                sizes="(max-width: 991px) 100vw, 34%"
-              />
-              <Image
-                src={`${ASSET}/gallery-bottom.jpg`}
-                alt=""
-                width={413}
-                height={252}
-                className="qs-csd-gallery-img"
-                sizes="(max-width: 991px) 100vw, 34%"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section className="qs-csd-quote-banner" aria-label="Project overview">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -313,51 +271,6 @@ export function CaseStudyDetailsPageBody() {
             <div>
               <p className="qs-csd-quote-banner-name">{v.testimonial.name}</p>
               <p className="qs-csd-quote-banner-role">{v.testimonial.role}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="qs-csd-section qs-csd-testimonial">
-        <div className="qs-inner qs-csd-testimonial-inner">
-          <Image
-            src={`${ASSET}/icon-quote.svg`}
-            alt=""
-            width={48}
-            height={36}
-            className="qs-csd-testimonial-quote-icon"
-          />
-          <blockquote className="qs-csd-testimonial-quote">
-            &ldquo;{testimonialQuote}&rdquo;
-          </blockquote>
-          <div className="qs-csd-stars" aria-label="5 out of 5 stars">
-            {[0, 1, 2, 3].map((i) => (
-              <Image
-                key={i}
-                src={`${ASSET}/icon-star.svg`}
-                alt=""
-                width={18}
-                height={18}
-              />
-            ))}
-            <Image
-              src={`${ASSET}/icon-star-half.svg`}
-              alt=""
-              width={18}
-              height={18}
-            />
-          </div>
-          <div className="qs-csd-testimonial-author">
-            <Image
-              src={`${ASSET}/avatar.jpg`}
-              alt=""
-              width={48}
-              height={48}
-              className="qs-csd-testimonial-avatar"
-            />
-            <div>
-              <p className="qs-csd-testimonial-name">{v.testimonial.name}</p>
-              <p className="qs-csd-testimonial-role">{v.testimonial.role}</p>
             </div>
           </div>
         </div>
