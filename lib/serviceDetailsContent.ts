@@ -47,6 +47,18 @@ export type ServiceTestimonial = {
   variant: "dark" | "cream" | "sky";
 };
 
+export type ServiceSpecialist = {
+  name: string;
+  role: string;
+  image: string;
+  statusLabel: string;
+  bio: string;
+  tags: string[];
+  stats: { value: string; label: string }[];
+  primaryCta: CtaLink;
+  secondaryCta: { label: string; href: string };
+};
+
 export type ServiceExploreCard = {
   tag: string;
   tagBg: string;
@@ -85,6 +97,8 @@ export type ServiceDetailsContent = {
     items: string[];
   };
   teamHeading: HeadingPair;
+  specialist?: ServiceSpecialist;
+  specialistHeading?: HeadingPair;
   impact: {
     heading: HeadingPair;
     body: string;
@@ -185,6 +199,33 @@ function paint(
   }));
 }
 
+const SPECIALIST_HEADING: HeadingPair = {
+  prefix: "Meet the specialist\nbehind ",
+  serif: "this service",
+};
+
+function specialist(
+  role: string,
+  bio: string,
+  tags: [string, string, string],
+): ServiceSpecialist {
+  return {
+    name: "Musawir",
+    role,
+    image: "/assets/figma-service-details/team-0.jpg",
+    statusLabel: "Available for new projects",
+    bio,
+    tags,
+    stats: [
+      { value: "12+", label: "Years Experience" },
+      { value: "150+", label: "Brands Shaped" },
+      { value: "94%", label: "Client Retention" },
+    ],
+    primaryCta: { label: "Talk to Specialist", href: "/contact" },
+    secondaryCta: { label: "Call directly", href: "tel:+13074272883" },
+  };
+}
+
 const BRAND_STRATEGY: ServiceDetailsContent = {
   slug: "brand-strategy",
   documentTitle: "Brand Strategy | Quad Solutions",
@@ -231,6 +272,12 @@ const BRAND_STRATEGY: ServiceDetailsContent = {
     prefix: "Meet the creative minds\nbehind ",
     serif: "our success",
   },
+  specialistHeading: SPECIALIST_HEADING,
+  specialist: specialist(
+    "Brand Strategy Specialist",
+    "With over a decade of experience shaping brand foundations for ambitious businesses, Musawir leads our brand strategy practice. He specialises in market positioning, competitive analysis, and translating insight into strategy that drives measurable growth — partnering closely with founders to build brands that last.",
+    ["Strategic Thinking", "Market Research", "Brand Positioning"],
+  ),
   impact: {
     heading: {
       prefix: "Measurable results for ",
@@ -550,6 +597,12 @@ const AI: ServiceDetailsContent = {
     prefix: "Led by the team behind\n",
     serif: "QA, GTM & AI automation",
   },
+  specialistHeading: SPECIALIST_HEADING,
+  specialist: specialist(
+    "AI Automation Lead",
+    "Musawir leads our AI and automation practice, partnering with operators to wire intelligent systems into the workflows where teams lose the most time. He focuses on practical, high-leverage automation across GTM, RevOps, and delivery — shipping working systems in weeks, not quarters.",
+    ["AI Strategy", "GTM Engineering", "Process Automation"],
+  ),
   impact: {
     heading: {
       prefix: "Real execution, ",
@@ -784,6 +837,12 @@ const INTELLIGENT_AUTOMATION: ServiceDetailsContent = {
     prefix: "Built by specialists in\n",
     serif: "workflow & ops automation",
   },
+  specialistHeading: SPECIALIST_HEADING,
+  specialist: specialist(
+    "Workflow & Ops Specialist",
+    "Musawir leads our workflow and operations automation practice. He partners with founders and ops leaders to map the messy reality of existing processes, then design connected systems across CRM, communication, and delivery — so teams ship faster with less manual lift.",
+    ["Workflow Design", "RevOps Automation", "Process Architecture"],
+  ),
   impact: {
     heading: {
       prefix: "Less manual work. ",
@@ -1016,6 +1075,12 @@ const AI_COMMUNICATION: ServiceDetailsContent = {
     prefix: "Shaped by experience in\n",
     serif: "AI-assisted support",
   },
+  specialistHeading: SPECIALIST_HEADING,
+  specialist: specialist(
+    "AI Communications Specialist",
+    "Musawir leads our AI communications practice, designing assisted support, classification, and response systems that keep humans in the loop while raising the floor on quality and speed. He focuses on practical deployments grounded in your context — not generic chatbot patterns.",
+    ["Conversational AI", "Support Automation", "Voice & Tone"],
+  ),
   impact: {
     heading: {
       prefix: "Consistency at ",
@@ -1248,6 +1313,12 @@ const ADVANCED_AI: ServiceDetailsContent = {
     prefix: "Engineered with deep expertise in\n",
     serif: "AI systems & integrations",
   },
+  specialistHeading: SPECIALIST_HEADING,
+  specialist: specialist(
+    "Advanced AI Specialist",
+    "Musawir leads our advanced AI engagements, partnering with operators to design autonomous agents, integrations, and decisioning systems grounded in real business data. He focuses on scoped, high-leverage AI deployments with clear actions, logging, and guardrails — not demoware.",
+    ["Agent Architecture", "AI Integrations", "Data Grounding"],
+  ),
   impact: {
     heading: {
       prefix: "AI that ",

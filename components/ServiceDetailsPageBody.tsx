@@ -13,8 +13,6 @@ import {
 } from "@/lib/serviceDetailsContent";
 import { useHeroAnimation } from "@/hooks/useHeroAnimation";
 
-const TEAM = "/assets/figma-service-details";
-
 function ListIconX() {
   return (
     <svg width="14" height="14" viewBox="0 0 9 9" fill="none" aria-hidden>
@@ -47,15 +45,16 @@ function FinalCtaPhoneIcon() {
     <svg
       width="16"
       height="16"
-      viewBox="0 0 16 16"
+      viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden
     >
       <path
-        d="M10.853 9.56c.184.367.072.816-.25 1.138l-.354.354a8 8 0 01-8.485 0 8 8 0 010-11.314l.354-.354c.322-.322.77-.434 1.138-.25l1.414.707c.276.138.456.414.456.728v1.638a.727.727 0 01-.213.514L4.12 4.707a5.818 5.818 0 005.172 5.172l.232-.232a.727.727 0 01.514-.213h1.638c.314 0 .59.18.728.456l.707 1.414z"
+        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
         stroke="currentColor"
-        strokeWidth="1.2"
+        strokeWidth="1.7"
+        strokeLinecap="round"
         strokeLinejoin="round"
       />
     </svg>
@@ -287,67 +286,85 @@ export function ServiceDetailsPageBody({ slug }: ServiceDetailsPageBodyProps = {
         </div>
       </section>
 
-      <section className="qs-sd-team-section">
-        <div className="qs-inner">
-          <div className="qs-sd-team-head">
-            <h2>{renderHeadingPair(content.teamHeading)}</h2>
-          </div>
-          <div className="qs-sd-team-grid">
-            {[
-              { name: "Musawir", role: "CEO & Co-Founder", img: `${TEAM}/team-0.jpg` },
-              {
-                name: "Hamzah",
-                role: "Business Operations & Co-Founder",
-                img: `${TEAM}/team-1.jpg`,
-              },
-              { name: "Shabal", role: "Digital Manager", img: `${TEAM}/team-2.jpg` },
-              { name: "Umer", role: "UI-UX Specialist", img: `${TEAM}/team-3.jpg` },
-            ].map((m) => (
-              <div key={m.name} className="qs-sd-team-card">
-                <div className="qs-sd-team-photo">
-                  <img src={m.img} alt="" width={400} height={500} />
+      {content.specialist ? (
+        <section className="qs-sd-specialist">
+          <div className="qs-inner">
+            <div className="qs-sd-specialist-head">
+              <h2>
+                {renderHeadingPair(
+                  content.specialistHeading ?? {
+                    prefix: "Meet the specialist\nbehind ",
+                    serif: "this service",
+                  },
+                )}
+              </h2>
+            </div>
+            <div className="qs-sd-specialist-card">
+              <div className="qs-sd-specialist-card-bg" aria-hidden />
+              <div className="qs-sd-specialist-inner">
+                <div className="qs-sd-specialist-photo-card">
+                  <div className="qs-sd-specialist-photo">
+                    <img
+                      src={content.specialist.image}
+                      alt={content.specialist.name}
+                      width={400}
+                      height={500}
+                    />
+                  </div>
+                  <div className="qs-sd-specialist-stats">
+                    {content.specialist.stats.map((s) => (
+                      <div key={s.label}>
+                        <strong>{s.value}</strong>
+                        <span>{s.label}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <h3>{m.name}</h3>
-                <p>{m.role}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="qs-sd-impact">
-        <div className="qs-inner">
-          <div className="qs-sd-impact-card">
-            <div className="qs-sd-impact-inner">
-              <div className="qs-sd-impact-copy">
-                <h2>{renderHeadingPair(content.impact.heading)}</h2>
-                <p>{content.impact.body}</p>
-              </div>
-              <div className="qs-sd-impact-side">
-                <div className="qs-sd-impact-metrics">
-                  {content.impact.metrics.map((m) => (
-                    <div key={m.value}>
-                      <strong>{m.value}</strong>
-                      {m.labelLines.map((line) => (
-                        <span key={line}>{line}</span>
-                      ))}
-                    </div>
-                  ))}
+                <div className="qs-sd-specialist-body">
+                  <div className="qs-sd-specialist-status">
+                    <span className="dot" aria-hidden />
+                    <span>{content.specialist.statusLabel}</span>
+                  </div>
+                  <h3 className="qs-sd-specialist-name">
+                    {content.specialist.name}
+                  </h3>
+                  <p className="qs-sd-specialist-role">
+                    {content.specialist.role}
+                  </p>
+                  <div className="qs-sd-specialist-divider" aria-hidden />
+                  <p className="qs-sd-specialist-bio">
+                    {content.specialist.bio}
+                  </p>
+                  <div className="qs-sd-specialist-tags">
+                    {content.specialist.tags.map((t) => (
+                      <span key={t}>{t}</span>
+                    ))}
+                  </div>
+                  <div className="qs-sd-specialist-divider" aria-hidden />
+                  <div className="qs-sd-specialist-actions">
+                    <Link
+                      href={content.specialist.primaryCta.href}
+                      className="qs-sd-specialist-cta-primary w-inline-block"
+                    >
+                      {content.specialist.primaryCta.label}
+                      <span className="qs-sd-icon-circle" aria-hidden>
+                        <ServiceArrowIcon variant="on-light" />
+                      </span>
+                    </Link>
+                    <a
+                      href={content.specialist.secondaryCta.href}
+                      className="qs-sd-specialist-cta-ghost w-inline-block"
+                    >
+                      <FinalCtaPhoneIcon />
+                      {content.specialist.secondaryCta.label}
+                    </a>
+                  </div>
                 </div>
-                <Link
-                  href={content.impact.link.href}
-                  className="qs-sd-link-light w-inline-block"
-                >
-                  {content.impact.link.label}
-                  <span className="qs-sd-icon-circle-sm" aria-hidden>
-                    <ServiceArrowIcon variant="on-dark" />
-                  </span>
-                </Link>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
 
       <section className="qs-sd-deliverables">
         <div className="qs-inner">
@@ -387,6 +404,40 @@ export function ServiceDetailsPageBody({ slug }: ServiceDetailsPageBodyProps = {
                 <p>{x.d}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="qs-sd-impact">
+        <div className="qs-inner">
+          <div className="qs-sd-impact-card">
+            <div className="qs-sd-impact-inner">
+              <div className="qs-sd-impact-copy">
+                <h2>{renderHeadingPair(content.impact.heading)}</h2>
+                <p>{content.impact.body}</p>
+              </div>
+              <div className="qs-sd-impact-side">
+                <div className="qs-sd-impact-metrics">
+                  {content.impact.metrics.map((m) => (
+                    <div key={m.value}>
+                      <strong>{m.value}</strong>
+                      {m.labelLines.map((line) => (
+                        <span key={line}>{line}</span>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+                <Link
+                  href={content.impact.link.href}
+                  className="qs-sd-link-light w-inline-block"
+                >
+                  {content.impact.link.label}
+                  <span className="qs-sd-icon-circle-sm" aria-hidden>
+                    <ServiceArrowIcon variant="on-dark" />
+                  </span>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
