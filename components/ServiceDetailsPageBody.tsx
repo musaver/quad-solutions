@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { TemplateFooter } from "@/components/TemplateFooter";
 import { TemplateNavbar } from "@/components/TemplateNavbar";
 import { ServiceArrowIcon } from "@/components/ServiceArrowIcon";
+import { CTASection } from "@/components/home/CTASection";
 import {
   getServiceDetailsContent,
   type HeadingPair,
@@ -61,41 +62,29 @@ function FinalCtaPhoneIcon() {
   );
 }
 
-function FinalCtaMailIcon() {
+function TestimonialUserIcon() {
   return (
     <svg
-      width="16"
-      height="16"
+      width="20"
+      height="20"
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden
     >
       <path
-        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+        d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
         stroke="currentColor"
-        strokeWidth="1.5"
+        strokeWidth="1.7"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-    </svg>
-  );
-}
-
-function FinalCtaLockIcon() {
-  return (
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 14 14"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden
-    >
-      <path
-        d="M4.083 6.417V4.083a2.917 2.917 0 015.834 0v2.334M3.5 6.417h7a1.167 1.167 0 011.167 1.166v4.667A1.167 1.167 0 0110.5 13.417h-7a1.167 1.167 0 01-1.167-1.167V7.583A1.167 1.167 0 013.5 6.417z"
+      <circle
+        cx="12"
+        cy="7"
+        r="4"
         stroke="currentColor"
-        strokeWidth="1.1"
+        strokeWidth="1.7"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -566,7 +555,9 @@ export function ServiceDetailsPageBody({ slug }: ServiceDetailsPageBodyProps = {
                   <div
                     className={`qs-sd-avatar${t.variant === "dark" ? " is-light" : ""}`}
                     aria-hidden
-                  />
+                  >
+                    <TestimonialUserIcon />
+                  </div>
                   <div>
                     <h4>{t.name}</h4>
                     <p>{t.role}</p>
@@ -669,95 +660,7 @@ export function ServiceDetailsPageBody({ slug }: ServiceDetailsPageBodyProps = {
         </div>
       </section>
 
-      <section className="qs-sd-final">
-        <div className="qs-inner">
-          <div className="qs-sd-final-card">
-            <div className="qs-sd-final-left">
-              <div className="qs-sd-final-kicker">
-                <i className="is-purple" aria-hidden />
-                <span>{content.finalCta.kicker}</span>
-              </div>
-              <h2>
-                <span className="qs-sd-final-head-sans">
-                  {content.finalCta.headingSans}
-                </span>
-                <span className="qs-sd-serif">{content.finalCta.headingSerif}</span>
-              </h2>
-              <p>{content.finalCta.lede}</p>
-              <div className="qs-sd-final-stats">
-                {content.finalCta.stats.map((s) => (
-                  <div key={s.label}>
-                    <strong>{s.value}</strong>
-                    <span>{s.label}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="qs-sd-final-contact">
-                <p className="qs-sd-final-contact-label">
-                Talk to a Specialist?
-                </p>
-                <div className="qs-sd-final-links">
-                  <a href="tel:+13074272883">
-                    <FinalCtaPhoneIcon />
-                    +1 (307) 427-2883
-                  </a>
-                  <a href="mailto:hello@quadsolutions.ai">
-                    <FinalCtaMailIcon />
-                    hello@quadsolutions.ai
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="qs-sd-final-form-wrap">
-              <h3>Start your project</h3>
-              <p className="hint">Free consultation · No commitment required</p>
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                }}
-              >
-                <div className="qs-sd-form-grid2">
-                  <div className="qs-sd-field">
-                    <label htmlFor="sd-name">Your name</label>
-                    <input id="sd-name" name="name" placeholder="e.g. Sara Ahmed" />
-                  </div>
-                  <div className="qs-sd-field">
-                    <label htmlFor="sd-co">Company</label>
-                    <input id="sd-co" name="company" placeholder="Your company" />
-                  </div>
-                </div>
-                <div className="qs-sd-field qs-sd-form-full">
-                  <label htmlFor="sd-email">Email address</label>
-                  <input
-                    id="sd-email"
-                    name="email"
-                    type="email"
-                    placeholder="you@company.com"
-                  />
-                </div>
-                <div className="qs-sd-field qs-sd-form-full">
-                  <label htmlFor="sd-msg">Tell us about your project</label>
-                  <textarea
-                    id="sd-msg"
-                    name="message"
-                    placeholder="What are you looking to achieve? Any challenges you're facing?"
-                  />
-                </div>
-                <button type="submit" className="qs-sd-submit">
-                Talk to a Specialist
-                  <span className="qs-sd-icon-circle-sm" aria-hidden>
-                    <ServiceArrowIcon variant="on-light" />
-                  </span>
-                </button>
-              </form>
-              <p className="qs-sd-form-note">
-                <FinalCtaLockIcon />
-                We reply within 4 hours · 100% confidential
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <CTASection />
       <TemplateFooter />
     </div>
   );

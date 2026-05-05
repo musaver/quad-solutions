@@ -586,7 +586,7 @@
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 18px;
-  padding: 13px 16px;
+  padding: 13px 13px;
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -1641,11 +1641,16 @@
   height: 40px;
   border-radius: 999px;
   background: rgba(73, 40, 253, 0.12);
+  color: #4928fd;
   flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .qs-sd-avatar.is-light {
   background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
 }
 
 .qs-sd-testimonial-author h4 {
