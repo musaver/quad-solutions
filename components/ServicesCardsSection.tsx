@@ -21,10 +21,17 @@ type FeatureCard = {
   bg: string;
   tile: string;
   accent: string;
+  text: string;
+  iconFilter: string;
   scroll: boolean;
   href: string;
   groups: FeatureChipGroup[];
 };
+
+const ICON_FILTER_BLACK =
+  "brightness(0) saturate(100%)";
+const ICON_FILTER_WHITE =
+  "brightness(0) saturate(100%) invert(100%)";
 
 const FEATURE_CARDS: FeatureCard[] = [
   {
@@ -32,9 +39,11 @@ const FEATURE_CARDS: FeatureCard[] = [
     title: "Growth Marketing",
     desc: "Customer acquisition, lead generation, and revenue scaling.",
     icon: "/assets/wf/67b2f932468e3acae7e236f3/68e623e24b10e2e4e2969b30_digitalmarketing.svg",
-    bg: "hsla(211, 100%, 72%, 0.2)",
-    tile: "hsla(211, 100%, 72%, 0.4)",
-    accent: "hsl(211, 45%, 52%)",
+    bg: "#2E1B41",
+    tile: "#2E1B41",
+    accent: "#2E1B41",
+    text: "#ffffff",
+    iconFilter: ICON_FILTER_WHITE,
     scroll: true,
     href: "/service-details?service=marketing",
     groups: [
@@ -74,9 +83,11 @@ const FEATURE_CARDS: FeatureCard[] = [
     title: "Creative Production",
     desc: "High-impact visual storytelling and brand identity.",
     icon: "/assets/wf/67b2f932468e3acae7e236f3/68e6018a556df7bc3330d227_brand.svg",
-    bg: "hsla(271, 76%, 72%, 0.2)",
-    tile: "hsla(271, 76%, 72%, 0.4)",
-    accent: "hsl(271, 55%, 55%)",
+    bg: "#BF32B9",
+    tile: "#BF32B9",
+    accent: "#BF32B9",
+    text: "#ffffff",
+    iconFilter: ICON_FILTER_WHITE,
     scroll: false,
     href: "/service-details?service=creative",
     groups: [
@@ -113,9 +124,11 @@ const FEATURE_CARDS: FeatureCard[] = [
     title: "Digital Products",
     desc: "Scalable software and high-performance web solutions.",
     icon: "/assets/wf/67b2f932468e3acae7e236f3/68e621c968fd23ebcbec7320_webdevp.svg",
-    bg: "hsla(350, 83%, 75%, 0.2)",
-    tile: "hsla(350, 83%, 75%, 0.4)",
-    accent: "hsl(350, 65%, 55%)",
+    bg: "#737AD1",
+    tile: "#737AD1",
+    accent: "#737AD1",
+    text: "#ffffff",
+    iconFilter: ICON_FILTER_WHITE,
     scroll: false,
     href: "/service-details?service=digital",
     groups: [
@@ -149,9 +162,11 @@ const FEATURE_CARDS: FeatureCard[] = [
     title: "AI & Automation",
     desc: "Operational efficiency and intelligent systems.",
     icon: "/assets/wf/67b2f932468e3acae7e236f3/68e623fa72bd543218e41cb8_uiux.svg",
-    bg: "hsla(28, 100%, 70%, 0.2)",
-    tile: "hsla(28, 100%, 70%, 0.4)",
-    accent: "hsl(28, 80%, 48%)",
+    bg: "#5AC6F4",
+    tile: "#5AC6F4",
+    accent: "#5AC6F4",
+    text: "#000000",
+    iconFilter: ICON_FILTER_BLACK,
     scroll: false,
     href: "/service-details?service=ai",
     groups: [
@@ -261,6 +276,8 @@ export function ServicesCardsSection() {
                   "--card-bg": card.bg,
                   "--card-tile": card.tile,
                   "--card-accent": card.accent,
+                  "--card-text": card.text,
+                  "--card-icon-filter": card.iconFilter,
                   "--reveal-i": i,
                   "--reveal-total": card.groups.length,
                 } as React.CSSProperties

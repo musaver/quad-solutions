@@ -19,7 +19,7 @@ export function Footer() {
             >
               <img
                 loading="lazy"
-                src="/assets/logo/quad-solutions-logo.jpg"
+                src="/assets/logo/quad-icon.png"
                 alt="QUAD Solutions"
                 style={{
                   height: "44px",

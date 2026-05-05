@@ -2704,7 +2704,7 @@ a {
 }
 
 .about-card-2 {
-  background-color: var(--yellow-100);
+  background-color: #a7dadb;
   border-radius: 16px;
   flex-flow: column;
   justify-content: flex-start;
@@ -3659,7 +3659,8 @@ a {
   grid-column-gap: 12px;
   grid-row-gap: 12px;
   cursor: pointer;
-  background-color: #ba81ee33;
+  background-color: #BF32B9;
+  border: 1px solid #BF32B9;
   border-radius: 999px;
   justify-content: center;
   align-items: center;
@@ -3669,11 +3670,12 @@ a {
 
 .creativity-img {
   display: block;
+  filter: brightness(0) saturate(100%) invert(100%);
 }
 
 .creativity-txt {
   font-family: var(--instrument);
-  color: #ba81ee;
+  color: #ffffff;
   letter-spacing: -1px;
   margin-bottom: 0;
   font-size: 48px;
@@ -3684,7 +3686,7 @@ a {
 
 .innovation-txt {
   font-family: var(--instrument);
-  color: #70b5ff;
+  color: #ffffff;
   letter-spacing: -1px;
   margin-bottom: 0;
   font-size: 48px;
@@ -3696,12 +3698,18 @@ a {
 .innovation-bedge {
   grid-column-gap: 12px;
   grid-row-gap: 12px;
-  background-color: #70b5ff33;
+  background-color: #737AD1;
+  border: 1px solid #737AD1;
   border-radius: 999px;
   justify-content: center;
   align-items: center;
   padding: 4px 24px;
   display: inline-flex;
+}
+
+.innovation-img {
+  display: block;
+  filter: brightness(0) saturate(100%) invert(100%);
 }
 
 .bedges-wrapper {
@@ -3716,15 +3724,21 @@ a {
 .strategy-bedge {
   grid-column-gap: 12px;
   grid-row-gap: 12px;
-  background-color: #ffaf6833;
+  background-color: #5AC6F4;
+  border: 1px solid #5AC6F4;
   border-radius: 999px;
   padding: 4px 24px;
   display: flex;
 }
 
+.strategy-img {
+  display: block;
+  filter: brightness(0) saturate(100%);
+}
+
 .strategy-txt {
   font-family: var(--instrument);
-  color: #ffaf68;
+  color: #000000;
   letter-spacing: normal;
   margin-bottom: 0;
   font-size: 48px;
