@@ -5,8 +5,7 @@ export function WorkSection() {
     {
       id: "heyam",
       name: "Heyam.ae",
-      image:
-        "/assets/wf/67a5fb8bc33c7f25ab4e52d9/67adb22b6801ba1be2c8816a_flowbank.jpg",
+      image: "/assets/figma-case-studies/heyam.jpg",
       tags: ["Shopify CRO", "Meta Ads"],
       cardClass: "card-1",
       dataWId: "4c59f5ea-8902-3ed7-f744-beb222178250",
@@ -14,8 +13,7 @@ export function WorkSection() {
     {
       id: "mexivida",
       name: "MexiVida",
-      image:
-        "/assets/wf/67a5fb8bc33c7f25ab4e52d9/67adb22bbb6dbd85f5b9fc07_academy.jpg",
+      image: "/assets/figma-case-studies/mexivida.jpg",
       tags: ["Amazon SEO", "Cultural Content"],
       cardClass: "card-2",
       dataWId: "04bc2df1-16f2-23e8-1ce0-9f38f46ad20c",
@@ -23,8 +21,7 @@ export function WorkSection() {
     {
       id: "blends",
       name: "Blends Barbershop",
-      image:
-        "/assets/wf/67a5fb8bc33c7f25ab4e52d9/67adb22b8be398062d992b05_genome.jpg",
+      image: "/assets/figma-case-studies/blends.jpg",
       tags: ["Hyper-Local Ads", "Booking Funnel"],
       cardClass: "card-3",
       dataWId: "5daca492-060a-69d8-58c2-f7617508d084",
@@ -32,8 +29,7 @@ export function WorkSection() {
     {
       id: "home-services",
       name: "US Home Services",
-      image:
-        "/assets/wf/67a5fb8bc33c7f25ab4e52d9/67adb22cde7bb305cec8b740_hotto.jpg",
+      image: "/assets/figma-case-studies/home-services.jpg",
       tags: ["Lead Funnels", "Paid Media"],
       cardClass: "card-4",
       dataWId: "f3b16a16-0c4c-a740-a426-e15765d9f019",

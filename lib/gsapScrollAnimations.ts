@@ -172,15 +172,15 @@ function animateSectionHeadings(
       // Create scroll-linked animation
       const trigger = ST.create({
         trigger: el,
-        start: "top 85%",
-        end: "bottom 20%",
-        scrub: 0.8,
+        start: "top 100%",
+        end: "top 80%",
+        scrub: 0.3,
         onUpdate: (self: { progress: number }) => {
-          const progress = self.progress;
+          const progress = Math.min(1, self.progress * 4);
           split.chars.forEach((char, i) => {
             const charProgress = Math.max(
               0,
-              Math.min(1, (progress * split.chars.length - i) / 3)
+              Math.min(1, (progress * (split.chars.length + 3) - i) / 3)
             );
             (char as HTMLElement).style.color =
               charProgress >= 1
