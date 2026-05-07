@@ -165,8 +165,8 @@ const FEATURE_CARDS: FeatureCard[] = [
     bg: "#5AC6F4",
     tile: "#5AC6F4",
     accent: "#5AC6F4",
-    text: "#000000",
-    iconFilter: ICON_FILTER_BLACK,
+    text: "#ffffff",
+    iconFilter: ICON_FILTER_WHITE,
     scroll: false,
     href: "/service-details?service=ai",
     groups: [
