@@ -2161,11 +2161,13 @@ a {
   border-radius: 33px;
   justify-content: space-between;
   align-items: center;
-  width: 256px;
+  width: auto;
+  min-width: 256px;
   padding: 8px 12px 8px 20px;
   font-size: 16px;
   line-height: 20px;
   text-decoration: none;
+  white-space: nowrap;
   display: flex;
 }
 
@@ -2275,6 +2277,7 @@ a {
   align-items: center;
   width: 40px;
   height: 40px;
+  flex-shrink: 0;
   display: flex;
 }
 
@@ -5150,11 +5153,7 @@ a {
   }
 
   .count-block {
-    grid-template-columns: 1fr;
-  }
-
-  .count-sec-divider {
-    display: none;
+    grid-template-columns: 1fr 1fr 1fr;
   }
 
   .plus {
@@ -5560,9 +5559,27 @@ a {
   }
 
   .count-block {
-    grid-column-gap: 10px;
+    grid-column-gap: 6px;
     grid-row-gap: 10px;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .div-block-190 {
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .descp {
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .plus {
+    font-size: 32px;
+  }
+
+  .count {
+    font-size: 32px;
   }
 
   .flex-block-2 {

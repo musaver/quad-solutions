@@ -176,10 +176,10 @@ export function HeroSection() {
           <div className="getstarted-btn">
             <a
               data-w-id="eecee728-f47b-6730-11f5-5b63546b3fc7"
-              href="/contact"
+              href="/specialists"
               className="button w-inline-block"
             >
-              <div className="text-block-6">See Our Results</div>
+              <div className="text-block-6">Talk To Specialist</div>
               <div className="arrow-div">
                 <img
                   src="/assets/wf/67a5fb8bc33c7f25ab4e52d9/67a9e2599fa438b2b5ca91b6_arrow-top-right.png"

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, type FormEvent, type ReactNode } from "react";
 import { TemplateNavbar } from "@/components/TemplateNavbar";
-import { TemplateFooter } from "@/components/TemplateFooter";
+import { Footer } from "@/components/Footer";
 import { useHeroAnimation } from "@/hooks/useHeroAnimation";
 
 const ARROW_DARK = "/assets/wf/67a5fb8bc33c7f25ab4e52d9/67a9e2599fa438b2b5ca91b6_arrow-top-right.png";
@@ -278,27 +278,6 @@ export function ContactPageBody() {
                     </label>
                   </div>
 
-                  <div className="qs-contact-field-row">
-                    <label className="qs-contact-field">
-                      <span className="qs-contact-field-label">Company</span>
-                      <input
-                        type="text"
-                        name="company"
-                        placeholder="Company name"
-                        autoComplete="organization"
-                      />
-                    </label>
-                    <label className="qs-contact-field">
-                      <span className="qs-contact-field-label">Website</span>
-                      <input
-                        type="url"
-                        name="website"
-                        placeholder="https://"
-                        autoComplete="url"
-                      />
-                    </label>
-                  </div>
-
                   <div className="qs-contact-field">
                     <span className="qs-contact-field-label">
                       What do you need?
@@ -329,7 +308,7 @@ export function ContactPageBody() {
 
                   <label className="qs-contact-field">
                     <span className="qs-contact-field-label">
-                      Tell us about your project
+                      What Exactly You Want Our Specialist To Help You With?
                     </span>
                     <textarea
                       name="message"
@@ -409,7 +388,7 @@ export function ContactPageBody() {
         </div>
       </section>
 
-      <TemplateFooter />
+      <Footer />
     </div>
   );
 }

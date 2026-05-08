@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Fragment, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { TemplateFooter } from "@/components/TemplateFooter";
+import { Footer } from "@/components/Footer";
 import { TemplateNavbar } from "@/components/TemplateNavbar";
 import { ServiceArrowIcon } from "@/components/ServiceArrowIcon";
 import { CTASection } from "@/components/home/CTASection";
@@ -661,7 +661,7 @@ export function ServiceDetailsPageBody({ slug }: ServiceDetailsPageBodyProps = {
       </section>
 
       <CTASection />
-      <TemplateFooter />
+      <Footer />
     </div>
   );
 }

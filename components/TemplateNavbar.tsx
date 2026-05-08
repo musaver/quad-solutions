@@ -10,10 +10,16 @@ export function TemplateNavbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const onHome = pathname === "/";
-  const onServices =
-    pathname === "/services" ||
-    pathname === "/service-details" ||
-    (pathname?.startsWith("/service-details/") ?? false);
+  const SERVICE_PREFIXES = [
+    "/services",
+    "/growth-marketing",
+    "/creative-production",
+    "/digital-products",
+    "/ai-automation",
+  ];
+  const onServices = SERVICE_PREFIXES.some(
+    (p) => pathname === p || (pathname?.startsWith(p + "/") ?? false),
+  );
   const onCaseStudies =
     pathname === "/case-studies" || pathname === "/case-study-details";
   const onAbout = pathname === "/about-us";

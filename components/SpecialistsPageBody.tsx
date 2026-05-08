@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { TemplateNavbar } from "@/components/TemplateNavbar";
-import { TemplateFooter } from "@/components/TemplateFooter";
+import { Footer } from "@/components/Footer";
+import { TeamSection } from "@/components/home/TeamSection";
 import { useHeroAnimation } from "@/hooks/useHeroAnimation";
-import { TEAM_MEMBERS } from "@/lib/team";
 
 const ARROW_DARK =
   "/assets/wf/67a5fb8bc33c7f25ab4e52d9/67a9e2599fa438b2b5ca91b6_arrow-top-right.png";
@@ -75,63 +75,14 @@ export function SpecialistsPageBody() {
         </div>
       </header>
 
-      <section id="team" className="home-our-team-sec">
-        <div className="w-layout-blockcontainer container-7 w-container">
-          <div className="w-layout-grid ourteam-heading-div">
-            <h2 className="creative-mind-heading">
-              The senior team behind{" "}
-              <span className="text-span-14">every engagement</span>
-            </h2>
-          </div>
-          <div className="w-layout-grid creative-mind-wrapper">
-            {TEAM_MEMBERS.map((member) => (
-              <div key={member.name} className="profile-card">
-                <img
-                  {...(member.image.includes("webp")
-                    ? {
-                        sizes: "(max-width: 600px) 100vw, 600px",
-                        srcSet: `${member.image.replace(".webp", "-p-500.webp")} 500w, ${member.image} 600w`,
-                      }
-                    : {})}
-                  alt={`${member.name} profile`}
-                  loading="lazy"
-                  src={member.image}
-                />
-                <div className="creative-descp-block">
-                  <p className="creative-block-title">{member.name}</p>
-                  <div className="position-txt">{member.position}</div>
-                  <div className="social-link-div">
-                    <a
-                      href="https://x.com/quadsolutions"
-                      className="twitter-link w-inline-block"
-                    >
-                      <img
-                        width="20"
-                        height="20"
-                        alt="twitter-icon"
-                        src="/assets/wf/67a5fb8bc33c7f25ab4e52d9/67addc1083998f646851a971_twitter.png"
-                        loading="lazy"
-                      />
-                    </a>
-                    <a
-                      href="https://www.linkedin.com/company/quadsolutions"
-                      className="linkedin-link w-inline-block"
-                    >
-                      <img
-                        width="20"
-                        height="20"
-                        alt="linkedin-icon"
-                        src="/assets/wf/67a5fb8bc33c7f25ab4e52d9/67addc10396a59bde77d300f_linkedin.png"
-                        loading="lazy"
-                      />
-                    </a>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <TeamSection
+        heading={
+          <>
+            The senior team behind{" "}
+            <span className="text-span-14">every engagement</span>
+          </>
+        }
+      />
 
       <section className="qs-about-values">
         <div className="qs-inner">
@@ -193,7 +144,7 @@ export function SpecialistsPageBody() {
         </div>
       </section>
 
-      <TemplateFooter />
+      <Footer />
     </div>
   );
 }

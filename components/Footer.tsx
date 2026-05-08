@@ -59,29 +59,9 @@ export function Footer() {
             </div>
             <div className="div-block-42">
               <a
-                href="https://x.com/quadsolutions"
-                className="footer-social-icon w-inline-block"
-                aria-label="Twitter / X"
-              >
-                <img
-                  src="/assets/wf/67a5fb8bc33c7f25ab4e52d9/67b02255b31413b811c048ab_si-twitter.svg"
-                  loading="lazy"
-                  alt=""
-                />
-              </a>
-              <a
-                href="https://www.linkedin.com/company/quadsolutions"
-                className="footer-social-icon w-inline-block"
-                aria-label="LinkedIn"
-              >
-                <img
-                  src="/assets/wf/67a5fb8bc33c7f25ab4e52d9/67b02256c742c6b7cb28f718_si-linkedin.svg"
-                  loading="lazy"
-                  alt=""
-                />
-              </a>
-              <a
-                href="https://www.instagram.com/quadsolutions"
+                href="https://www.instagram.com/quadsolutions.ai?igsh=bTA4dmF5cG45ZGNz"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="footer-social-icon w-inline-block"
                 aria-label="Instagram"
               >
@@ -92,12 +72,27 @@ export function Footer() {
                 />
               </a>
               <a
-                href="https://dribbble.com/quadsolutions"
+                href="https://www.facebook.com/share/1L45uNjwa3/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="footer-social-icon w-inline-block"
-                aria-label="Dribbble"
+                aria-label="Facebook"
               >
                 <img
-                  src="/assets/wf/67a5fb8bc33c7f25ab4e52d9/67b02255fd7da562e4e9dd7a_si-dribbble.svg"
+                  src="/assets/wf/67a5fb8bc33c7f25ab4e52d9/si-facebook.svg"
+                  loading="lazy"
+                  alt=""
+                />
+              </a>
+              <a
+                href="https://www.linkedin.com/company/quadsolution-ai/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-social-icon w-inline-block"
+                aria-label="LinkedIn"
+              >
+                <img
+                  src="/assets/wf/67a5fb8bc33c7f25ab4e52d9/67b02256c742c6b7cb28f718_si-linkedin.svg"
                   loading="lazy"
                   alt=""
                 />

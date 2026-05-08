@@ -249,28 +249,6 @@ export function CTASection({ className = "qs-svc-final-cta" }: CTASectionProps) 
                   <input type="hidden" name="name" value={name} />
                   <input type="hidden" name="email" value={email} />
                   <input type="hidden" name="phone" value={phone} />
-                  <div className="qs-csd-form-row">
-                    <label className="qs-csd-field">
-                      <span className="qs-csd-field-label">Company</span>
-                      <input
-                        type="text"
-                        name="company"
-                        placeholder="Company name"
-                        className="qs-csd-input"
-                        autoComplete="organization"
-                      />
-                    </label>
-                    <label className="qs-csd-field">
-                      <span className="qs-csd-field-label">Website</span>
-                      <input
-                        type="url"
-                        name="website"
-                        placeholder="https://"
-                        className="qs-csd-input"
-                        autoComplete="url"
-                      />
-                    </label>
-                  </div>
                   <div className="qs-csd-field qs-csd-field--full">
                     <span className="qs-csd-field-label">What do you need?</span>
                     <div className="qs-csd-chip-row">
@@ -295,7 +273,7 @@ export function CTASection({ className = "qs-svc-final-cta" }: CTASectionProps) 
                   </div>
                   <label className="qs-csd-field qs-csd-field--full">
                     <span className="qs-csd-field-label">
-                      Tell us about your project
+                      What Exactly You Want Our Specialist To Help You With?
                     </span>
                     <textarea
                       name="message"

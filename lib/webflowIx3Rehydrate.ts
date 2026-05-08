@@ -6,8 +6,14 @@ import {
 } from "./gsapScrollAnimations";
 
 type Ix3Engine = {
-  register: (payload: unknown[]) => void;
+  register: (interactions: unknown[], timelines: unknown[]) => void;
   interactions: Map<string, unknown>;
+  timelineDefs: Map<string, unknown>;
+};
+
+type Ix3Payload = {
+  interactions: unknown[];
+  timelines: unknown[];
 };
 
 type Ix3Module = {
@@ -16,13 +22,18 @@ type Ix3Module = {
   getInstance: () => Ix3Engine | null;
 };
 
+type WebflowModule = {
+  ready?: () => void;
+  destroy?: () => void;
+};
+
 type ScrollTriggerInstance = {
   kill: () => void;
 };
 
 type AwakeWin = Window &
   typeof globalThis & {
-    __AWAKE_IX3_REGISTER_PAYLOAD?: unknown[];
+    __AWAKE_IX3_REGISTER_PAYLOAD?: Ix3Payload;
     __awakeLenis?: { scrollTo: (y: number, opts?: { immediate?: boolean }) => void };
     ScrollTrigger?: {
       refresh: () => void;
@@ -30,17 +41,47 @@ type AwakeWin = Window &
       getAll: () => ScrollTriggerInstance[];
       clearScrollMemory: () => void;
     };
-    Webflow?: { require: (name: string) => Ix3Module };
+    Webflow?: {
+      require: ((name: "ix3") => Ix3Module) & ((name: string) => WebflowModule);
+    };
   };
 
-function clonePayload(raw: unknown[]): unknown[] {
+/**
+ * Webflow modules (dropdown, slider, lightbox, etc.) bind event handlers to the DOM
+ * once at first load. After a Next.js client navigation swaps the route subtree, the
+ * new elements (e.g. `.w-dropdown` on the home page FAQ) have no listeners. Re-run
+ * each module's `ready()` so it re-queries the DOM and re-binds.
+ */
+const WEBFLOW_MODULES_TO_REBIND = [
+  "dropdown",
+  "slider",
+  "tabs",
+  "lightbox",
+  "navbar",
+] as const;
+
+function reinitWebflowModules(W: NonNullable<AwakeWin["Webflow"]>): void {
+  for (const name of WEBFLOW_MODULES_TO_REBIND) {
+    try {
+      const mod = W.require(name) as WebflowModule | undefined;
+      mod?.ready?.();
+    } catch {
+      /* module may not be loaded; skip */
+    }
+  }
+}
+
+function clonePayload(raw: Ix3Payload): Ix3Payload {
   try {
-    return structuredClone(raw) as unknown[];
+    return structuredClone(raw);
   } catch {
     try {
-      return JSON.parse(JSON.stringify(raw)) as unknown[];
+      return JSON.parse(JSON.stringify(raw)) as Ix3Payload;
     } catch {
-      return raw.slice();
+      return {
+        interactions: raw.interactions.slice(),
+        timelines: raw.timelines.slice(),
+      };
     }
   }
 }
@@ -56,8 +97,11 @@ export function startIx3PayloadCapture(): void {
       const ix3 = win.Webflow?.require?.("ix3");
       const inst = ix3?.getInstance?.();
       const n = inst?.interactions?.size ?? 0;
-      if (inst && n > 0 && !win.__AWAKE_IX3_REGISTER_PAYLOAD?.length) {
-        win.__AWAKE_IX3_REGISTER_PAYLOAD = Array.from(inst.interactions.values());
+      if (inst && n > 0 && !win.__AWAKE_IX3_REGISTER_PAYLOAD) {
+        win.__AWAKE_IX3_REGISTER_PAYLOAD = {
+          interactions: Array.from(inst.interactions.values()),
+          timelines: Array.from(inst.timelineDefs?.values?.() ?? []),
+        };
         return;
       }
     } catch {
@@ -110,13 +154,26 @@ export function rehydrateIx3AfterNavigation(): Promise<void> {
     // Kill any previous custom scroll animations
     killCustomScrollAnimations();
 
-    if (!raw?.length || !W?.require) {
-      // No IX3 payload, use custom GSAP animations
+    if (!W?.require) {
+      initCustomScrollAnimations();
+      return;
+    }
+
+    if (!raw?.interactions?.length) {
+      // No IX3 payload, but still re-bind non-IX modules (dropdowns, etc.)
+      reinitWebflowModules(W);
       initCustomScrollAnimations();
       return;
     }
 
     try {
+      // Force scroll to 0 BEFORE building new ScrollTriggers. Otherwise IX3's
+      // register() creates triggers against the previous page's leftover scrollY,
+      // and any heading whose endPos is below that stale scroll registers as
+      // already past — showing up fully animated with no progressive reveal.
+      win.scrollTo(0, 0);
+      win.__awakeLenis?.scrollTo(0, { immediate: true });
+
       // Kill existing ScrollTrigger instances before destroying IX3
       killAllScrollTriggers();
 
@@ -133,13 +190,48 @@ export function rehydrateIx3AfterNavigation(): Promise<void> {
         initCustomScrollAnimations();
         return;
       }
-      inst.register(clonePayload(raw));
+      // ix3.ready() awaits async work that can yield to the browser; reset scroll
+      // again right before register so the new ScrollTriggers are built at scroll 0.
+      win.scrollTo(0, 0);
+      win.__awakeLenis?.scrollTo(0, { immediate: true });
+
+      const cloned = clonePayload(raw);
+      inst.register(cloned.interactions, cloned.timelines);
       document.documentElement.classList.add("w-mod-ix3");
       win.dispatchEvent(new CustomEvent("__wf_ix3_ready"));
-      win.__awakeLenis?.scrollTo(0, { immediate: true });
+
+      reinitWebflowModules(W);
+
+      // Webflow's legacy IX2 fade/slide effects (e.g. slideInBottom on
+      // .crafting-heading) don't rehydrate after Next.js navigation, so JSX-set
+      // `style.opacity: 0` would persist and (a) hide the heading and (b) make
+      // the GSAP fallback below set up a second SplitText + color animation
+      // that conflicts with the IX3 one we just rebound. Manually clear the
+      // inline opacity on every IX3-bound heading so IX3 can do its job alone.
+      const IX3_HEADING_SELECTORS = [
+        ".crafting-heading",
+        ".home-heading-h2",
+        ".our-work-heading",
+        ".creative-mind-heading",
+        ".testimonial-heading-h2",
+        ".pricing-heading-h2",
+        ".heading-20",
+        ".achevement-heading-h2",
+        ".c2a-title",
+      ];
+      IX3_HEADING_SELECTORS.forEach((sel) => {
+        document.querySelectorAll<HTMLElement>(sel).forEach((el) => {
+          const v = el.style.opacity.trim();
+          if (v === "0" || v === "0.0") el.style.removeProperty("opacity");
+        });
+      });
 
       // Wait another frame to let IX3 bind to DOM elements
       await nextFrame();
+
+      // One more scroll reset before refresh, in case anything has nudged scroll.
+      win.scrollTo(0, 0);
+      win.__awakeLenis?.scrollTo(0, { immediate: true });
 
       win.ScrollTrigger?.update?.();
       win.ScrollTrigger?.refresh?.();

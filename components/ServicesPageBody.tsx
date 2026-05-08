@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ServicesTestimonials } from "@/components/ServicesTestimonials";
-import { TemplateFooter } from "@/components/TemplateFooter";
+import { Footer } from "@/components/Footer";
 import { TemplateNavbar } from "@/components/TemplateNavbar";
 import { ServiceArrowIcon } from "@/components/ServiceArrowIcon";
 import { ServicesCardsSection } from "@/components/ServicesCardsSection";
@@ -219,7 +219,7 @@ export function ServicesPageBody() {
       </section>
       <CTASection />
 
-      <TemplateFooter />
+      <Footer />
     </div>
   );
 }

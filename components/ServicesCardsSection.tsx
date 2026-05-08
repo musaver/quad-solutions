@@ -45,12 +45,13 @@ const FEATURE_CARDS: FeatureCard[] = [
     text: "#ffffff",
     iconFilter: ICON_FILTER_WHITE,
     scroll: true,
-    href: "/service-details?service=marketing",
+    href: "/growth-marketing",
     groups: [
       {
         title: "Paid Advertising",
         sub: "Performance Marketing",
         topCount: 2,
+        href: "/growth-marketing/paid-advertising",
         chips: [
           { label: "Meta Ads (Facebook & Instagram)" },
           { label: "Google Ads (Search, Display, YouTube)" },
@@ -62,6 +63,7 @@ const FEATURE_CARDS: FeatureCard[] = [
       {
         title: "Organic Marketing",
         sub: "Content Strategy",
+        href: "/growth-marketing/organic-marketing",
         chips: [
           { label: "Search Engine Optimization (SEO)" },
           { label: "Social Media Management" },
@@ -70,6 +72,7 @@ const FEATURE_CARDS: FeatureCard[] = [
       },
       {
         title: "Strategic Optimization",
+        href: "/growth-marketing/strategic-optimization",
         chips: [
           { label: "Audience Targeting & Segmentation" },
           { label: "Campaign Performance Analysis" },
@@ -89,10 +92,11 @@ const FEATURE_CARDS: FeatureCard[] = [
     text: "#ffffff",
     iconFilter: ICON_FILTER_WHITE,
     scroll: false,
-    href: "/service-details?service=creative",
+    href: "/creative-production",
     groups: [
       {
         title: "Visual Content Creation",
+        href: "/creative-production/visual-content-creation",
         chips: [
           { label: "Product Photography" },
           { label: "Brand Identity Design" },
@@ -101,6 +105,7 @@ const FEATURE_CARDS: FeatureCard[] = [
       },
       {
         title: "Video & Post-Production",
+        href: "/creative-production/video-post-production",
         chips: [
           { label: "Commercial & Advertisement Creatives" },
           { label: "Video Editing & Visual Refinement" },
@@ -110,6 +115,7 @@ const FEATURE_CARDS: FeatureCard[] = [
       {
         title: "AI-Generated Content",
         sub: "AI-Accelerated",
+        href: "/creative-production/ai-generated-content",
         chips: [
           { label: "UGC-Style AI Content" },
           { label: "Cinematic & Documentary-Style Videos" },
@@ -130,10 +136,11 @@ const FEATURE_CARDS: FeatureCard[] = [
     text: "#ffffff",
     iconFilter: ICON_FILTER_WHITE,
     scroll: false,
-    href: "/service-details?service=digital",
+    href: "/digital-products",
     groups: [
       {
         title: "Web Development",
+        href: "/digital-products/web-development",
         chips: [
           { label: "Custom Website Design & Build" },
           { label: "E-commerce Platforms" },
@@ -142,6 +149,7 @@ const FEATURE_CARDS: FeatureCard[] = [
       },
       {
         title: "Mobile App Development",
+        href: "/digital-products/mobile-app-development",
         chips: [
           { label: "iOS & Android Applications" },
           { label: "Cross-Platform Solutions" },
@@ -149,6 +157,7 @@ const FEATURE_CARDS: FeatureCard[] = [
       },
       {
         title: "Custom Software Solutions",
+        href: "/digital-products/custom-software-solutions",
         chips: [
           { label: "Business Process Software" },
           { label: "Scalable Digital Product Development" },
@@ -168,11 +177,11 @@ const FEATURE_CARDS: FeatureCard[] = [
     text: "#ffffff",
     iconFilter: ICON_FILTER_WHITE,
     scroll: false,
-    href: "/service-details?service=ai",
+    href: "/ai-automation",
     groups: [
       {
         title: "Intelligent Automation",
-        href: "/service-details/intelligent-automation",
+        href: "/ai-automation/intelligent-automation",
         chips: [
           { label: "Workflow Automation Systems" },
           { label: "Business Process Optimization" },
@@ -180,7 +189,7 @@ const FEATURE_CARDS: FeatureCard[] = [
       },
       {
         title: "AI Communication Tools",
-        href: "/service-details/ai-communication-tools",
+        href: "/ai-automation/ai-communication-tools",
         chips: [
           { label: "Custom AI Chatbots" },
           { label: "Intelligent Customer Support Systems" },
@@ -188,7 +197,7 @@ const FEATURE_CARDS: FeatureCard[] = [
       },
       {
         title: "Advanced AI Systems",
-        href: "/service-details/advanced-ai-systems",
+        href: "/ai-automation/advanced-ai-systems",
         chips: [
           { label: "Autonomous AI Agents" },
           { label: "AI-Driven Data Insights" },

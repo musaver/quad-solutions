@@ -2,21 +2,21 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { ServiceDetailsPageBody } from "@/components/ServiceDetailsPageBody";
 import { getServiceDetailsContent } from "@/lib/serviceDetailsContent";
-import "../service-details-page.css";
-import "../../case-studies/case-studies-page.css";
-import "../../services/services-page.css";
+import "@/app/styles/service-details-page.css";
+import "@/app/case-studies/case-studies-page.css";
+import "@/app/services/services-page.css";
 
-const content = getServiceDetailsContent("intelligent-automation");
+const content = getServiceDetailsContent("ai-communication-tools");
 
 export const metadata: Metadata = {
   title: content.documentTitle,
   description: content.metaDescription,
 };
 
-export default function IntelligentAutomationPage() {
+export default function AiCommunicationToolsPage() {
   return (
     <Suspense fallback={null}>
-      <ServiceDetailsPageBody slug="intelligent-automation" />
+      <ServiceDetailsPageBody slug="ai-communication-tools" />
     </Suspense>
   );
 }

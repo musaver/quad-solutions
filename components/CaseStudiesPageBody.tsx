@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { TemplateFooter } from "@/components/TemplateFooter";
+import { Footer } from "@/components/Footer";
 import { TemplateNavbar } from "@/components/TemplateNavbar";
 import { ServiceArrowIcon } from "@/components/ServiceArrowIcon";
 import { CTASection } from "@/components/home";
@@ -33,41 +33,6 @@ const FILTERS: { id: FilterId; label: string }[] = [
   { id: "ecommerce", label: "E-commerce" },
   { id: "local-business", label: "Local Business" },
   { id: "lead-gen", label: "Lead Generation" },
-];
-
-const CATEGORY_CARDS: {
-  category: ProjectCategory;
-  title: string;
-  desc: string;
-  style: { background: string; borderColor: string };
-}[] = [
-  {
-    category: "ecommerce",
-    title: "E-commerce",
-    desc: "DTC growth & marketplaces",
-    style: {
-      background: "rgba(255,175,104,0.04)",
-      borderColor: "rgba(255,175,104,0.22)",
-    },
-  },
-  {
-    category: "local-business",
-    title: "Local Business",
-    desc: "Hyper-local growth & bookings",
-    style: {
-      background: "rgba(244,136,154,0.04)",
-      borderColor: "rgba(244,136,154,0.22)",
-    },
-  },
-  {
-    category: "lead-gen",
-    title: "Lead Generation",
-    desc: "Funnels, qualification & CRM",
-    style: {
-      background: "rgba(73,40,253,0.03)",
-      borderColor: "rgba(73,40,253,0.2)",
-    },
-  },
 ];
 
 const PROJECTS: Project[] = [
@@ -129,14 +94,6 @@ export function CaseStudiesPageBody() {
         : PROJECTS.filter((p) => p.category === filter),
     [filter],
   );
-
-  const categoryCounts = useMemo(() => {
-    const counts = new Map<ProjectCategory, number>();
-    for (const p of PROJECTS) {
-      counts.set(p.category, (counts.get(p.category) ?? 0) + 1);
-    }
-    return counts;
-  }, []);
 
   return (
     <div className="main qs-case-studies-page">
@@ -203,86 +160,6 @@ export function CaseStudiesPageBody() {
         </div>
       </div>
 
-      <section className="qs-case-latest">
-        <div className="qs-inner">
-          <div className="qs-case-latest-top">
-            <div className="qs-case-section-label">
-              <span className="qs-case-section-label-bar" aria-hidden />
-              <p className="qs-case-section-label-text">Latest Project</p>
-            </div>
-            <Link
-              href="/case-study-details?project=heyam"
-              className="qs-case-link-pill w-inline-block"
-            >
-              Open case study
-              <span className="qs-case-arrow-muted" aria-hidden>
-                <ServiceArrowIcon variant="on-light" />
-              </span>
-            </Link>
-          </div>
-          <Link
-            href="/case-study-details?project=heyam"
-            className="qs-case-featured w-inline-block"
-          >
-            <div className="qs-case-featured-bg" aria-hidden>
-              <img
-                src={`${ASSET}/heyam.jpg`}
-                alt=""
-                width={1920}
-                height={1280}
-              />
-              <div className="qs-case-featured-overlay" />
-            </div>
-            <div className="qs-case-featured-top">
-              <span className="qs-case-pill-glass">Featured Project</span>
-              <span className="qs-case-pill-glass is-regular">
-                E-commerce Growth
-              </span>
-            </div>
-            <div className="qs-case-featured-bottom">
-              <div>
-                <p className="qs-case-featured-name">Heyam.ae</p>
-                <p className="qs-case-featured-meta">
-                  Heyam.ae · UAE Luxury Fashion · 2025
-                </p>
-                <div className="qs-case-featured-tags">
-                  <span className="qs-case-tag-glass">Shopify CRO</span>
-                  <span className="qs-case-tag-glass">Meta Ads</span>
-                  <span className="qs-case-tag-glass">Influencer &amp; UGC</span>
-                </div>
-              </div>
-              <span className="qs-case-featured-btn">
-                View Case Study
-                <span className="qs-case-arrow-dark" aria-hidden>
-                  <ServiceArrowIcon variant="on-dark" />
-                </span>
-              </span>
-            </div>
-          </Link>
-        </div>
-      </section>
-
-      <section className="qs-case-categories">
-        <div className="qs-inner">
-          <div className="qs-case-cat-grid">
-            {CATEGORY_CARDS.map((c) => {
-              const count = categoryCounts.get(c.category) ?? 0;
-              return (
-                <div key={c.category} className="qs-case-cat-card" style={c.style}>
-                  <p className="qs-case-cat-count">
-                    {count} {count === 1 ? "project" : "projects"}
-                  </p>
-                  <div>
-                    <p className="qs-case-cat-title">{c.title}</p>
-                    <p className="qs-case-cat-desc">{c.desc}</p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
       <section className="qs-case-projects-section">
         <div className="qs-inner">
           <div className="qs-case-projects-head">
@@ -347,7 +224,7 @@ export function CaseStudiesPageBody() {
       
       <CTASection className="qs-csd-final-cta qs-case-final-cta" />
 
-      <TemplateFooter />
+      <Footer />
     </div>
   );
 }
