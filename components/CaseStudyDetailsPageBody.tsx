@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { TemplateFooter } from "@/components/TemplateFooter";
+import { Footer } from "@/components/Footer";
 import { TemplateNavbar } from "@/components/TemplateNavbar";
 import { ServiceArrowIcon } from "@/components/ServiceArrowIcon";
 import { CTASection } from "@/components/home";
@@ -390,7 +390,7 @@ export function CaseStudyDetailsPageBody() {
       
 
       <CTASection className="qs-csd-final-cta" />
-      <TemplateFooter />
+      <Footer />
     </div>
   );
 }

@@ -1,6 +1,19 @@
+import Link from "next/link";
+import type { ReactNode } from "react";
 import { TEAM_MEMBERS } from "@/lib/team";
 
-export function TeamSection() {
+const DEFAULT_HEADING = (
+  <>
+    Meet the specialist leaders behind{" "}
+    <span className="text-span-14">your growth</span>
+  </>
+);
+
+type TeamSectionProps = {
+  heading?: ReactNode;
+};
+
+export function TeamSection({ heading = DEFAULT_HEADING }: TeamSectionProps = {}) {
   return (
     <section id="team" className="home-our-team-sec">
       <div className="w-layout-blockcontainer container-7 w-container">
@@ -10,8 +23,7 @@ export function TeamSection() {
             style={{ opacity: 0 }}
             className="creative-mind-heading"
           >
-            Meet the specialist leaders behind{" "}
-            <span className="text-span-14">your growth</span>
+            {heading}
           </h2>
         </div>
         <div className="w-layout-grid creative-mind-wrapper">
@@ -37,6 +49,22 @@ export function TeamSection() {
               <div className="creative-descp-block">
                 <p className="creative-block-title">{member.name}</p>
                 <div className="position-txt">{member.position}</div>
+                <p className="qs-team-bio">{member.bio}</p>
+                <Link
+                  href="/contact"
+                  className="qs-team-cta"
+                  aria-label={`Talk to ${member.name}`}
+                >
+                  <img
+                    src="/assets/team/icon-phone.svg"
+                    alt=""
+                    width="14"
+                    height="14"
+                    className="qs-team-cta-icon"
+                    loading="lazy"
+                  />
+                  <span>Talk to Specialist</span>
+                </Link>
                 <div className="social-link-div">
                   <a
                     href="https://x.com/quadsolutions"

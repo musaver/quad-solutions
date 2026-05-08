@@ -2,15 +2,12 @@
 
 import Link from "next/link";
 import { TemplateNavbar } from "@/components/TemplateNavbar";
-import { TemplateFooter } from "@/components/TemplateFooter";
+import { Footer } from "@/components/Footer";
+import { TeamSection } from "@/components/home/TeamSection";
 import { useHeroAnimation } from "@/hooks/useHeroAnimation";
-import { TEAM_MEMBERS } from "@/lib/team";
 
 const ARROW_DARK = "/assets/wf/67a5fb8bc33c7f25ab4e52d9/67a9e2599fa438b2b5ca91b6_arrow-top-right.png";
 const ARROW_LIGHT = "/assets/figma-case-study-details/icon-arrow-on-dark.svg";
-const ICON_LINKEDIN = "/assets/wf/67a5fb8bc33c7f25ab4e52d9/67b02256c742c6b7cb28f718_si-linkedin.svg";
-const ICON_TWITTER = "/assets/wf/67a5fb8bc33c7f25ab4e52d9/67b02255b31413b811c048ab_si-twitter.svg";
-const ICON_PHONE = "/assets/figma-case-study-details/icon-phone.svg";
 
 const STATS = [
   { num: "12+", label: ["Years of", "expertise"] },
@@ -41,12 +38,6 @@ const VALUES = [
     text: "Our model is engineered for ambitious businesses. We deploy the exact specialists you need, when you need them, so growth never bottlenecks on agency capacity.",
   },
 ];
-
-const TEAM = TEAM_MEMBERS.map((m) => ({
-  name: m.name,
-  role: m.position,
-  image: m.image,
-}));
 
 export function AboutPageBody() {
   const heroRef = useHeroAnimation();
@@ -178,49 +169,14 @@ export function AboutPageBody() {
       </section>
 
       {/* Team */}
-      <section className="qs-about-team">
-        <div className="qs-inner">
-          <div className="qs-about-team-head">
-            <div>
-              <h2 className="qs-about-team-title">
-                Meet your{" "}
-                <span className="qs-about-italic">specialist leaders</span>
-              </h2>
-              <p className="qs-about-team-sub">
-                Our divisions are led by industry experts who ensure every
-                project is executed with precision and deep domain knowledge.
-              </p>
-            </div>
-            <span className="qs-about-team-chip">
-              <strong>{TEAM.length}</strong> division leads
-            </span>
-          </div>
-          <div className="qs-about-team-grid">
-            {TEAM.map((m) => (
-              <article key={m.name} className="qs-about-team-card">
-                <div className="qs-about-team-photo">
-                  <img src={m.image} alt={`${m.name}, ${m.role}`} loading="lazy" />
-                </div>
-                <div className="qs-about-team-info">
-                  <p className="qs-about-team-name">{m.name}</p>
-                  <p className="qs-about-team-role">{m.role}</p>
-                  <div className="qs-about-team-socials">
-                    <a href="https://www.linkedin.com" aria-label={`${m.name} on LinkedIn`}>
-                      <img src={ICON_LINKEDIN} alt="" />
-                    </a>
-                    <a href="https://x.com" aria-label={`${m.name} on X`}>
-                      <img src={ICON_TWITTER} alt="" />
-                    </a>
-                    <a href="/contact" aria-label={`Call ${m.name}`}>
-                      <img src={ICON_PHONE} alt="" />
-                    </a>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      <TeamSection
+        heading={
+          <>
+            Meet your{" "}
+            <span className="text-span-14">specialist leaders</span>
+          </>
+        }
+      />
 
       {/* Custom Quote CTA */}
       <section className="qs-about-quote">
@@ -275,7 +231,7 @@ export function AboutPageBody() {
         </div>
       </section>
 
-      <TemplateFooter />
+      <Footer />
     </div>
   );
 }

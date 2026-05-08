@@ -126,6 +126,57 @@ body.body {
   background-image: url("/assets/wf/67a5fb8bc33c7f25ab4e52d9/68e4efa959606e9a7d41cc67_background-gradient.webp");
 }
 
+/* Webflow IX3 SplitText wraps every character of `.crafting-heading` in an
+   inline-block span for its color-stagger animation. inline-block destroys
+   word boundaries, so the browser wraps "Growth"/"Creativity" mid-word on
+   narrow viewports. The timeline only animates color (no transform), so we
+   can force the char spans back to inline — word-aware wrapping returns and
+   the color stagger still works. */
+.crafting-heading * {
+  display: inline !important;
+  white-space: normal !important;
+}
+.crafting-heading {
+  text-wrap: pretty;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+/* Per-member bio + "Talk to Specialist" CTA inside the home team cards. */
+.qs-team-bio {
+  color: var(--black-60);
+  font-size: 14px;
+  line-height: 1.45;
+  text-align: center;
+  margin: 8px 0 0;
+  max-width: 260px;
+}
+.qs-team-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--black-100, #1b1d1e);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.qs-team-cta:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+.qs-team-cta-icon {
+  display: block;
+  width: 14px;
+  height: 14px;
+  filter: brightness(0) invert(1);
+}
+
 /* React-controlled mobile menu — slide in from right, smooth + reliable across
    client-side navigations (doesn't depend on Webflow IX3 re-binding). */
 .awake-menu-btn {

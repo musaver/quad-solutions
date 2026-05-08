@@ -91,7 +91,7 @@ export function AboutSection() {
                     40
                   </p>
                 </div>
-                <p className="descp">Total Projects Completed</p>
+                <p className="descp">Projects Completed</p>
               </div>
               <div className="count-sec-divider"></div>
             </div>
