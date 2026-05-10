@@ -30,6 +30,8 @@ export function CTASection({ className = "qs-svc-final-cta" }: CTASectionProps) 
   const [phone, setPhone] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const continueButtonRef = useRef<HTMLButtonElement>(null);
   const modalCloseRef = useRef<HTMLButtonElement>(null);
@@ -60,9 +62,40 @@ export function CTASection({ className = "qs-svc-final-cta" }: CTASectionProps) 
     setModalOpen(true);
   };
 
-  const onDetailsSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onDetailsSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
+    if (submitting) return;
+    setSubmitting(true);
+    setErrorMsg(null);
+    try {
+      const formEl = e.currentTarget;
+      const data = new FormData(formEl);
+      const services = data.getAll("services").map(String);
+      const budget = (data.get("budget") as string | null) ?? "";
+      const message = (data.get("message") as string | null) ?? "";
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          source: "cta",
+          name,
+          email,
+          phone,
+          services,
+          budget,
+          message,
+        }),
+      });
+      const body = (await res.json().catch(() => ({}))) as { error?: string };
+      if (!res.ok) {
+        throw new Error(body.error ?? "Something went wrong");
+      }
+      setSubmitted(true);
+    } catch (err) {
+      setErrorMsg(err instanceof Error ? err.message : "Something went wrong");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const closeModal = () => setModalOpen(false);
@@ -282,8 +315,13 @@ export function CTASection({ className = "qs-svc-final-cta" }: CTASectionProps) 
                       rows={2}
                     />
                   </label>
-                  <button type="submit" className="qs-csd-form-submit">
-                    <span>Talk to a Specialist</span>
+                  {errorMsg && (
+                    <p className="qs-csd-form-error" role="alert" style={{ color: "#b00020", margin: "8px 0 0", fontSize: 13 }}>
+                      {errorMsg}
+                    </p>
+                  )}
+                  <button type="submit" className="qs-csd-form-submit" disabled={submitting}>
+                    <span>{submitting ? "Sending…" : "Talk to a Specialist"}</span>
                     <span className="qs-csd-form-submit-icon" aria-hidden>
                       <ServiceArrowIcon variant="on-light" />
                     </span>
