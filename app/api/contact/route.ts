@@ -57,8 +57,16 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const to = process.env.BREVO_TO_EMAIL;
-  if (!to) {
+  const DEFAULT_RECIPIENTS = [
+    "musaverleo@gmail.com",
+    "hello@quadsolutions.com",
+  ];
+  const recipients = (process.env.BREVO_TO_EMAIL ?? DEFAULT_RECIPIENTS.join(","))
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+  if (recipients.length === 0) {
     return NextResponse.json(
       { ok: false, error: "Recipient is not configured" },
       { status: 500 },
@@ -103,7 +111,7 @@ export async function POST(request: NextRequest) {
 
   try {
     await sendBrevoEmail({
-      to: [{ email: to, name: "QUAD Solutions" }],
+      to: recipients.map((address) => ({ email: address, name: "QUAD Solutions" })),
       replyTo: { email, name },
       subject,
       htmlContent,
