@@ -106,10 +106,50 @@ const FAQS = [
 export function ContactPageBody() {
   const heroRef = useHeroAnimation();
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
+    if (submitting) return;
+    const formEl = e.currentTarget;
+    const data = new FormData(formEl);
+    const name = ((data.get("name") as string | null) ?? "").trim();
+    const email = ((data.get("email") as string | null) ?? "").trim();
+    const message = ((data.get("message") as string | null) ?? "").trim();
+    const budget = (data.get("budget") as string | null) ?? "";
+    const services = data.getAll("services").map(String);
+
+    if (!name || !email) {
+      setErrorMsg("Please share your name and email so we can reply.");
+      return;
+    }
+
+    setSubmitting(true);
+    setErrorMsg(null);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          source: "contact",
+          name,
+          email,
+          services,
+          budget,
+          message,
+        }),
+      });
+      const body = (await res.json().catch(() => ({}))) as { error?: string };
+      if (!res.ok) {
+        throw new Error(body.error ?? "Something went wrong");
+      }
+      setSubmitted(true);
+    } catch (err) {
+      setErrorMsg(err instanceof Error ? err.message : "Something went wrong");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -317,13 +357,18 @@ export function ContactPageBody() {
                     />
                   </label>
 
+                  {errorMsg && (
+                    <p className="qs-contact-form-error" role="alert" style={{ color: "#b00020", margin: "8px 0 0", fontSize: 13 }}>
+                      {errorMsg}
+                    </p>
+                  )}
                   <div className="qs-contact-form-foot">
                     <p className="qs-contact-form-note">
                       By sending this, you agree to our handling of the details
                       above solely to reply to your enquiry.
                     </p>
-                    <button type="submit" className="qs-btn-primary">
-                      <span>Send Message</span>
+                    <button type="submit" className="qs-btn-primary" disabled={submitting}>
+                      <span>{submitting ? "Sending…" : "Send Message"}</span>
                       <span className="qs-btn-arrow" aria-hidden="true">
                         <img src={ARROW_DARK} alt="" />
                       </span>
