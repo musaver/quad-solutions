@@ -57,10 +57,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const DEFAULT_RECIPIENTS = [
-    "musaverleo@gmail.com",
-    "hello@quadsolutions.com",
-  ];
+  const DEFAULT_RECIPIENTS = ["musaverleo@gmail.com"];
   const recipients = (process.env.BREVO_TO_EMAIL ?? DEFAULT_RECIPIENTS.join(","))
     .split(",")
     .map((s) => s.trim())
