@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const VIDEO_SRC = "https://www.w3schools.com/html/mov_bbb.mp4";
+const VIDEO_SRC = "/assets/video/intro-video.mp4";
 const DESKTOP_BREAKPOINT = 992;
 
 export function HeroVideoScroll() {
