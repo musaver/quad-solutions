@@ -19,39 +19,14 @@ export function Footer() {
             >
               <img
                 loading="lazy"
-                src="/assets/logo/quad-icon.png"
+                src="/assets/logo/web-logo-final.jpg"
                 alt="QUAD Solutions"
                 style={{
-                  height: "44px",
+                  height: "52px",
                   width: "auto",
                   display: "block",
-                  marginRight: "8px",
-                  mixBlendMode: "multiply",
                 }}
               />
-              <span
-                style={{
-                  display: "inline-flex",
-                  flexDirection: "column",
-                  lineHeight: 1,
-                  color: "var(--black-100)",
-                }}
-              >
-                <span style={{ fontSize: 23, lineHeight: 1, fontWeight: 500 }}>
-                  QUAD
-                </span>
-                <span
-                  className="italic-span"
-                  style={{
-                    fontSize: 18.5,
-                    lineHeight: 1,
-                    letterSpacing: 0,
-                    fontWeight: 400,
-                  }}
-                >
-                  Solutions
-                </span>
-              </span>
             </Link>
             <div className="text-block-32">
               Empowering businesses with innovative AI and digital solutions.

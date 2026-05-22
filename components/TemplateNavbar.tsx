@@ -70,40 +70,14 @@ export function TemplateNavbar() {
               >
                 <img
                   loading="lazy"
-                  src="/assets/logo/quad-icon.png"
+                  src="/assets/logo/web-logo-final.jpg"
                   alt="QUAD Solutions"
                   style={{
-                    height: "44px",
+                    height: "52px",
                     width: "auto",
                     display: "block",
-                    marginRight: "4px",
-                    mixBlendMode: "multiply",
                   }}
                 />
-                <span
-                  className="navbar-brand-text"
-                  style={{
-                    display: "inline-flex",
-                    flexDirection: "column",
-                    lineHeight: 1,
-                  }}
-                >
-                  <span style={{ fontSize: 23, lineHeight: 1, fontWeight: 500 }}>
-                    QUAD
-                  </span>
-                  <span
-                    className="italic-span typing-text"
-                    style={{
-                      fontSize: 18.5,
-                      lineHeight: 1,
-                      letterSpacing: 0,
-                      fontWeight: 400,
-                      color: "var(--black-100)",
-                    }}
-                  >
-                    Solutions
-                  </span>
-                </span>
               </Link>
             </div>
             <ul role="list" className="nav-menu-two-2 w-list-unstyled">
