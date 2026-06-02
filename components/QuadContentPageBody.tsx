@@ -122,11 +122,46 @@ const HERO_PIPELINE = [
   "Delivery",
 ];
 
+const PILLARS = [
+  {
+    title: "One roof, zero handoffs",
+    body: "Concept, shoot, post and delivery handled by a single in-house team. No agency relay, no freelancer chain — nothing lost in the gaps between vendors.",
+  },
+  {
+    title: "Story before software",
+    body: "We start with research and narrative, not a template. The edit serves the story — every cut, caption and frame earns its place.",
+  },
+  {
+    title: "AI-accelerated, human-led",
+    body: "We use AI to move faster and reach further — cinematics, variations, scale — while people make every creative call that matters.",
+  },
+  {
+    title: "Engineered to perform",
+    body: "Built for the hook, the retention curve and the conversion — not just to look good. Creative judged on outcomes, not awards.",
+  },
+];
+
 const PROCESS = [
-  { num: "01", title: "Brief", sub: "Send footage + brand notes" },
-  { num: "02", title: "Cut", sub: "First edit within 48h" },
-  { num: "03", title: "Refine", sub: "Up to 2 rounds of feedback" },
-  { num: "04", title: "Deliver", sub: "Master + platform-ready files" },
+  {
+    num: "01",
+    title: "Discover",
+    sub: "Your goal, audience and offer — mapped to the angle that actually wins.",
+  },
+  {
+    num: "02",
+    title: "Concept & script",
+    sub: "Story, hooks and shot list written before we roll a single frame.",
+  },
+  {
+    num: "03",
+    title: "Produce",
+    sub: "Shoot, AI cinematics, motion, sound and grade — built start to finish.",
+  },
+  {
+    num: "04",
+    title: "Deliver & scale",
+    sub: "Platform-native masters for every channel, ready to post and repeat.",
+  },
 ];
 
 function PlayIcon() {
@@ -599,19 +634,52 @@ export function QuadContentPageBody() {
 
       <section className="qs-fc-process-section" aria-labelledby="qs-fc-process-title">
         <div className="qs-inner">
-          <h2 id="qs-fc-process-title" className="qs-fc-section-title home-heading-h2">
-            How we <span className="span-txt">work together</span>
-          </h2>
-          <div className="qs-fc-process-steps">
-            {PROCESS.map((p) => (
-              <div key={p.num} className="qs-fc-process-step">
-                <p className="qs-fc-process-num">{p.num}</p>
-                <div>
-                  <p className="qs-fc-process-step-title">{p.title}</p>
-                  <p className="qs-fc-process-step-sub">{p.sub}</p>
-                </div>
-              </div>
+          <div className="qs-fc-process-intro">
+            <span className="qs-fc-process-eyebrow">The QUAD difference</span>
+            <h2
+              id="qs-fc-process-title"
+              className="qs-fc-section-title home-heading-h2"
+            >
+              Four disciplines.{" "}
+              <span className="span-txt">One team. Your outcome.</span>
+            </h2>
+            <p className="qs-fc-process-lede">
+              QUAD means four crafts — Creative, Strategy, Digital and AI —
+              working as one on every project. Not a chain of freelancers or an
+              agency relay, but a single studio that takes your idea from blank
+              page to published, and builds every frame to perform. That&rsquo;s
+              how we move faster, hold the story together, and turn content into
+              results others can&rsquo;t.
+            </p>
+          </div>
+
+          <div className="qs-fc-pillars">
+            {PILLARS.map((p, i) => (
+              <article key={p.title} className="qs-fc-pillar">
+                <span className="qs-fc-pillar-index" aria-hidden>
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="qs-fc-pillar-title">{p.title}</h3>
+                <p className="qs-fc-pillar-body">{p.body}</p>
+              </article>
             ))}
+          </div>
+
+          <div className="qs-fc-process-flow">
+            <h3 className="qs-fc-process-subhead">
+              How we <span className="qs-fc-hero-italic">work together</span>
+            </h3>
+            <ol className="qs-fc-process-steps">
+              {PROCESS.map((p) => (
+                <li key={p.num} className="qs-fc-process-step">
+                  <span className="qs-fc-process-num">{p.num}</span>
+                  <div className="qs-fc-process-step-text">
+                    <p className="qs-fc-process-step-title">{p.title}</p>
+                    <p className="qs-fc-process-step-sub">{p.sub}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
       </section>
