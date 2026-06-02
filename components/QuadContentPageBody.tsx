@@ -31,7 +31,7 @@ type CreatorVideo = {
 const VIDEOS: CreatorVideo[] = [
   {
     id: "quad-brand-film",
-    title: "Agency chaos to cloud nine",
+    title: "You relax. We handle the rest.",
     meta: "QUAD brand film · Vertical short-form",
     format: "vertical",
     category: "shorts",
