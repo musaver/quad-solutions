@@ -1,0 +1,625 @@
+"use client";
+
+import Link from "next/link";
+import { useMemo, useState } from "react";
+import { Footer } from "@/components/Footer";
+import { TemplateNavbar } from "@/components/TemplateNavbar";
+import { ServiceArrowIcon } from "@/components/ServiceArrowIcon";
+import { CTASection } from "@/components/home";
+import { useHeroAnimation } from "@/hooks/useHeroAnimation";
+
+type VideoFilter = "all" | "longform" | "shorts";
+type VideoFormat = "horizontal" | "vertical";
+
+type CreatorVideo = {
+  id: string;
+  title: string;
+  meta: string;
+  format: VideoFormat;
+  category: Exclude<VideoFilter, "all">;
+  tags: string[];
+  /** Drop your file at this path. Leave undefined to render the placeholder tile. */
+  src?: string;
+  /** Optional poster image — first frame is used otherwise. */
+  poster?: string;
+  /** Long-form blurb shown below the tags. Optional. */
+  description?: string;
+  /** Pin to the top of the grid and show a "Featured" badge. */
+  featured?: boolean;
+};
+
+const VIDEOS: CreatorVideo[] = [
+  {
+    id: "long-1",
+    title: "Cinematic vlog cut",
+    meta: "Long-form · Lifestyle",
+    format: "horizontal",
+    category: "longform",
+    tags: ["YouTube", "Cinematic", "Color"],
+    // src: "/assets/creator-videos/long-1.mp4",
+    // poster: "/assets/creator-videos/posters/long-1.jpg",
+  },
+  {
+    id: "long-2",
+    title: "Tutorial deep-dive",
+    meta: "Long-form · Educational",
+    format: "horizontal",
+    category: "longform",
+    tags: ["YouTube", "Retention", "Graphics"],
+  },
+  {
+    id: "umrah-in-sixty-seconds",
+    title: "Umrah — in sixty seconds",
+    meta: "Faith & travel · Vertical short-form",
+    format: "vertical",
+    category: "shorts",
+    tags: ["Umrah", "Cinematic", "Subtitled", "Color grade"],
+    src: "/assets/creator-videos/sixty-seconds.mp4",
+    poster: "/assets/creator-videos/posters/sixty-seconds.jpg",
+    featured: true,
+    description:
+      "Sixty seconds. Four moments. One journey. From the quiet of niyyah before the flight, to the first sight of the Kaaba, to the closing rite of tahallul — a cinematic Umrah explainer cut for the platforms that scroll the fastest. Subtitled for sound-off viewing, paced for the hook, and graded for the warmth Mecca already has. Faith content that respects the subject and still earns the stop.",
+  },
+  {
+    id: "two-power-centers",
+    title: "Two parallel power centers",
+    meta: "Geopolitics explainer · Produced for TAM",
+    format: "vertical",
+    category: "shorts",
+    tags: ["Explainer", "Maps", "Subtitled", "Editorial"],
+    src: "/assets/creator-videos/story-led-tiktok.mp4",
+    poster: "/assets/creator-videos/posters/story-led-tiktok.jpg",
+    description:
+      "A 79-second geopolitical brief for The Awakening Media — the kind of editorial short that turns a tangled news cycle into a story the scroll actually finishes. Map animations carry the geography, captions carry the argument, and the cut holds a steady rhythm that makes a complex thesis feel inevitable. Short-form built like long-form: research-led, frame-by-frame.",
+  },
+  {
+    id: "short-3",
+    title: "Product showcase Short",
+    meta: "Short-form · E-com",
+    format: "vertical",
+    category: "shorts",
+    tags: ["Shorts", "Product", "Pacing"],
+  },
+  {
+    id: "long-3",
+    title: "Documentary feature",
+    meta: "Long-form · Brand film",
+    format: "horizontal",
+    category: "longform",
+    tags: ["Film", "Sound design", "Grade"],
+  },
+];
+
+const FILTERS: { id: VideoFilter; label: string }[] = [
+  { id: "all", label: "All work" },
+  { id: "longform", label: "Long-form" },
+  { id: "shorts", label: "Short-form" },
+];
+
+const TAM_INSTAGRAM = "https://www.instagram.com/the.awakeningmedia/";
+
+const SERVICES = [
+  {
+    title: "Short-form editing",
+    body: "Reels, TikToks and Shorts engineered for hook-strength, retention and watch-time — captions, sound, pacing, all done.",
+    tag: "Reels · TikTok · Shorts",
+  },
+  {
+    title: "Long-form editing",
+    body: "YouTube edits with story-first cuts, motion graphics, sound design and grade — the kind of polish that compounds subscribers.",
+    tag: "YouTube · Brand films",
+  },
+  {
+    title: "Thumbnails & packaging",
+    body: "A/B-ready thumbnails, titles and chapter packaging. Built to lift CTR without selling out your channel voice.",
+    tag: "CTR · Titles · Hooks",
+  },
+  {
+    title: "Channel strategy",
+    body: "Posting cadence, content pillars, hook frameworks, and retention reviews — a steady operating system for your growth.",
+    tag: "Strategy · Ops · Reviews",
+  },
+];
+
+const METRICS = [
+  { value: "50M+", label: "Views generated" },
+  { value: "200+", label: "Edits delivered" },
+  { value: "+3.2m", label: "Avg watch-time lift" },
+  { value: "30+", label: "Creators served" },
+];
+
+const PROCESS = [
+  { num: "01", title: "Brief", sub: "Send footage + brand notes" },
+  { num: "02", title: "Cut", sub: "First edit within 48h" },
+  { num: "03", title: "Refine", sub: "Up to 2 rounds of feedback" },
+  { num: "04", title: "Deliver", sub: "Master + platform-ready files" },
+];
+
+function PlayIcon() {
+  return (
+    <svg
+      width="22"
+      height="22"
+      viewBox="0 0 22 22"
+      fill="none"
+      aria-hidden
+    >
+      <path d="M7 5l11 6-11 6V5z" fill="currentColor" />
+    </svg>
+  );
+}
+
+function VideoTile({ video }: { video: CreatorVideo }) {
+  const hasVideo = Boolean(video.src);
+  const aspectClass =
+    video.format === "vertical"
+      ? "qs-fc-video-tile--vertical"
+      : "qs-fc-video-tile--horizontal";
+
+  const className = [
+    "qs-fc-video-tile",
+    aspectClass,
+    video.featured ? "qs-fc-video-tile--featured" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  return (
+    <article className={className}>
+      <div className="qs-fc-video-frame">
+        {hasVideo ? (
+          <video
+            className="qs-fc-video-el"
+            src={video.src}
+            poster={video.poster}
+            controls
+            preload="metadata"
+            playsInline
+          />
+        ) : (
+          <div className="qs-fc-video-placeholder" aria-label="Coming soon">
+            <span className="qs-fc-video-play" aria-hidden>
+              <PlayIcon />
+            </span>
+            <span className="qs-fc-video-format-badge">
+              {video.format === "vertical" ? "9:16" : "16:9"}
+            </span>
+          </div>
+        )}
+        {video.featured ? (
+          <span className="qs-fc-video-featured-badge">Featured</span>
+        ) : null}
+      </div>
+      <div className="qs-fc-video-body">
+        <p className="qs-fc-video-title">{video.title}</p>
+        <p className="qs-fc-video-meta">{video.meta}</p>
+        <div className="qs-fc-video-tags">
+          {video.tags.map((t) => (
+            <span key={t} className="qs-fc-video-tag">
+              {t}
+            </span>
+          ))}
+        </div>
+        {video.description ? (
+          <p className="qs-fc-video-description">{video.description}</p>
+        ) : null}
+      </div>
+    </article>
+  );
+}
+
+export function QuadContentPageBody() {
+  const [filter, setFilter] = useState<VideoFilter>("all");
+  const heroRef = useHeroAnimation();
+
+  const visible = useMemo(() => {
+    const list =
+      filter === "all" ? VIDEOS : VIDEOS.filter((v) => v.category === filter);
+    return [...list].sort((a, b) => Number(!!b.featured) - Number(!!a.featured));
+  }, [filter]);
+
+  return (
+    <div className="main qs-fc-page">
+      <div className="gradient-background" />
+      <TemplateNavbar />
+
+      <header className="qs-fc-hero">
+        <div className="qs-inner">
+          <div className="qs-fc-eyebrow-wrap">
+            <span className="qs-fc-eyebrow">QUAD Content</span>
+          </div>
+          <h1 ref={heroRef} className="qs-fc-hero-title">
+            Edits that <span className="qs-fc-hero-italic">grow</span>
+            <br />
+            your channel
+          </h1>
+          <p className="qs-fc-hero-lede">
+            We&rsquo;re the editing and strategy team behind faster-growing
+            creator channels. Cinematic long-form, scroll-stopping shorts, and
+            the systems that keep your content engine running.
+          </p>
+          <div className="qs-fc-hero-ctas">
+            <Link href="/contact" className="qs-fc-btn-primary w-inline-block">
+              <span>Book a creator strategy call</span>
+              <span className="qs-fc-btn-icon" aria-hidden>
+                <ServiceArrowIcon variant="on-dark" />
+              </span>
+            </Link>
+            <a href="#qs-fc-work" className="qs-fc-btn-secondary w-inline-block">
+              See the work
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <section className="qs-fc-metrics" aria-label="Results we&rsquo;ve driven">
+        <div className="qs-inner">
+          <div className="qs-fc-metrics-grid">
+            {METRICS.map((m) => (
+              <div key={m.label} className="qs-fc-metric">
+                <p className="qs-fc-metric-num">{m.value}</p>
+                <p className="qs-fc-metric-label">{m.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="qs-fc-services-section">
+        <div className="qs-inner">
+          <div className="qs-fc-section-head">
+            <h2 className="qs-fc-section-title home-heading-h2">
+              What we <span className="span-txt">do for creators</span>
+            </h2>
+            <p className="qs-fc-section-sub">
+              An end-to-end content engine — built around your voice, not a
+              template.
+            </p>
+          </div>
+          <div className="qs-fc-services-grid">
+            {SERVICES.map((s) => (
+              <article key={s.title} className="qs-fc-service-card">
+                <span className="qs-fc-service-tag">{s.tag}</span>
+                <h3 className="qs-fc-service-title">{s.title}</h3>
+                <p className="qs-fc-service-body">{s.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="qs-fc-work" className="qs-fc-portfolio-section">
+        <div className="qs-inner">
+          <article className="qs-fc-client-feature" aria-labelledby="qs-fc-tam-title">
+            <div className="qs-fc-client-feature-video">
+              <video
+                className="qs-fc-client-feature-video-el"
+                src="/assets/creator-videos/tam-portfolio.mp4"
+                poster="/assets/creator-videos/posters/tam-portfolio.jpg"
+                controls
+                preload="metadata"
+                playsInline
+              />
+            </div>
+            <div className="qs-fc-client-feature-body">
+              <span className="qs-fc-client-feature-eyebrow">
+                Featured client · The Awakening Media
+              </span>
+              <h2 id="qs-fc-tam-title" className="qs-fc-client-feature-title">
+                A tribute to <span className="qs-fc-hero-italic">Faris Odeh</span>
+              </h2>
+              <p className="qs-fc-client-feature-story">
+                A cinematic tribute produced end-to-end for{" "}
+                <strong>The Awakening Media</strong> — script, motion, sound and
+                final delivery. Built around the 2000 photograph of a 15-year-old
+                whose image became a lasting symbol of resistance. The VFX builds
+                the weight; the closing card lands the silence. This is the kind
+                of work TAM trusts us to take from page to post: storytelling
+                that respects the subject and refuses to look away.
+              </p>
+              <ul className="qs-fc-client-feature-pipeline" aria-label="Production pipeline">
+                <li><span>Script</span></li>
+                <li><span>Production</span></li>
+                <li><span>VFX &amp; sound</span></li>
+                <li><span>Final delivery</span></li>
+              </ul>
+              <div className="qs-fc-client-feature-ctas">
+                <a
+                  href={TAM_INSTAGRAM}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="qs-fc-btn-primary w-inline-block"
+                >
+                  <span>See our work for TAM — script to delivery</span>
+                  <span className="qs-fc-btn-icon" aria-hidden>
+                    <ServiceArrowIcon variant="on-light" />
+                  </span>
+                </a>
+                <a
+                  href={TAM_INSTAGRAM}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="qs-fc-client-feature-handle"
+                  aria-label="The Awakening Media on Instagram"
+                >
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden
+                  >
+                    <rect
+                      x="3"
+                      y="3"
+                      width="18"
+                      height="18"
+                      rx="5"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                    />
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="4"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                    />
+                    <circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" />
+                  </svg>
+                  <span>@the.awakeningmedia</span>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <div className="qs-fc-section-head qs-fc-portfolio-head">
+            <div>
+              <h2 className="qs-fc-section-title home-heading-h2">
+                More <span className="span-txt">work</span>
+              </h2>
+              <p className="qs-fc-section-sub">
+                A selection of recent edits across YouTube, TikTok, Reels and
+                Shorts.
+              </p>
+            </div>
+            <div className="qs-fc-filter-bar" role="tablist" aria-label="Filter videos">
+              {FILTERS.map((f) => (
+                <button
+                  key={f.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={filter === f.id}
+                  className={`qs-fc-filter-btn${filter === f.id ? " is-active" : ""}`}
+                  onClick={() => setFilter(f.id)}
+                >
+                  {f.label}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="qs-fc-portfolio-grid">
+            {visible.map((v) => (
+              <VideoTile key={v.id} video={v} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section
+        className="qs-fc-reels-pitch-section"
+        aria-labelledby="qs-fc-reels-title"
+      >
+        <div className="qs-inner">
+          <article className="qs-fc-reels-pitch">
+            <div className="qs-fc-reels-pitch-body">
+              <span className="qs-fc-reels-pitch-eyebrow">
+                For YouTube creators &amp; Instagram page owners
+              </span>
+              <h2 id="qs-fc-reels-title" className="qs-fc-reels-pitch-title">
+                Story-led Reels —{" "}
+                <span className="qs-fc-hero-italic">for YouTube &amp; Instagram</span>
+              </h2>
+              <p className="qs-fc-reels-pitch-lede">
+                9:16 short-form built like documentary. Same edit ships to
+                YouTube Shorts <em>and</em> Instagram Reels — same hook, same
+                retention, same reach.
+              </p>
+              <p className="qs-fc-reels-pitch-body-copy">
+                Send us raw footage, a script, or just a topic. We come back
+                with a story-led Reel that holds attention from frame one —
+                cinematic visuals, beat-matched cuts, captions that carry
+                sound-off, and platform-native exports. Built for creators and
+                page owners who&rsquo;d rather post one thing that grows the
+                channel than ten that don&rsquo;t.
+              </p>
+              <ul className="qs-fc-reels-pitch-list">
+                <li>
+                  <span className="qs-fc-reels-check" aria-hidden>✓</span>
+                  Hook engineered for the first 1.5 seconds
+                </li>
+                <li>
+                  <span className="qs-fc-reels-check" aria-hidden>✓</span>
+                  Cinematic visuals — live-action, AI, or stock
+                </li>
+                <li>
+                  <span className="qs-fc-reels-check" aria-hidden>✓</span>
+                  Caption-driven cuts that work sound-off
+                </li>
+                <li>
+                  <span className="qs-fc-reels-check" aria-hidden>✓</span>
+                  Sound design + music sync
+                </li>
+                <li>
+                  <span className="qs-fc-reels-check" aria-hidden>✓</span>
+                  Vertical master + Shorts, Reels &amp; TikTok exports
+                </li>
+              </ul>
+              <div className="qs-fc-reels-pitch-ctas">
+                <Link
+                  href="/contact"
+                  className="qs-fc-btn-primary w-inline-block"
+                >
+                  <span>Pitch us your channel</span>
+                  <span className="qs-fc-btn-icon" aria-hidden>
+                    <ServiceArrowIcon variant="on-dark" />
+                  </span>
+                </Link>
+                <a href="#qs-fc-work" className="qs-fc-btn-secondary w-inline-block">
+                  See more Reel work
+                </a>
+              </div>
+            </div>
+            <div className="qs-fc-reels-pitch-video-wrap">
+              <div className="qs-fc-reels-pitch-video">
+                <video
+                  className="qs-fc-reels-pitch-video-el"
+                  src="/assets/creator-videos/reels-pitch.mp4"
+                  poster="/assets/creator-videos/posters/reels-pitch.jpg"
+                  controls
+                  preload="metadata"
+                  playsInline
+                />
+              </div>
+              <p className="qs-fc-reels-pitch-video-caption">
+                Constantinople, April 1453 — a 42-second story-led Reel.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section
+        className="qs-fc-ugc-section"
+        aria-labelledby="qs-fc-ugc-title"
+      >
+        <div className="qs-inner">
+          <article className="qs-fc-ugc">
+            <header className="qs-fc-ugc-header">
+              <span className="qs-fc-ugc-eyebrow">
+                For business owners &amp; DTC brands
+              </span>
+              <h2 id="qs-fc-ugc-title" className="qs-fc-ugc-title">
+                Ads &amp; UGC{" "}
+                <span className="qs-fc-hero-italic">Production</span>
+              </h2>
+              <p className="qs-fc-ugc-lede">
+                Two formats, one performance goal. Polished brand spots that
+                sell the aesthetic, and creator-style UGC that explains the
+                offer — both engineered for ad accounts that need ROAS, not
+                vanity.
+              </p>
+            </header>
+
+            <div className="qs-fc-ugc-gallery">
+              <figure className="qs-fc-ugc-clip">
+                <div className="qs-fc-ugc-video">
+                  <video
+                    className="qs-fc-ugc-video-el"
+                    src="/assets/creator-videos/ad-demo.mp4"
+                    poster="/assets/creator-videos/posters/ad-demo.jpg"
+                    controls
+                    preload="metadata"
+                    playsInline
+                  />
+                </div>
+                <figcaption className="qs-fc-ugc-video-caption">
+                  <strong>Brand ad — TSUKIYO.</strong> Cinematic lookbook,
+                  neon-lit b-roll, urgency CTA.
+                </figcaption>
+              </figure>
+              <figure className="qs-fc-ugc-clip">
+                <div className="qs-fc-ugc-video">
+                  <video
+                    className="qs-fc-ugc-video-el"
+                    src="/assets/creator-videos/ugc-demo.mp4"
+                    poster="/assets/creator-videos/posters/ugc-demo.jpg"
+                    controls
+                    preload="metadata"
+                    playsInline
+                  />
+                </div>
+                <figcaption className="qs-fc-ugc-video-caption">
+                  <strong>UGC ad — MIRAE Smooth.</strong> Problem → authority →
+                  mechanism → offer.
+                </figcaption>
+              </figure>
+            </div>
+
+            <div className="qs-fc-ugc-content">
+              <p className="qs-fc-ugc-body-copy">
+                Ship us the product, the offer, or just the angle. We come
+                back with paid-ready creative: scripts, on-camera talent for
+                UGC, location and styling for brand, hooks, captions, edits
+                and platform-native masters for Meta, TikTok, YouTube and
+                Pinterest. Test 5 hooks. Scale the one that prints.
+              </p>
+              <ul className="qs-fc-ugc-list">
+                <li>
+                  <span className="qs-fc-ugc-check" aria-hidden>✓</span>
+                  Brand ads <em>and</em> UGC ads — same vendor, same pipeline
+                </li>
+                <li>
+                  <span className="qs-fc-ugc-check" aria-hidden>✓</span>
+                  8–10 hook angles per concept
+                </li>
+                <li>
+                  <span className="qs-fc-ugc-check" aria-hidden>✓</span>
+                  On-camera talent matched to your buyer
+                </li>
+                <li>
+                  <span className="qs-fc-ugc-check" aria-hidden>✓</span>
+                  Cinematic lookbook + lifestyle b-roll
+                </li>
+                <li>
+                  <span className="qs-fc-ugc-check" aria-hidden>✓</span>
+                  Sound-off captions, sound design, branded end-cards
+                </li>
+                <li>
+                  <span className="qs-fc-ugc-check" aria-hidden>✓</span>
+                  Whitelisting &amp; Spark-Ads ready masters
+                </li>
+              </ul>
+              <div className="qs-fc-ugc-ctas">
+                <Link
+                  href="/contact"
+                  className="qs-fc-btn-primary w-inline-block"
+                >
+                  <span>Book an Ads &amp; UGC strategy call</span>
+                  <span className="qs-fc-btn-icon" aria-hidden>
+                    <ServiceArrowIcon variant="on-dark" />
+                  </span>
+                </Link>
+                <a href="#qs-fc-work" className="qs-fc-btn-secondary w-inline-block">
+                  See more sample ads
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section className="qs-fc-process-section" aria-labelledby="qs-fc-process-title">
+        <div className="qs-inner">
+          <h2 id="qs-fc-process-title" className="qs-fc-section-title home-heading-h2">
+            How we <span className="span-txt">work together</span>
+          </h2>
+          <div className="qs-fc-process-steps">
+            {PROCESS.map((p) => (
+              <div key={p.num} className="qs-fc-process-step">
+                <p className="qs-fc-process-num">{p.num}</p>
+                <div>
+                  <p className="qs-fc-process-step-title">{p.title}</p>
+                  <p className="qs-fc-process-step-sub">{p.sub}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <CTASection className="qs-fc-final-cta" />
+      <Footer />
+    </div>
+  );
+}
