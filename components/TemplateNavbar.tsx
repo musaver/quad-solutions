@@ -24,6 +24,7 @@ export function TemplateNavbar() {
     pathname === "/case-studies" || pathname === "/case-study-details";
   const onAbout = pathname === "/about-us";
   const onSpecialists = pathname === "/specialists";
+  const onQuadContent = pathname === "/quad-content";
 
   useEffect(() => {
     setMenuOpen(false);
@@ -102,6 +103,13 @@ export function TemplateNavbar() {
                   aria-current={onCaseStudies ? "page" : undefined}
                 >
                   Case studies
+                </Link>
+                <Link
+                  href="/quad-content"
+                  className={`nav-link-4${onQuadContent ? " w--current" : ""}`}
+                  aria-current={onQuadContent ? "page" : undefined}
+                >
+                  QUAD Content
                 </Link>
                 <Link
                   href="/specialists"
@@ -210,6 +218,15 @@ export function TemplateNavbar() {
                   aria-current={onCaseStudies ? "page" : undefined}
                 >
                   Case studies
+                </Link>
+              </li>
+              <li className="list-item-12">
+                <Link
+                  href="/quad-content"
+                  className={`link-6${onQuadContent ? " w--current" : ""}`}
+                  aria-current={onQuadContent ? "page" : undefined}
+                >
+                  QUAD Content
                 </Link>
               </li>
               <li className="list-item-12">

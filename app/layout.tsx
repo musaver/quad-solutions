@@ -4,6 +4,7 @@ import { Instrument_Serif, Inter_Tight } from "next/font/google";
 import "./globals.css";
 import { WebflowRuntime } from "@/components/WebflowRuntime";
 import { WebflowRouteSync } from "@/components/WebflowRouteSync";
+import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 
 const interTight = Inter_Tight({
   subsets: ["latin"],
@@ -87,6 +88,7 @@ export default function RootLayout({
           strategy="beforeInteractive"
         />
         {children}
+        <WhatsAppFloat />
         <WebflowRouteSync />
         <WebflowRuntime />
       </body>

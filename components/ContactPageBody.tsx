@@ -46,8 +46,8 @@ const ArrowUpRightIcon = () => (
 const CHANNELS: { label: string; value: string; href: string; hint: string; icon: ReactNode }[] = [
   {
     label: "Email us",
-    value: "hello@quadsolutions.ai",
-    href: "mailto:hello@quadsolutions.ai",
+    value: "support@quadsolutions.ai",
+    href: "mailto:support@quadsolutions.ai",
     hint: "Replies within one business day",
     icon: <MailIcon />,
   },
@@ -416,7 +416,7 @@ export function ContactPageBody() {
               brief together.
             </p>
             <div className="qs-contact-cta-row">
-              <a href="mailto:hello@quadsolutions.ai" className="qs-btn-light">
+              <a href="mailto:support@quadsolutions.ai" className="qs-btn-light">
                 <span>Email the Studio</span>
                 <span className="qs-btn-arrow" aria-hidden="true">
                   <img src={ARROW_LIGHT} alt="" />
