@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 @import "./styles/awakeagency.webflow.shared.css";
 @import "./styles/lenis.css";
 @import "./services/services-page.css";
@@ -291,6 +293,14 @@ body.body {
   padding-left: max(0px, calc((100% - 1100px) / 2));
   padding-right: max(0px, calc((100% - 1100px) / 2));
   box-sizing: border-box;
+}
+
+.admin-panel-title{
+  font-size: 17px;
+}
+
+.buttons-admin-panel{
+  text-decoration: none;
 }
 
 /* Anchor that defines the initial (thumbnail) position of the floating video.
