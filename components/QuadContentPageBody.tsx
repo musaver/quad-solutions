@@ -30,6 +30,19 @@ type CreatorVideo = {
 
 const VIDEOS: CreatorVideo[] = [
   {
+    id: "quad-brand-film",
+    title: "Agency chaos to cloud nine",
+    meta: "QUAD brand film · Vertical short-form",
+    format: "vertical",
+    category: "shorts",
+    tags: ["Brand film", "AI cinematic", "Kinetic type", "Sound design"],
+    src: "/assets/creator-videos/quad-brand-film.mp4",
+    poster: "/assets/creator-videos/posters/quad-brand-film.jpg",
+    featured: true,
+    description:
+      "A brand film we wrote, designed and produced end to end — the story of every founder buried under an agency that overpromised and under-delivered. A desk marooned in a sandstorm, a paper bag for a face, then the turn: QUAD steps in to create, market and automate. AI-driven cinematics, kinetic typography, sound design and grade carry the arc from chaos to calm — and land the founder exactly where they wanted to be. Relaxed. Just not on clouds. Concept to final cut: full-scale production, not an edit.",
+  },
+  {
     id: "long-1",
     title: "Cinematic vlog cut",
     meta: "Long-form · Lifestyle",
