@@ -1,7 +1,8 @@
 import crypto from "node:crypto";
 import mysql from "mysql2/promise";
+import type { RowDataPacket } from "mysql2";
 
-type AdminUserRow = {
+type AdminUserRow = RowDataPacket & {
   id: number;
   username: string;
   password_hash: string;
