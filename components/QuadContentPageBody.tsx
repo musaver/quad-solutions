@@ -100,32 +100,35 @@ const TAM_INSTAGRAM = "https://www.instagram.com/the.awakeningmedia/";
 
 const SERVICES = [
   {
-    title: "Short-form editing",
-    body: "Reels, TikToks and Shorts engineered for hook-strength, retention and watch-time — captions, sound, pacing, all done.",
+    title: "End-to-end production",
+    body: "Concept, script, shoot, motion, sound design, colour and delivery — the complete pipeline. Brand films and creator content built from a blank page, not just trimmed from your footage.",
+    tag: "Concept · Shoot · Post",
+  },
+  {
+    title: "Short-form & social",
+    body: "Reels, TikToks and Shorts engineered for the first-second hook and built to travel — captions, sound and pacing tuned for reach on every platform at once.",
     tag: "Reels · TikTok · Shorts",
   },
   {
-    title: "Long-form editing",
-    body: "YouTube edits with story-first cuts, motion graphics, sound design and grade — the kind of polish that compounds subscribers.",
+    title: "Long-form & brand films",
+    body: "YouTube features, documentaries and brand stories with story-first structure, motion graphics, sound design and grade — the kind of polish that earns attention and trust.",
     tag: "YouTube · Brand films",
   },
   {
-    title: "Thumbnails & packaging",
-    body: "A/B-ready thumbnails, titles and chapter packaging. Built to lift CTR without selling out your channel voice.",
-    tag: "CTR · Titles · Hooks",
-  },
-  {
-    title: "Channel strategy",
-    body: "Posting cadence, content pillars, hook frameworks, and retention reviews — a steady operating system for your growth.",
-    tag: "Strategy · Ops · Reviews",
+    title: "Ads & UGC that convert",
+    body: "Paid-ready creative for business owners and DTC brands — scripting, on-camera talent, hook testing and platform-native masters engineered for ROAS, not vanity metrics.",
+    tag: "Ads · UGC · ROAS",
   },
 ];
 
-const METRICS = [
-  { value: "50M+", label: "Views generated" },
-  { value: "200+", label: "Edits delivered" },
-  { value: "+3.2m", label: "Avg watch-time lift" },
-  { value: "30+", label: "Creators served" },
+const HERO_PIPELINE = [
+  "Concept",
+  "Script",
+  "Shoot",
+  "Motion",
+  "Sound",
+  "Colour",
+  "Delivery",
 ];
 
 const PROCESS = [
@@ -226,21 +229,36 @@ export function QuadContentPageBody() {
       <header className="qs-fc-hero">
         <div className="qs-inner">
           <div className="qs-fc-eyebrow-wrap">
-            <span className="qs-fc-eyebrow">QUAD Content</span>
+            <span className="qs-fc-eyebrow">
+              QUAD Content · Creative Production Studio
+            </span>
           </div>
           <h1 ref={heroRef} className="qs-fc-hero-title">
-            Edits that <span className="qs-fc-hero-italic">grow</span>
+            You bring the idea.
             <br />
-            your channel
+            We <span className="qs-fc-hero-italic">produce</span> the rest.
           </h1>
           <p className="qs-fc-hero-lede">
-            We&rsquo;re the editing and strategy team behind faster-growing
-            creator channels. Cinematic long-form, scroll-stopping shorts, and
-            the systems that keep your content engine running.
+            We don&rsquo;t just polish footage — we build the whole production.
+            Concept and script through shoot, motion, sound design, colour and
+            final delivery, for creators growing an audience and brands selling
+            to one. One studio. The complete pipeline.
           </p>
+          <ul className="qs-fc-hero-pipeline" aria-label="Our production pipeline">
+            {HERO_PIPELINE.map((step, i) => (
+              <li key={step} className="qs-fc-hero-pipeline-item">
+                <span>{step}</span>
+                {i < HERO_PIPELINE.length - 1 ? (
+                  <span className="qs-fc-hero-pipeline-sep" aria-hidden>
+                    →
+                  </span>
+                ) : null}
+              </li>
+            ))}
+          </ul>
           <div className="qs-fc-hero-ctas">
             <Link href="/contact" className="qs-fc-btn-primary w-inline-block">
-              <span>Book a creator strategy call</span>
+              <span>Book a production call</span>
               <span className="qs-fc-btn-icon" aria-hidden>
                 <ServiceArrowIcon variant="on-dark" />
               </span>
@@ -252,28 +270,17 @@ export function QuadContentPageBody() {
         </div>
       </header>
 
-      <section className="qs-fc-metrics" aria-label="Results we&rsquo;ve driven">
-        <div className="qs-inner">
-          <div className="qs-fc-metrics-grid">
-            {METRICS.map((m) => (
-              <div key={m.label} className="qs-fc-metric">
-                <p className="qs-fc-metric-num">{m.value}</p>
-                <p className="qs-fc-metric-label">{m.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="qs-fc-services-section">
         <div className="qs-inner">
           <div className="qs-fc-section-head">
             <h2 className="qs-fc-section-title home-heading-h2">
-              What we <span className="span-txt">do for creators</span>
+              What we do for{" "}
+              <span className="span-txt">creators &amp; business owners</span>
             </h2>
             <p className="qs-fc-section-sub">
-              An end-to-end content engine — built around your voice, not a
-              template.
+              One creative production studio for both sides of the camera — the
+              creators building an audience and the brands selling to one.
+              Full-scale productions, not just edits.
             </p>
           </div>
           <div className="qs-fc-services-grid">

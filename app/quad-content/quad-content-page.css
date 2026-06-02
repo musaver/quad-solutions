@@ -134,60 +134,53 @@
   background: rgba(27, 29, 30, 0.05);
 }
 
-/* ─── Metrics strip ────────────────────────────────────────────────────── */
-.qs-fc-metrics {
-  padding: 24px 0 0;
-}
-
-.qs-fc-metrics-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  border-radius: 20px;
-  background: #fafafa;
-  border: 1px solid rgba(27, 29, 30, 0.08);
-  overflow: hidden;
-}
-
-@media (min-width: 768px) {
-  .qs-fc-metrics-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-.qs-fc-metric {
+/* ─── Hero production pipeline chips ───────────────────────────────────── */
+.qs-fc-hero-pipeline {
+  list-style: none;
+  margin: 32px auto 0;
+  padding: 0;
+  max-width: 760px;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
-  gap: 6px;
-  padding: 28px 20px;
-  border-bottom: 1px solid rgba(27, 29, 30, 0.08);
+  gap: 8px 4px;
 }
 
-@media (min-width: 768px) {
-  .qs-fc-metric {
-    border-bottom: none;
-    border-right: 1px solid rgba(27, 29, 30, 0.08);
-  }
-  .qs-fc-metric:last-child {
-    border-right: none;
-  }
+.qs-fc-hero-pipeline-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
-.qs-fc-metric-num {
-  margin: 0;
+.qs-fc-hero-pipeline-item > span:first-child {
+  display: inline-flex;
+  align-items: center;
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(27, 29, 30, 0.12);
+  background: rgba(255, 255, 255, 0.7);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   font-family: var(--inter-tight, "Inter Tight", sans-serif);
-  font-size: 36px;
+  font-size: 13px;
   font-weight: 500;
-  letter-spacing: -0.01em;
-  color: #1b1d1e;
+  letter-spacing: 0.01em;
+  color: rgba(27, 29, 30, 0.78);
+  transition: border-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
 }
 
-.qs-fc-metric-label {
-  margin: 0;
-  font-family: var(--inter-tight, "Inter Tight", sans-serif);
-  font-size: 14px;
-  letter-spacing: 0.004em;
-  color: rgba(27, 29, 30, 0.6);
+.qs-fc-hero-pipeline-item:hover > span:first-child {
+  transform: translateY(-1px);
+  border-color: rgba(73, 40, 253, 0.4);
+  color: #4928fd;
+}
+
+.qs-fc-hero-pipeline-sep {
+  margin: 0 2px;
+  font-size: 13px;
+  color: rgba(27, 29, 30, 0.32);
 }
 
 /* ─── Shared section heading ───────────────────────────────────────────── */
