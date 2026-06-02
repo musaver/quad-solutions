@@ -43,24 +43,6 @@ const VIDEOS: CreatorVideo[] = [
       "A brand film we wrote, designed and produced end to end — the story of every founder buried under an agency that overpromised and under-delivered. A desk marooned in a sandstorm, a paper bag for a face, then the turn: QUAD steps in to create, market and automate. AI-driven cinematics, kinetic typography, sound design and grade carry the arc from chaos to calm — and land the founder exactly where they wanted to be. Relaxed. Just not on clouds. Concept to final cut: full-scale production, not an edit.",
   },
   {
-    id: "long-1",
-    title: "Cinematic vlog cut",
-    meta: "Long-form · Lifestyle",
-    format: "horizontal",
-    category: "longform",
-    tags: ["YouTube", "Cinematic", "Color"],
-    // src: "/assets/creator-videos/long-1.mp4",
-    // poster: "/assets/creator-videos/posters/long-1.jpg",
-  },
-  {
-    id: "long-2",
-    title: "Tutorial deep-dive",
-    meta: "Long-form · Educational",
-    format: "horizontal",
-    category: "longform",
-    tags: ["YouTube", "Retention", "Graphics"],
-  },
-  {
     id: "umrah-in-sixty-seconds",
     title: "Umrah — in sixty seconds",
     meta: "Faith & travel · Vertical short-form",
@@ -86,20 +68,16 @@ const VIDEOS: CreatorVideo[] = [
       "A 79-second geopolitical brief for The Awakening Media — the kind of editorial short that turns a tangled news cycle into a story the scroll actually finishes. Map animations carry the geography, captions carry the argument, and the cut holds a steady rhythm that makes a complex thesis feel inevitable. Short-form built like long-form: research-led, frame-by-frame.",
   },
   {
-    id: "short-3",
-    title: "Product showcase Short",
-    meta: "Short-form · E-com",
-    format: "vertical",
-    category: "shorts",
-    tags: ["Shorts", "Product", "Pacing"],
-  },
-  {
-    id: "long-3",
-    title: "Documentary feature",
-    meta: "Long-form · Brand film",
+    id: "tam-documentary",
+    title: "Why Syria is different",
+    meta: "Long-form documentary · Produced for TAM",
     format: "horizontal",
     category: "longform",
-    tags: ["Film", "Sound design", "Grade"],
+    tags: ["Documentary", "Archival", "Motion graphics", "Sound design"],
+    src: "/assets/creator-videos/tam-documentary.mp4",
+    poster: "/assets/creator-videos/posters/tam-documentary.jpg",
+    description:
+      "A long-form documentary explainer produced for The Awakening Media — the history and present of Syria, built for YouTube retention. A studio talking-head cut against black-and-white archival footage, with designed timeline graphics and animated maps, scoring five minutes of dense geopolitics so it never loses the viewer. Research-led storytelling — structure, b-roll, motion and sound, delivered end to end. The kind of editorial long-form that makes a complicated subject land clearly and earns the audience's trust.",
   },
 ];
 
