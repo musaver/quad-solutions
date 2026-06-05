@@ -1,40 +1,12 @@
 import crypto from "node:crypto";
-import mysql from "mysql2/promise";
 import type { RowDataPacket } from "mysql2";
+import { getPool } from "@/lib/db";
 
 type AdminUserRow = RowDataPacket & {
   id: number;
   username: string;
   password_hash: string;
 };
-
-let pool: mysql.Pool | null = null;
-
-function getPool(): mysql.Pool {
-  if (pool) {
-    return pool;
-  }
-
-  const { MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE } =
-    process.env;
-
-  if (!MYSQL_HOST || !MYSQL_USER || !MYSQL_DATABASE) {
-    throw new Error(
-      "Missing MySQL env vars. Set MYSQL_HOST, MYSQL_USER, MYSQL_DATABASE, MYSQL_PASSWORD, MYSQL_PORT.",
-    );
-  }
-
-  pool = mysql.createPool({
-    host: MYSQL_HOST,
-    port: MYSQL_PORT ? Number(MYSQL_PORT) : 3306,
-    user: MYSQL_USER,
-    password: MYSQL_PASSWORD ?? "",
-    database: MYSQL_DATABASE,
-    connectionLimit: 10,
-  });
-
-  return pool;
-}
 
 function hashPassword(password: string): string {
   return crypto.createHash("sha256").update(password).digest("hex");
