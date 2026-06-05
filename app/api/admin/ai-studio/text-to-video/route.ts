@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { fal } from "@fal-ai/client";
 import { SESSION_COOKIE_NAME, verifyAdminSessionToken } from "@/lib/admin-session";
+import { formatFalBalance, getFalCredits } from "@/lib/fal-credits";
 import { falKeySetupMessage, getFalKey } from "@/lib/fal-credentials";
 
 export const runtime = "nodejs";
@@ -231,6 +232,9 @@ export async function GET() {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  const hasKey = Boolean(getFalKey());
+  const credits = hasKey ? await getFalCredits() : null;
+
   return NextResponse.json({
     models: MODELS.map((m) => ({
       id: m.id,
@@ -238,9 +242,24 @@ export async function GET() {
       blurb: m.blurb,
       pricePer5s: m.pricePer5s,
     })),
-    hasKey: Boolean(getFalKey()),
+    hasKey,
+    credits:
+      credits?.ok && credits.balance !== undefined
+        ? {
+            balance: credits.balance,
+            currency: credits.currency ?? "USD",
+            formatted: formatFalBalance(
+              credits.balance,
+              credits.currency ?? "USD",
+            ),
+            username: credits.username,
+          }
+        : credits
+          ? { error: credits.error ?? "Could not load credits" }
+          : null,
     keySetupUrl: "https://fal.ai/dashboard/keys",
+    billingUrl: "https://fal.ai/dashboard/billing",
     onVercel: Boolean(process.env.VERCEL),
-    setupHint: getFalKey() ? undefined : falKeySetupMessage(),
+    setupHint: hasKey ? undefined : falKeySetupMessage(),
   });
 }

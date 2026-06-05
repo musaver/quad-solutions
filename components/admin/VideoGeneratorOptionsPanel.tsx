@@ -12,10 +12,19 @@ type T2VModel = {
   pricePer5s: string;
 };
 
+type FalCredits = {
+  balance: number;
+  currency: string;
+  formatted: string;
+  username?: string;
+};
+
 type T2VStatus = {
   models: T2VModel[];
   hasKey: boolean;
+  credits: FalCredits | { error: string } | null;
   keySetupUrl: string;
+  billingUrl?: string;
   onVercel?: boolean;
   setupHint?: string;
 };
@@ -51,6 +60,9 @@ export function VideoGeneratorOptionsPanel() {
   const [aiModel, setAiModel] = useState<string>("");
   const [aiModels, setAiModels] = useState<T2VModel[]>([]);
   const [aiHasKey, setAiHasKey] = useState<boolean | null>(null);
+  const [aiCredits, setAiCredits] = useState<FalCredits | null>(null);
+  const [aiCreditsError, setAiCreditsError] = useState<string | null>(null);
+  const [aiBillingUrl, setAiBillingUrl] = useState("https://fal.ai/dashboard/billing");
   const [aiKeySetupUrl, setAiKeySetupUrl] = useState("https://fal.ai/dashboard/keys");
   const [aiKeySetupHint, setAiKeySetupHint] = useState<string | null>(null);
   const [aiOnVercel, setAiOnVercel] = useState(false);
@@ -63,16 +75,32 @@ export function VideoGeneratorOptionsPanel() {
   useEffect(() => {
     let alive = true;
 
+    const applyStatus = (data: T2VStatus) => {
+      if (Array.isArray(data.models)) setAiModels(data.models);
+      if (typeof data.hasKey === "boolean") setAiHasKey(data.hasKey);
+      if (data.keySetupUrl) setAiKeySetupUrl(data.keySetupUrl);
+      if (data.billingUrl) setAiBillingUrl(data.billingUrl);
+      setAiOnVercel(Boolean(data.onVercel));
+      setAiKeySetupHint(data.setupHint ?? null);
+
+      if (data.credits && "balance" in data.credits) {
+        setAiCredits(data.credits);
+        setAiCreditsError(null);
+      } else if (data.credits && "error" in data.credits) {
+        setAiCredits(null);
+        setAiCreditsError(data.credits.error);
+      } else {
+        setAiCredits(null);
+        setAiCreditsError(null);
+      }
+    };
+
     const loadStatus = async () => {
       try {
         const res = await fetch("/api/admin/ai-studio/text-to-video", { credentials: "include" });
         const data = (await res.json()) as T2VStatus;
         if (!alive) return;
-        if (Array.isArray(data.models)) setAiModels(data.models);
-        if (typeof data.hasKey === "boolean") setAiHasKey(data.hasKey);
-        if (data.keySetupUrl) setAiKeySetupUrl(data.keySetupUrl);
-        setAiOnVercel(Boolean(data.onVercel));
-        setAiKeySetupHint(data.setupHint ?? null);
+        applyStatus(data);
       } catch {
         if (alive) setErrorMessage("Could not load AI video model status.");
       }
@@ -141,6 +169,19 @@ export function VideoGeneratorOptionsPanel() {
       setAiResult(data as AiVideoResult);
       setAiAttempts((data.attempts as Attempt[]) || []);
       setAiStatus("");
+
+      try {
+        const statusRes = await fetch("/api/admin/ai-studio/text-to-video", {
+          credentials: "include",
+        });
+        const statusData = (await statusRes.json()) as T2VStatus;
+        if (statusData.credits && "balance" in statusData.credits) {
+          setAiCredits(statusData.credits);
+          setAiCreditsError(null);
+        }
+      } catch {
+        // Non-blocking refresh after generation.
+      }
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : "Video generation failed.");
       setAiStatus("");
@@ -153,13 +194,36 @@ export function VideoGeneratorOptionsPanel() {
   return (
     <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[420px_1fr]">
       <div className="h-fit rounded-2xl border border-slate-200/70 bg-white p-6 shadow-sm">
-        <div className="mb-3 flex items-center gap-2">
+        <div className="mb-3 flex flex-wrap items-center gap-2">
           <span className="inline-flex rounded-full bg-violet-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-violet-700">
             Premium
           </span>
           <span className="inline-flex rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-700">
             Pay per clip
           </span>
+          {aiCredits ? (
+            <a
+              href={aiBillingUrl}
+              target="_blank"
+              rel="noreferrer"
+              className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide transition hover:opacity-90 ${
+                aiCredits.balance < 1
+                  ? "bg-amber-100 text-amber-800"
+                  : "bg-slate-100 text-slate-700"
+              }`}
+              title={
+                aiCredits.username
+                  ? `fal.ai account: ${aiCredits.username}`
+                  : "fal.ai account balance"
+              }
+            >
+              Credits: {aiCredits.formatted}
+            </a>
+          ) : aiCreditsError ? (
+            <span className="inline-flex rounded-full bg-amber-100 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-amber-800">
+              Credits unavailable
+            </span>
+          ) : null}
         </div>
         <h3 className="text-xl font-bold text-slate-900">Real AI Video Generator</h3>
         <p className="mt-1 text-xs text-slate-500">
