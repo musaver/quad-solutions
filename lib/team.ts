@@ -17,10 +17,10 @@ export const TEAM_MEMBERS: TeamMember[] = [
     imageWId: "56bb2451-170e-89ce-c69f-6cfb15fd42b5",
   },
   {
-    name: "Yousaf Shah",
+    name: "Ahmed Khan",
     position: "Creative Manager",
     bio: "Shapes brand stories and visual systems that capture attention and build trust.",
-    image: "/assets/team/yousuf-3.jpg",
+    image: "/assets/team/ahmed-3.png",
     dataWId: "0a28a6a2-8b8a-d8c2-5458-5994b3ad5898",
     imageWId: "fe758f9d-39d6-cb14-52e0-c9fa891a9a74",
   },
