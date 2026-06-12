@@ -214,7 +214,7 @@ function findMember(name: string): TeamMember {
 
 const AGHA = findMember("Agha Moiz");
 const MUSTAFA = findMember("Mustafa Hassan");
-const YOUSAF = findMember("Yousaf Shah");
+const YOUSAF = findMember("Ahmed Khan");
 const MUSAVER = findMember("Musaver Khan");
 
 function specialist(
