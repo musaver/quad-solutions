@@ -255,7 +255,6 @@ export function HeroSection() {
               <p className="trusted-text">Trusted by <strong>100+ ambitious brands</strong> worldwide.</p>
             </div>
           </div>
-          <div className="qs-hero-video-thumb-anchor" aria-hidden="true" />
         </div>
       </div>
     </section>

@@ -1,173 +1,188 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { ServiceArrowIcon } from "@/components/ServiceArrowIcon";
 
 const VIDEO_SRC = "/assets/video/intro-video.mp4";
-const DESKTOP_BREAKPOINT = 992;
+
+// The four disciplines QUAD brings under one roof — mirrors the hero copy.
+const PIPELINE = ["Growth", "Creative", "Digital", "AI"];
+
+function SoundOnIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M4 9v6h4l5 4V5L8 9H4z"
+        fill="currentColor"
+      />
+      <path
+        d="M16 8.5a4 4 0 0 1 0 7M18.5 6a7.5 7.5 0 0 1 0 12"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function SoundOffIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor" />
+      <path
+        d="M16 9.5l5 5M21 9.5l-5 5"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
 
 export function HeroVideoScroll() {
-  const floaterRef = useRef<HTMLDivElement>(null);
-  const finalAnchorRef = useRef<HTMLDivElement>(null);
-  const modalVideoRef = useRef<HTMLVideoElement>(null);
-  const [ready, setReady] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [muted, setMuted] = useState(true);
 
+  // Autoplay muted (the only thing browsers allow), then unmute + play while
+  // the film is on screen, and pause + mute the moment it scrolls out of view.
   useEffect(() => {
-    if (!modalOpen) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setModalOpen(false);
-    };
-    document.addEventListener("keydown", onKey);
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = prevOverflow;
-    };
-  }, [modalOpen]);
+    const video = videoRef.current;
+    if (!video) return;
 
-  useEffect(() => {
-    const floater = floaterRef.current;
-    const finalAnchor = finalAnchorRef.current;
-    if (!floater || !finalAnchor) return;
+    let inView = false;
 
-    let raf = 0;
-    let pending = false;
-
-    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
-    const smoothstep = (t: number) => t * t * (3 - 2 * t);
-
-    const update = () => {
-      pending = false;
-      const isDesktop = window.innerWidth >= DESKTOP_BREAKPOINT;
-      const thumbAnchor =
-        document.querySelector<HTMLElement>(".qs-hero-video-thumb-anchor");
-
-      const fr = finalAnchor.getBoundingClientRect();
-
-      let top: number;
-      let left: number;
-      let width: number;
-      let height: number;
-      let radius: number;
-
-      if (!isDesktop || !thumbAnchor) {
-        top = fr.top;
-        left = fr.left;
-        width = fr.width;
-        height = fr.height;
-        radius = 24;
+    const playWithSound = () => {
+      video.muted = false;
+      const attempt = video.play();
+      if (attempt && typeof attempt.then === "function") {
+        attempt
+          .then(() => setMuted(false))
+          .catch(() => {
+            // Browser blocked unmuted autoplay (no prior user gesture). Fall
+            // back to muted playback so the film still plays; the sound toggle
+            // lets the user switch audio on with a click.
+            video.muted = true;
+            setMuted(true);
+            video.play().catch(() => {});
+          });
       } else {
-        const tr = thumbAnchor.getBoundingClientRect();
-        // Animation completes after ~70vh of scroll — quick enough that the
-        // user sees the transition early in their scroll.
-        const animLength = Math.max(400, window.innerHeight * 0.7);
-        const progress = Math.min(1, Math.max(0, window.scrollY / animLength));
-        const t = smoothstep(progress);
-
-        top = lerp(tr.top, fr.top, t);
-        left = lerp(tr.left, fr.left, t);
-        width = lerp(tr.width, fr.width, t);
-        height = lerp(tr.height, fr.height, t);
-        radius = lerp(14, 24, t);
+        setMuted(false);
       }
-
-      const s = floater.style;
-      s.top = `${top}px`;
-      s.left = `${left}px`;
-      s.width = `${width}px`;
-      s.height = `${height}px`;
-      s.borderRadius = `${radius}px`;
     };
 
-    const schedule = () => {
-      if (pending) return;
-      pending = true;
-      raf = requestAnimationFrame(update);
+    const stop = () => {
+      video.pause();
+      video.muted = true;
+      setMuted(true);
     };
 
-    update();
-    setReady(true);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        inView = entry.isIntersecting && entry.intersectionRatio >= 0.5;
+        if (inView && !document.hidden) {
+          playWithSound();
+        } else {
+          stop();
+        }
+      },
+      { threshold: [0, 0.5, 0.75] },
+    );
+    observer.observe(video);
 
-    window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule);
+    // Pause when the tab is hidden; resume (with sound) when it's shown again.
+    const onVisibility = () => {
+      if (document.hidden) {
+        video.pause();
+      } else if (inView) {
+        playWithSound();
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibility);
 
     return () => {
-      window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", schedule);
-      if (raf) cancelAnimationFrame(raf);
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
     };
   }, []);
 
+  const toggleSound = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    const nextMuted = !video.muted;
+    video.muted = nextMuted;
+    setMuted(nextMuted);
+    if (!nextMuted) {
+      // A click is a user gesture, so unmuted playback is guaranteed to work.
+      video.play().catch(() => {});
+    }
+  };
+
   return (
-    <>
-      <section className="qs-hero-video-section">
-        <div
-          ref={finalAnchorRef}
-          className="qs-hero-video-final-anchor"
-          aria-hidden="true"
-        />
-      </section>
-      <div
-        ref={floaterRef}
-        className={`qs-hero-video-floater${ready ? " qs-ready" : ""}`}
-      >
-        <video
-          className="qs-hero-video-el"
-          src={VIDEO_SRC}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-        />
-        <button
-          type="button"
-          className="qs-hero-video-play"
-          aria-label="Play video with sound"
-          onClick={() => setModalOpen(true)}
-        >
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M8 5v14l11-7z" />
-          </svg>
-        </button>
-      </div>
-      {modalOpen && (
-        <div
-          className="qs-video-modal"
-          role="dialog"
-          aria-modal="true"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setModalOpen(false);
-          }}
-        >
-          <button
-            type="button"
-            className="qs-video-modal-close"
-            aria-label="Close video"
-            onClick={() => setModalOpen(false)}
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path
-                d="M6 6L18 18M18 6L6 18"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
-          </button>
-          <div className="qs-video-modal-inner">
+    <section className="qs-home-video-section" aria-labelledby="qs-home-video-title">
+      <div className="qs-home-video-inner">
+        <article className="qs-home-video-feature">
+          <div className="qs-home-video-media">
             <video
-              ref={modalVideoRef}
-              className="qs-video-modal-video"
+              ref={videoRef}
+              className="qs-home-video-el"
               src={VIDEO_SRC}
               autoPlay
-              controls
+              muted
+              loop
               playsInline
+              preload="auto"
             />
+            <button
+              type="button"
+              className="qs-home-video-sound"
+              aria-pressed={!muted}
+              aria-label={muted ? "Turn sound on" : "Mute video"}
+              onClick={toggleSound}
+            >
+              {muted ? <SoundOffIcon /> : <SoundOnIcon />}
+              <span className="qs-home-video-sound-label">
+                {muted ? "Tap for sound" : "Sound on"}
+              </span>
+            </button>
           </div>
-        </div>
-      )}
-    </>
+
+          <div className="qs-home-video-body">
+            <span className="qs-home-video-eyebrow">
+              Quad Solutions · Brand film
+            </span>
+            <h2 id="qs-home-video-title" className="qs-home-video-title">
+              All under <span className="qs-home-video-italic">one roof</span>
+            </h2>
+            <p className="qs-home-video-story">
+              Every founder knows the 2&nbsp;a.m. desk — buried in sticky notes,
+              chasing ads that won&rsquo;t convert, fighting AI that won&rsquo;t
+              cooperate, and juggling a dozen tools that don&rsquo;t talk to each
+              other. This is the film we made about that moment — and the way out
+              of it. <strong>One team</strong> handling growth, creative, digital
+              and automation together, so you can finally let the chaos go.{" "}
+              <strong>You relax. We handle the rest.</strong>
+            </p>
+            <ul className="qs-home-video-pipeline" aria-label="What we bring under one roof">
+              {PIPELINE.map((step) => (
+                <li key={step}>
+                  <span>{step}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="qs-home-video-ctas">
+              <Link href="/specialists" className="qs-home-video-btn-primary">
+                <span>Talk to a specialist</span>
+                <span className="qs-home-video-btn-icon" aria-hidden="true">
+                  <ServiceArrowIcon variant="on-light" />
+                </span>
+              </Link>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
   );
 }
