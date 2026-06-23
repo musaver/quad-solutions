@@ -201,9 +201,10 @@ body.body {
   justify-content: center;
 }
 
-/* Home logo marquee: continuous left-scroll loop. The wrap is 200vw and holds
-   two identical 100vw rows, so translating by -100vw lands the 2nd row where
-   the 1st started — the reset is seamless. */
+/* Home logo marquee: continuous left-scroll loop. The wrap is sized to its
+   content and holds two identical rows, so translating by -50% lands the 2nd
+   row where the 1st started — the reset is seamless. The rows are content-width
+   (not 100vw) so the fixed-width logos never get squeezed into overlap. */
 .qs-marquee-animate {
   animation: qs-marquee-scroll 40s linear infinite;
   will-change: transform;
@@ -213,8 +214,24 @@ body.body {
     transform: translateX(0);
   }
   to {
-    transform: translateX(-100vw);
+    transform: translateX(-50%);
   }
+}
+/* Size the track to its content with a real gap instead of the vendored
+   100vw + space-around, which overlapped the logos once their combined width
+   exceeded the viewport. Higher specificity beats the responsive vw rules. */
+.home-logo-section .marquee_wrap {
+  width: max-content;
+  column-gap: 0;
+}
+.home-logo-section .static-marquee_logos {
+  width: max-content;
+  justify-content: flex-start;
+  column-gap: 56px;
+  padding-right: 56px; /* keeps the seam gap equal to the inner gap */
+}
+.home-logo-section .logo-2 {
+  flex: none;
 }
 @media (prefers-reduced-motion: reduce) {
   .qs-marquee-animate {
@@ -303,273 +320,277 @@ body.body {
   text-decoration: none;
 }
 
-/* Anchor that defines the initial (thumbnail) position of the floating video.
-   Hidden on mobile — the floater locks straight to the final anchor. */
-.qs-hero-video-thumb-anchor {
-  display: none;
-}
-
-@media screen and (min-width: 992px) {
-  .qs-hero-video-thumb-anchor {
-    display: block;
-    width: 220px;
-    height: 130px;
-    margin-left: auto;
-    border-radius: 14px;
-    /* Subtle stand-in until JS measures and the floater fades in. */
-    background: rgba(0, 0, 0, 0.04);
-  }
-}
-
-@media screen and (min-width: 1280px) {
-  .qs-hero-video-thumb-anchor {
-    width: 260px;
-    height: 150px;
-  }
-}
-
-/* Section that reserves the vertical space for the video's final, full-width
-   resting position (between hero and the logo marquee). */
-.qs-hero-video-section {
+/* ───────────────────────────────────────────────────────────────────────
+   Home brand-film feature. A two-column card (modeled on the QUAD Content
+   client-feature): the vertical 9:16 film shown in its TRUE ratio on the
+   left, the story about it on the right. No scroll animation — the video is
+   never forced into a box that distorts its aspect ratio. Clicking opens the
+   modal to play it full-size with sound.
+   ─────────────────────────────────────────────────────────────────────── */
+.qs-home-video-section {
   width: 100%;
-  padding: 40px 20px 60px;
-  display: flex;
-  justify-content: center;
+  padding: 48px 20px 64px;
 }
 
-.qs-hero-video-final-anchor {
+.qs-home-video-inner {
   width: 100%;
   max-width: 1232px;
-  aspect-ratio: 16 / 9;
+  margin: 0 auto;
 }
 
-/* The single fixed-positioned video element. JS interpolates its top/left/
-   width/height between the thumbnail anchor and the final anchor based on
-   scroll. Pointer-events stay on so the user can interact with the video. */
-.qs-hero-video-floater {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 0;
-  z-index: 5;
-  overflow: hidden;
+.qs-home-video-feature {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
   border-radius: 24px;
-  background: #000;
-  box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.35);
-  opacity: 0;
-  transition: opacity 0.35s ease;
-  will-change: top, left, width, height;
-}
-
-.qs-hero-video-floater.qs-ready {
-  opacity: 1;
-}
-
-.qs-hero-video-el {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* Unmute button overlay — opens the modal with sound.
-   - Idle: subtle "breathing" ring to invite the click
-   - Hover/focus: scales up, color shifts to accent, two-pulse sonar rings */
-.qs-hero-video-play {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 64px;
-  height: 64px;
-  margin: -32px 0 0 -32px;
-  border: 0;
-  padding: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.94);
-  color: #1b1d1e;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  transition:
-    transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
-    background 0.18s ease,
-    color 0.18s ease,
-    box-shadow 0.22s ease;
-}
-
-.qs-hero-video-play::before,
-.qs-hero-video-play::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 2px solid currentColor;
-  pointer-events: none;
-  opacity: 0;
-  transform: scale(1);
-}
-
-/* Idle: a single soft pulse to draw the eye */
-.qs-hero-video-play::before {
-  animation: qs-ring-idle 2.4s ease-out infinite;
-}
-
-@keyframes qs-ring-idle {
-  0% {
-    transform: scale(1);
-    opacity: 0.45;
-  }
-  80%,
-  100% {
-    transform: scale(1.6);
-    opacity: 0;
-  }
-}
-
-/* Hover: faster sonar with two staggered rings + brand accent */
-.qs-hero-video-play:hover,
-.qs-hero-video-play:focus-visible {
-  transform: scale(1.12);
-  background: #fff;
-  color: #6b46ff;
-  box-shadow:
-    0 14px 40px rgba(107, 70, 255, 0.45),
-    0 0 0 6px rgba(107, 70, 255, 0.12);
-  outline: none;
-}
-
-.qs-hero-video-play:hover::before,
-.qs-hero-video-play:focus-visible::before {
-  animation: qs-ring-pulse 1.4s ease-out infinite;
-}
-
-.qs-hero-video-play:hover::after,
-.qs-hero-video-play:focus-visible::after {
-  animation: qs-ring-pulse 1.4s ease-out 0.7s infinite;
-}
-
-@keyframes qs-ring-pulse {
-  0% {
-    transform: scale(1);
-    opacity: 0.7;
-  }
-  100% {
-    transform: scale(1.9);
-    opacity: 0;
-  }
-}
-
-.qs-hero-video-play:active {
-  transform: scale(1.04);
-  transition-duration: 0.08s;
-}
-
-.qs-hero-video-play svg {
-  width: 26px;
-  height: 26px;
-  fill: currentColor;
-  position: relative;
-  z-index: 1;
-  margin-left: 3px;
-  transition: transform 0.18s ease;
-}
-
-.qs-hero-video-play:hover svg,
-.qs-hero-video-play:focus-visible svg {
-  transform: scale(1.06);
-}
-
-@media screen and (max-width: 991px) {
-  .qs-hero-video-play {
-    width: 56px;
-    height: 56px;
-    margin: -28px 0 0 -28px;
-  }
-  .qs-hero-video-play svg {
-    width: 22px;
-    height: 22px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .qs-hero-video-play::before,
-  .qs-hero-video-play::after,
-  .qs-hero-video-play:hover::before,
-  .qs-hero-video-play:hover::after {
-    animation: none;
-  }
-}
-
-/* Modal: fullscreen darkened overlay with the video centered, unmuted, with
-   native controls. Closes on backdrop click, the close button, or Escape. */
-.qs-video-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 2147483000;
-  background: rgba(0, 0, 0, 0.85);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  animation: qs-video-modal-fade 0.2s ease-out;
-}
-
-@keyframes qs-video-modal-fade {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.qs-video-modal-inner {
-  width: 100%;
-  max-width: 1100px;
-  aspect-ratio: 16 / 9;
-  background: #000;
-  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(180deg, #0f1011 0%, #1b1d1e 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #fff;
+  box-shadow: 0 30px 60px -32px rgba(0, 0, 0, 0.45);
 }
 
-.qs-video-modal-video {
+@media (min-width: 880px) {
+  .qs-home-video-feature {
+    grid-template-columns: minmax(280px, 360px) 1fr;
+    align-items: stretch;
+  }
+}
+
+/* Media column — holds the real-ratio 9:16 film. */
+.qs-home-video-media {
+  position: relative;
+  background: #000;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  max-height: 640px;
+  overflow: hidden;
+}
+
+@media (min-width: 880px) {
+  .qs-home-video-media {
+    aspect-ratio: auto;
+    height: 100%;
+  }
+}
+
+.qs-home-video-el {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
+  /* True 9:16 source: contain keeps every frame intact, never distorted or
+     cropped, at every breakpoint; the black card background absorbs any
+     margin around the film. */
+  object-fit: contain;
+  background: #000;
   display: block;
 }
 
-.qs-video-modal-close {
+/* Sound toggle — the film autoplays muted, unmutes on scroll-into-view, and
+   this lets the user override (and grants the gesture some browsers need to
+   permit audio). Pill collapses to an icon-only circle on hover-capable UIs. */
+.qs-home-video-sound {
   position: absolute;
-  top: 24px;
-  right: 24px;
-  width: 44px;
-  height: 44px;
-  border: 0;
-  padding: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.12);
+  right: 14px;
+  bottom: 14px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.55);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   color: #fff;
   cursor: pointer;
+  font-family: var(--inter-tight, "Inter Tight", sans-serif);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  transition: background 0.18s ease, border-color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.qs-home-video-sound:hover,
+.qs-home-video-sound:focus-visible {
+  background: rgba(0, 0, 0, 0.72);
+  border-color: rgba(255, 255, 255, 0.4);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.qs-home-video-sound svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.qs-home-video-sound-label {
+  white-space: nowrap;
+}
+
+/* Body column — the story about the film. */
+.qs-home-video-body {
+  padding: 32px 28px 36px;
   display: flex;
+  flex-direction: column;
+  gap: 18px;
+  justify-content: center;
+}
+
+@media (min-width: 880px) {
+  .qs-home-video-body {
+    padding: 48px 48px 48px 44px;
+  }
+}
+
+.qs-home-video-eyebrow {
+  align-self: flex-start;
+  display: inline-flex;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-family: var(--inter-tight, "Inter Tight", sans-serif);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.qs-home-video-title {
+  margin: 0;
+  font-family: var(--inter-tight, "Inter Tight", sans-serif);
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+
+.qs-home-video-italic {
+  font-family: var(--instrument, "Instrument Serif", serif);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.qs-home-video-story {
+  margin: 0;
+  font-family: var(--inter-tight, "Inter Tight", sans-serif);
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.qs-home-video-story strong {
+  color: #fff;
+  font-weight: 500;
+}
+
+.qs-home-video-pipeline {
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.qs-home-video-pipeline li {
+  display: inline-flex;
+}
+
+.qs-home-video-pipeline span {
+  display: inline-flex;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: var(--inter-tight, "Inter Tight", sans-serif);
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.78);
+  letter-spacing: 0.01em;
+}
+
+.qs-home-video-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-top: 6px;
+}
+
+.qs-home-video-btn-primary,
+.qs-home-video-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 52px;
+  padding: 0 22px;
+  border-radius: 999px;
+  font-family: var(--inter-tight, "Inter Tight", sans-serif);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.004em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.18s ease, background 0.18s ease, color 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.qs-home-video-btn-primary {
+  background: #fff;
+  color: #1b1d1e;
+  border: 1px solid #fff;
+}
+.qs-home-video-btn-primary:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.qs-home-video-btn-play {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.18s ease;
+  width: 18px;
+  height: 18px;
+}
+.qs-home-video-btn-play svg {
+  width: 16px;
+  height: 16px;
 }
 
-.qs-video-modal-close:hover,
-.qs-video-modal-close:focus-visible {
-  background: rgba(255, 255, 255, 0.24);
-  outline: none;
+.qs-home-video-btn-secondary {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+}
+.qs-home-video-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
 }
 
-.qs-video-modal-close svg {
-  width: 22px;
-  height: 22px;
-  fill: none;
+.qs-home-video-btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+}
+.qs-home-video-btn-icon svg {
+  width: 12px;
+  height: 12px;
+}
+/* Arrow icon ships with a dark stroke; force it to match the light button. */
+.qs-home-video-btn-secondary .qs-home-video-btn-icon svg path {
+  stroke: currentColor;
 }
 
 /* Shared CTA form chips (used by CTASection on every page) */
