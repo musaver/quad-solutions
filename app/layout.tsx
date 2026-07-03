@@ -30,6 +30,9 @@ export const metadata: Metadata = {
   description:
     "Quad Solutions is your entire digital department under one roof — Growth Marketing, Creative Production, Digital Products, and AI Automation. Trusted by 100+ brands worldwide.",
   robots: { index: true, follow: true },
+  verification: {
+    google: "JqVqBHfLvcYI0_i3yjSGRE90aQ_7iLvnOiOHzkP6J7k",
+  },
   icons: {
     icon: "/assets/wf/67a5fb8bc33c7f25ab4e52d9/68e3732f7782e21e4dbbc032_favicon.svg",
     apple:
