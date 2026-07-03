@@ -24,12 +24,12 @@ const instrumentSerif = Instrument_Serif({
 
 export const metadata: Metadata = {
   title: {
-    default: "Quad Solutions — Your Entire Digital Department Under One Roof",
+    default: "Quad Solutions | Growth, Creative, Digital & AI Agency",
     template: "%s | Quad Solutions",
   },
   description:
-    "Tired of juggling multiple agencies? We bring together specialized teams in Growth, Creative, Digital, and Al—all working as one to scale your business and simplify your life.",
-  robots: { index: false, follow: false },
+    "Quad Solutions is your entire digital department under one roof — Growth Marketing, Creative Production, Digital Products, and AI Automation. Trusted by 100+ brands worldwide.",
+  robots: { index: true, follow: true },
   icons: {
     icon: "/assets/wf/67a5fb8bc33c7f25ab4e52d9/68e3732f7782e21e4dbbc032_favicon.svg",
     apple:
@@ -38,6 +38,32 @@ export const metadata: Metadata = {
 };
 
 const webflowTouchClass = `!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);`;
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Quad Solutions",
+  alternateName: "QUAD Solutions",
+  url: "https://www.quadsolutions.ai/",
+  logo: "https://www.quadsolutions.ai/assets/logo/web-logo-final.jpg",
+  description:
+    "Quad Solutions is a full-service digital agency offering Growth Marketing, Creative Production, Digital Products, and AI Automation under one roof, trusted by 100+ brands worldwide.",
+  email: "support@quadsolutions.ai",
+  telephone: "+1-307-427-2883",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "30 N Gould St Ste R",
+    addressLocality: "Sheridan",
+    addressRegion: "WY",
+    postalCode: "82801",
+    addressCountry: "US",
+  },
+  sameAs: [
+    "https://www.instagram.com/quadsolutions.ai",
+    "https://www.facebook.com/share/1L45uNjwa3/",
+    "https://www.linkedin.com/company/quadsolution-ai/",
+  ],
+};
 
 export default function RootLayout({
   children,
@@ -64,6 +90,14 @@ export default function RootLayout({
           as="image"
           href="/assets/wf/67a5fb8bc33c7f25ab4e52d9/68e4efa959606e9a7d41cc67_background-gradient.webp"
           fetchPriority="high"
+        />
+        <Script
+          id="organization-schema"
+          type="application/ld+json"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationSchema),
+          }}
         />
         <Script
           id="webflow-w-mod"

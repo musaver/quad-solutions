@@ -72,7 +72,7 @@ export function TemplateNavbar() {
                 <img
                   loading="lazy"
                   src="/assets/logo/web-logo-final.jpg"
-                  alt="QUAD Solutions"
+                  alt="Quad Solutions logo"
                   style={{
                     height: "52px",
                     width: "auto",

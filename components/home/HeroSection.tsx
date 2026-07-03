@@ -160,6 +160,22 @@ export function HeroSection() {
           data-w-id="6d188073-2487-31fa-c36a-0d1621970df1"
           className={`hero-heading-h1${skeletonClass ? ` ${skeletonClass}` : ""}`}
         >
+          <span
+            style={{
+              position: "absolute",
+              width: "1px",
+              height: "1px",
+              padding: 0,
+              margin: "-1px",
+              overflow: "hidden",
+              clip: "rect(0, 0, 0, 0)",
+              clipPath: "inset(50%)",
+              whiteSpace: "nowrap",
+              border: 0,
+            }}
+          >
+            Quad Solutions —{" "}
+          </span>
           Your Entire Digital Department{" "}
           <span className="italic-span typing-text">Under One Roof</span>
         </h1>
