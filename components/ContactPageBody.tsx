@@ -5,6 +5,7 @@ import { useState, type FormEvent, type ReactNode } from "react";
 import { TemplateNavbar } from "@/components/TemplateNavbar";
 import { Footer } from "@/components/Footer";
 import { useHeroAnimation } from "@/hooks/useHeroAnimation";
+import { leadParams, trackPixelEvent } from "@/lib/metaPixel";
 
 const ARROW_DARK = "/assets/wf/67a5fb8bc33c7f25ab4e52d9/67a9e2599fa438b2b5ca91b6_arrow-top-right.png";
 const ARROW_LIGHT = "/assets/figma-case-study-details/icon-arrow-on-dark.svg";
@@ -145,6 +146,10 @@ export function ContactPageBody() {
         throw new Error(body.error ?? "Something went wrong");
       }
       setSubmitted(true);
+      trackPixelEvent(
+        "Lead",
+        leadParams({ formName: "Contact page enquiry", services, budget }),
+      );
     } catch (err) {
       setErrorMsg(err instanceof Error ? err.message : "Something went wrong");
     } finally {

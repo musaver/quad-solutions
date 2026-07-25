@@ -5,6 +5,7 @@ import "./globals.css";
 import { WebflowRuntime } from "@/components/WebflowRuntime";
 import { WebflowRouteSync } from "@/components/WebflowRouteSync";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
+import { MetaPixel } from "@/components/MetaPixel";
 
 const interTight = Inter_Tight({
   subsets: ["latin"],
@@ -125,6 +126,7 @@ export default function RootLayout({
           strategy="beforeInteractive"
         />
         {children}
+        <MetaPixel />
         <WhatsAppFloat />
         <WebflowRouteSync />
         <WebflowRuntime />
