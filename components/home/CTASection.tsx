@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { ServiceArrowIcon } from "@/components/ServiceArrowIcon";
+import { leadParams, trackPixelCustom, trackPixelEvent } from "@/lib/metaPixel";
 
 const SERVICES = [
   "Brand Strategy",
@@ -60,6 +61,8 @@ export function CTASection({ className = "qs-svc-final-cta" }: CTASectionProps) 
     e.preventDefault();
     if (!name.trim() || !email.trim()) return;
     setModalOpen(true);
+    // Step 1 of 2 — lets us retarget people who start the form but never reach the Lead event.
+    trackPixelCustom("LeadFormStarted", { content_name: "Start a project" });
   };
 
   const onDetailsSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -91,6 +94,10 @@ export function CTASection({ className = "qs-svc-final-cta" }: CTASectionProps) 
         throw new Error(body.error ?? "Something went wrong");
       }
       setSubmitted(true);
+      trackPixelEvent(
+        "Lead",
+        leadParams({ formName: "Start a project", services, budget }),
+      );
     } catch (err) {
       setErrorMsg(err instanceof Error ? err.message : "Something went wrong");
     } finally {
