@@ -1,0 +1,95 @@
+# Publishes a static export of the site to GitHub Pages.
+#
+# Pages can only serve static files, so this workflow builds a cut-down export
+# in CI only — it rewrites next.config.ts and drops the server-only routes
+# inside the ephemeral checkout. Nothing here changes the repo on `main`, which
+# keeps its API routes, admin panel and redirects for the real (server) host.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      # Static export cannot build route handlers or server-rendered pages.
+      # robots.ts goes too — it is a route handler, and the Pages copy gets its
+      # own noindex robots.txt below so it cannot outrank the real domain.
+      - name: Drop server-only routes
+        run: rm -rf app/api app/admin app/test-db app/robots.ts
+
+      # `basePath` is required: Pages serves this repo from /quad-solutions,
+      # so without it every CSS/JS/asset URL resolves to the domain root and 404s.
+      - name: Write export config
+        run: |
+          cat > next.config.ts <<'CFG'
+          import type { NextConfig } from "next";
+
+          const nextConfig: NextConfig = {
+            output: "export",
+            basePath: "/quad-solutions",
+            assetPrefix: "/quad-solutions",
+            images: { unoptimized: true },
+            trailingSlash: true,
+          };
+
+          export default nextConfig;
+          CFG
+
+      - run: npx next build
+
+      # basePath only rewrites framework URLs. Components across this site hardcode
+      # "/assets/..." strings (logos, icons, the Growth Funnel video), which would
+      # resolve to the domain root and 404 under the /quad-solutions subpath.
+      - name: Prefix hardcoded asset paths
+        run: |
+          find out -type f \( -name '*.html' -o -name '*.js' -o -name '*.css' \) -print0 \
+            | xargs -0 sed -i \
+                -e 's#"/assets/#"/quad-solutions/assets/#g' \
+                -e "s#'/assets/#'/quad-solutions/assets/#g" \
+                -e 's#(/assets/#(/quad-solutions/assets/#g'
+
+      # This is a preview mirror, not the canonical site — keep it out of search
+      # results so it never competes with quadsolutions.ai.
+      - name: Block indexing of the Pages mirror
+        run: printf 'User-agent: *\nDisallow: /\n' > out/robots.txt
+
+      - run: touch out/.nojekyll
+
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
