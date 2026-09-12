@@ -107,6 +107,7 @@ const AGENCY_CONS = [
   "Expensive: $2,000+/month",
   "Lead generation solution",
   "Get you more “leads”",
+  "Support reps who don’t even know your business",
 ];
 
 const QUAD_PROS = [
@@ -115,6 +116,7 @@ const QUAD_PROS = [
   "Affordable: $297/month",
   "Appointment generation solution",
   "Grow your online presence",
+  "A growth marketing specialist with you on call",
 ];
 
 const PILLARS = [
@@ -187,42 +189,6 @@ function MockBar({ label }: { label: string }) {
       <span className="gf-mock-dot" />
       <span className="gf-mock-dot" />
       <span className="gf-mock-label">{label}</span>
-    </div>
-  );
-}
-
-function CaptureMock() {
-  return (
-    <div className="gf-mock">
-      <MockBar label="Leads — all sources" />
-      <div className="gf-mock-body">
-        <div className="gf-stat-row">
-          <div className="gf-stat">
-            <strong>412</strong>
-            <span>Leads</span>
-          </div>
-          <div className="gf-stat">
-            <strong>68%</strong>
-            <span>Contacted</span>
-          </div>
-          <div className="gf-stat">
-            <strong>119</strong>
-            <span>Booked</span>
-          </div>
-        </div>
-        <div className="gf-bar-chart" aria-hidden="true">
-          {[34, 52, 46, 70, 62, 88, 76].map((h, i) => (
-            <div key={i} className="gf-bar" style={{ height: `${h}%` }} />
-          ))}
-        </div>
-        <div className="gf-channels">
-          {["Facebook Ads", "Google", "Website form", "Instagram", "Referral"].map((c) => (
-            <span key={c} className="gf-channel">
-              {c}
-            </span>
-          ))}
-        </div>
-      </div>
     </div>
   );
 }
@@ -491,10 +457,17 @@ export function GrowthFunnelPageBody() {
             </div>
           </div>
 
-          <div className="gf-cta-row">
-            <a className="gf-btn" href="#free-trial">
-              Get started for free
-            </a>
+          <div className="gf-consult">
+            <p className="gf-consult-flag">Free consultation — next 24 hours only</p>
+            <p className="gf-consult-note">
+              Get a growth marketing specialist on a call to map out your funnel. No cost, no
+              contract, no obligation to continue.
+            </p>
+            <div className="gf-cta-row">
+              <a className="gf-btn" href="#free-trial">
+                Claim your free consultation
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -562,7 +535,14 @@ export function GrowthFunnelPageBody() {
               </div>
             </div>
             <div className="gf-split-media">
-              <CaptureMock />
+              <img
+                className="gf-split-img"
+                src="/assets/growth-funnel/capture-leads.jpg"
+                alt="A new lead texting a business and instantly receiving an automated reply confirming the team will text back"
+                width={1200}
+                height={675}
+                loading="lazy"
+              />
             </div>
           </div>
 
