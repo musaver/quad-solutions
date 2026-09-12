@@ -25,6 +25,7 @@ export function TemplateNavbar() {
   const onAbout = pathname === "/about-us";
   const onSpecialists = pathname === "/specialists";
   const onQuadContent = pathname === "/quad-content";
+  const onGrowthFunnel = pathname === "/growth-funnel";
 
   useEffect(() => {
     setMenuOpen(false);
@@ -110,6 +111,13 @@ export function TemplateNavbar() {
                   aria-current={onQuadContent ? "page" : undefined}
                 >
                   QUAD Content
+                </Link>
+                <Link
+                  href="/growth-funnel"
+                  className={`nav-link-4${onGrowthFunnel ? " w--current" : ""}`}
+                  aria-current={onGrowthFunnel ? "page" : undefined}
+                >
+                  Growth Funnel
                 </Link>
                 <Link
                   href="/specialists"
@@ -227,6 +235,15 @@ export function TemplateNavbar() {
                   aria-current={onQuadContent ? "page" : undefined}
                 >
                   QUAD Content
+                </Link>
+              </li>
+              <li className="list-item-12">
+                <Link
+                  href="/growth-funnel"
+                  className={`link-6${onGrowthFunnel ? " w--current" : ""}`}
+                  aria-current={onGrowthFunnel ? "page" : undefined}
+                >
+                  Growth Funnel
                 </Link>
               </li>
               <li className="list-item-12">
