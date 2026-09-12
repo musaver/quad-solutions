@@ -649,11 +649,17 @@ export function GrowthFunnelPageBody() {
       <section className="gf-section">
         <div className="gf-inner gf-about">
           <div className="gf-about-card">
-            <div className="gf-about-mark" aria-hidden="true">
-              QUAD
-            </div>
-            <h3>The QUAD Team</h3>
-            <p>Growth, Creative, Digital &amp; AI — one department, one roof.</p>
+            <img
+              className="gf-specialist-photo"
+              src="/assets/team/mustafa-3.jpg"
+              alt="Mustafa Hassan"
+              width={580}
+              height={732}
+              loading="lazy"
+            />
+            <h3>Mustafa Hassan</h3>
+            <p className="gf-specialist-role">Digital Marketing Specialist</p>
+            <p>Drives data-led campaigns that turn audiences into loyal customers.</p>
             <div className="gf-about-metrics">
               <div>
                 <strong>100+</strong>
@@ -670,7 +676,7 @@ export function GrowthFunnelPageBody() {
             <p className="gf-eyebrow" style={{ textAlign: "left" }}>
               About us
             </p>
-            <h2>Meet the QUAD Team</h2>
+            <h2>Meet the Growth Marketing Specialist</h2>
             <p>
               We&rsquo;re a team of marketers, designers, developers and automation builders who love
               building and learning new things. Somewhere along the way we got deep into automating
