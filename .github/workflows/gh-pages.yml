@@ -78,7 +78,8 @@ jobs:
       # This is a preview mirror, not the canonical site — keep it out of search
       # results so it never competes with quadsolutions.ai.
       - name: Block indexing of the Pages mirror
-        run: printf 'User-agent: *\nDisallow: /\n' > out/robots.txt
+        run: |
+          printf 'User-agent: *\nDisallow: /\n' > out/robots.txt
 
       - run: touch out/.nojekyll
 
