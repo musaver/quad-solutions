@@ -894,6 +894,24 @@
   color: rgba(255, 255, 255, 0.8);
 }
 
+.gf-specialist-photo {
+  display: block;
+  width: 170px;
+  height: auto;
+  margin: 0 auto 20px;
+  border-radius: 18px;
+  box-shadow: 0 14px 34px rgba(8, 24, 64, 0.3);
+}
+
+.gf-about-card .gf-specialist-role {
+  margin: 0 0 12px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 .gf-about-metrics {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
