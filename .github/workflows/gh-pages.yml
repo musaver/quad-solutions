@@ -24,7 +24,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # The Growth Funnel video lives in Git LFS. Without lfs: true the checkout
+      # yields a 133-byte pointer file, which next build would copy into out/
+      # and Pages would serve as a broken video.
       - uses: actions/checkout@v4
+        with:
+          lfs: true
 
       - uses: actions/setup-node@v4
         with:
