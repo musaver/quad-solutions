@@ -506,6 +506,37 @@
 }
 
 /* ─── Split feature blocks ─────────────────────────────────────────────── */
+/* ─── Free consultation offer ────────────────────────────────── */
+.gf-consult {
+  margin-top: 48px;
+  text-align: center;
+}
+
+.gf-consult-flag {
+  display: inline-block;
+  margin: 0;
+  padding: 9px 18px;
+  border-radius: 999px;
+  background: rgba(233, 61, 61, 0.1);
+  color: var(--gf-red);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.gf-consult-note {
+  max-width: 520px;
+  margin: 16px auto 0;
+  color: var(--gf-muted);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.gf-consult .gf-cta-row {
+  margin-top: 28px;
+}
+
 .gf-split {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -519,6 +550,15 @@
 
 .gf-split--flip .gf-split-media {
   order: -1;
+}
+
+.gf-split-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  border: 1px solid var(--gf-line);
+  box-shadow: 0 24px 60px rgba(14, 24, 44, 0.12);
 }
 
 .gf-split-title {
