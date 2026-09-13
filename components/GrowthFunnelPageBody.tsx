@@ -648,29 +648,39 @@ export function GrowthFunnelPageBody() {
       {/* About the team */}
       <section className="gf-section">
         <div className="gf-inner gf-about">
-          <div className="gf-about-card">
-            <img
-              className="gf-specialist-photo"
-              src="/assets/team/mustafa-3.jpg"
-              alt="Mustafa Hassan"
-              width={580}
-              height={732}
-              loading="lazy"
-            />
-            <h3>Mustafa Hassan</h3>
-            <p className="gf-specialist-role">Digital Marketing Specialist</p>
-            <p>Drives data-led campaigns that turn audiences into loyal customers.</p>
-            <div className="gf-about-metrics">
-              <div>
-                <strong>100+</strong>
-                <span>Brands served</span>
-              </div>
-              <div>
-                <strong>4.9/5</strong>
-                <span>Client rating</span>
+          <article className="gf-specialist">
+            <div className="gf-specialist-media">
+              <img
+                className="gf-specialist-photo"
+                src="/assets/team/mustafa-3.jpg"
+                alt="Mustafa Hassan"
+                width={580}
+                height={732}
+                loading="lazy"
+              />
+              <span className="gf-specialist-tag">QUAD Growth Team</span>
+              <div className="gf-specialist-name">
+                <h3>Mustafa Hassan</h3>
+                <p className="gf-specialist-role">Digital Marketing Specialist</p>
               </div>
             </div>
-          </div>
+
+            <div className="gf-specialist-body">
+              <p className="gf-specialist-bio">
+                Drives data-led campaigns that turn audiences into loyal customers.
+              </p>
+              <div className="gf-about-metrics">
+                <div>
+                  <strong>100+</strong>
+                  <span>Brands served</span>
+                </div>
+                <div>
+                  <strong>4.9/5</strong>
+                  <span>Client rating</span>
+                </div>
+              </div>
+            </div>
+          </article>
 
           <div className="gf-about-body">
             <p className="gf-eyebrow" style={{ textAlign: "left" }}>
