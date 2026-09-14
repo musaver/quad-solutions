@@ -1,70 +1,27 @@
 "use client";
 
-import { useRef, useState, type FormEvent } from "react";
+import { useRef, useState } from "react";
 import { TemplateNavbar } from "@/components/TemplateNavbar";
 import { Footer } from "@/components/Footer";
-import { leadParams, trackPixelEvent } from "@/lib/metaPixel";
+import { GrowthFunnelNicheCards } from "@/components/GrowthFunnelNicheCards";
+import {
+  CheckIcon,
+  CrossIcon,
+  MailIcon,
+  PhoneIcon,
+  PlayIcon,
+  ShieldIcon,
+  Stars,
+} from "@/components/GrowthFunnelIcons";
+import {
+  GF_CONTACT_EMAIL as CONTACT_EMAIL,
+  GF_CONTACT_PHONE_HREF as CONTACT_PHONE_HREF,
+  GF_CONTACT_PHONE_LABEL as CONTACT_PHONE_LABEL,
+  GrowthFunnelTrialForm,
+} from "@/components/GrowthFunnelTrialForm";
 
 const VIDEO_SRC = "/assets/video/growth-funnel.mp4";
 const VIDEO_POSTER = "/assets/video/growth-funnel-poster.jpg";
-
-const CONTACT_EMAIL = "support@quadsolutions.ai";
-const CONTACT_PHONE_LABEL = "+1 (307) 427-2883";
-const CONTACT_PHONE_HREF = "tel:+13074272883";
-
-/* ─── Icons ──────────────────────────────────────────────────────────────── */
-
-const MailIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <rect x="2" y="4" width="20" height="16" rx="2.5" />
-    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-  </svg>
-);
-
-const PhoneIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-  </svg>
-);
-
-const StarIcon = () => (
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M12 2.5l2.9 5.88 6.5.95-4.7 4.58 1.11 6.47L12 17.33l-5.81 3.05 1.11-6.47-4.7-4.58 6.5-.95L12 2.5z" />
-  </svg>
-);
-
-const CheckIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M20 6 9 17l-5-5" />
-  </svg>
-);
-
-const CrossIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M18 6 6 18M6 6l12 12" />
-  </svg>
-);
-
-const ShieldIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-    <path d="m9 12 2 2 4-4" />
-  </svg>
-);
-
-const PlayIcon = () => (
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M8 5v14l11-7z" />
-  </svg>
-);
-
-const Stars = () => (
-  <div className="gf-stars" aria-hidden="true">
-    {[0, 1, 2, 3, 4].map((i) => (
-      <StarIcon key={i} />
-    ))}
-  </div>
-);
 
 /* ─── Content ────────────────────────────────────────────────────────────── */
 
@@ -77,7 +34,7 @@ const FEATURES = [
   {
     emoji: "⚡",
     title: "Automated Lead Followup",
-    body: "No more missed leads! Automatically text & email your leads as soon as they come in. Speed to lead is everything. No need for an office manager to “remember” to call back.",
+    body: "No more missed leads! Automatically text & email your leads as soon as they come in. Speed to lead is everything, and nobody on your team has to “remember” to call back.",
   },
   {
     emoji: "📮",
@@ -139,21 +96,21 @@ const TESTIMONIALS = [
     quote:
       "We went from chasing leads at 9pm to walking into a calendar that was already full. The follow-up runs itself — I genuinely stopped worrying about missed enquiries.",
     name: "Daniel Reyes",
-    role: "Owner, Reyes Roofing",
+    role: "Sales Director, Northline Homes",
     initials: "DR",
   },
   {
     quote:
-      "Setup took a week and we had 14 booked estimates in the first month. QUAD Solutions replaced three separate tools and an office manager's worth of admin.",
+      "Setup took a week and the consultation calendar hasn't had a quiet day since. QUAD Solutions replaced three separate tools and a whole lot of front desk admin.",
     name: "Priya Sharma",
-    role: "Director, Lumen Kitchens",
+    role: "Clinic Director, Lumen Aesthetics",
     initials: "PS",
   },
   {
     quote:
-      "Our Google reviews went from 11 to 96 in four months without us asking a single customer manually. That alone changed how many calls we get.",
+      "Our Google reviews climbed steadily for months without us asking a single customer manually. That alone changed how many calls we get.",
     name: "Marcus Bell",
-    role: "Founder, Bell HVAC & Air",
+    role: "Owner, Bluewater Renovations",
     initials: "MB",
   },
 ];
@@ -161,23 +118,23 @@ const TESTIMONIALS = [
 const TEAM_POINTS = [
   "Helped owners save time and grow",
   "100+ brands served worldwide",
-  "Built affordable systems for local businesses",
+  "Built affordable systems for growing businesses",
   "One team for growth, creative, web & AI",
 ];
 
 const INDUSTRIES = [
-  { icon: "🍳", label: "Kitchen Remodeling" },
-  { icon: "🛁", label: "Bathroom Remodeling" },
-  { icon: "🚗", label: "Garage Remodeling" },
-  { icon: "🏠", label: "Roofing" },
-  { icon: "🎨", label: "Painting" },
-  { icon: "🔧", label: "Auto Repair" },
-  { icon: "❄️", label: "HVAC" },
-  { icon: "🐾", label: "Pet Grooming" },
+  { icon: "🏗️", label: "Construction & Building" },
+  { icon: "🏠", label: "Home Services" },
+  { icon: "🏥", label: "Healthcare & Clinics" },
+  { icon: "💆", label: "Wellness & Aesthetics" },
+  { icon: "🎓", label: "Education & Schools" },
+  { icon: "🏭", label: "Manufacturing & B2B" },
+  { icon: "🚗", label: "Automotive" },
+  { icon: "🏡", label: "Real Estate" },
+  { icon: "💼", label: "Professional Services" },
+  { icon: "💪", label: "Fitness & Studios" },
+  { icon: "⚖️", label: "Legal & Financial" },
   { icon: "🏪", label: "Local Businesses" },
-  { icon: "🚚", label: "Junk Removal" },
-  { icon: "🌿", label: "Landscaping" },
-  { icon: "🧱", label: "Masonry" },
 ];
 
 /* ─── Mockups ────────────────────────────────────────────────────────────── */
@@ -200,12 +157,12 @@ function NurtureMock() {
       <div className="gf-mock-body">
         <div className="gf-chat">
           <span className="gf-chat-avatar">JL</span>
-          <p className="gf-chat-bubble">Hi, saw your ad — how much for a full roof replacement?</p>
+          <p className="gf-chat-bubble">Hi, saw your ad — can you send me a price for the full job?</p>
         </div>
         <div className="gf-chat gf-chat--out">
           <span className="gf-chat-avatar">QS</span>
           <p className="gf-chat-bubble">
-            Hi Jordan! Happy to help. Are you free Thursday at 10am for a free on-site estimate?
+            Hi Jordan! Happy to help. Are you free Thursday at 10am for a free consultation?
           </p>
         </div>
         <div className="gf-chat">
@@ -266,53 +223,12 @@ function BookingMock() {
 export function GrowthFunnelPageBody() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const playVideo = () => {
     const el = videoRef.current;
     if (!el) return;
     setPlaying(true);
     void el.play();
-  };
-
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (submitting) return;
-
-    const formEl = e.currentTarget;
-    const data = new FormData(formEl);
-    const name = ((data.get("name") as string | null) ?? "").trim();
-    const email = ((data.get("email") as string | null) ?? "").trim();
-    const phone = ((data.get("phone") as string | null) ?? "").trim();
-
-    setSubmitting(true);
-    setErrorMsg(null);
-
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          source: "growth-funnel",
-          name,
-          email,
-          phone,
-          message: "Requested the 7-day free trial from the Growth Funnel page.",
-        }),
-      });
-
-      if (!res.ok) throw new Error("request failed");
-
-      trackPixelEvent("Lead", leadParams({ formName: "Growth Funnel — Free Trial" }));
-      setSubmitted(true);
-      formEl.reset();
-    } catch {
-      setErrorMsg("Something went wrong. Please email us at " + CONTACT_EMAIL + " and we'll set you up.");
-    } finally {
-      setSubmitting(false);
-    }
   };
 
   return (
@@ -338,17 +254,18 @@ export function GrowthFunnelPageBody() {
         <div className="gf-inner">
           <p className="gf-hero-kicker">All-In-One Sales &amp; Marketing Platform</p>
           <h1 className="gf-hero-title">
-            We Help Local Businesses <span>Thrive</span>
+            We Help Businesses <span>Thrive</span>
           </h1>
           <p className="gf-hero-sub">
-            Automate your lead generation, followup &amp; project acquisition today.
+            Automate your lead generation, followup &amp; appointment booking today — whatever
+            industry you&rsquo;re in.
           </p>
           <div className="gf-hero-ctas">
             <a className="gf-btn" href="#free-trial">
               Get started for free
             </a>
-            <a className="gf-btn gf-btn--ghost" href="#how-it-works">
-              See how it works
+            <a className="gf-btn gf-btn--ghost" href="#niches">
+              Find your industry
             </a>
           </div>
           <p className="gf-hero-note">7-day free trial · No contracts · Cancel anytime</p>
@@ -388,6 +305,9 @@ export function GrowthFunnelPageBody() {
           <p className="gf-proof-note">See why we have such raving reviews</p>
         </div>
       </section>
+
+      {/* Industry funnels */}
+      <GrowthFunnelNicheCards />
 
       {/* Core features */}
       <section className="gf-section">
@@ -652,31 +572,31 @@ export function GrowthFunnelPageBody() {
             <div className="gf-specialist-media">
               <img
                 className="gf-specialist-photo"
-                src="/assets/team/mustafa-3.jpg"
+                src="/assets/team/mustafa-specialist.jpg"
                 alt="Mustafa Hassan"
-                width={580}
-                height={732}
+                width={1000}
+                height={1262}
                 loading="lazy"
               />
               <span className="gf-specialist-tag">QUAD Growth Team</span>
-              <div className="gf-specialist-name">
-                <h3>Mustafa Hassan</h3>
-                <p className="gf-specialist-role">Digital Marketing Specialist</p>
-              </div>
-            </div>
 
-            <div className="gf-specialist-body">
-              <p className="gf-specialist-bio">
-                Drives data-led campaigns that turn audiences into loyal customers.
-              </p>
-              <div className="gf-about-metrics">
-                <div>
-                  <strong>100+</strong>
-                  <span>Brands served</span>
+              <div className="gf-specialist-overlay">
+                <div className="gf-specialist-name">
+                  <h3>Mustafa Hassan</h3>
+                  <p className="gf-specialist-role">Digital Marketing Specialist</p>
                 </div>
-                <div>
-                  <strong>4.9/5</strong>
-                  <span>Client rating</span>
+                <p className="gf-specialist-bio">
+                  Drives data-led campaigns that turn audiences into loyal customers.
+                </p>
+                <div className="gf-about-metrics">
+                  <div>
+                    <strong>100+</strong>
+                    <span>Brands served</span>
+                  </div>
+                  <div>
+                    <strong>4.9/5</strong>
+                    <span>Client rating</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -764,39 +684,11 @@ export function GrowthFunnelPageBody() {
             Create your free account and try it for yourself to see how you like it!
           </p>
 
-          <form className="gf-form-card" onSubmit={onSubmit} noValidate={false}>
-            <div className="gf-field">
-              <label htmlFor="gf-name">Full Name *</label>
-              <input id="gf-name" name="name" type="text" autoComplete="name" placeholder="Jane Doe" required />
-            </div>
-            <div className="gf-field">
-              <label htmlFor="gf-email">Email *</label>
-              <input id="gf-email" name="email" type="email" autoComplete="email" placeholder="jane@company.com" required />
-            </div>
-            <div className="gf-field">
-              <label htmlFor="gf-phone">Phone *</label>
-              <input id="gf-phone" name="phone" type="tel" autoComplete="tel" placeholder="+1 (555) 000-0000" required />
-            </div>
-
-            <label className="gf-consent">
-              <input type="checkbox" name="consent" required />
-              <span>
-                I agree to terms &amp; conditions provided by the company. By providing my phone number,
-                I agree to receive text messages from the business.
-              </span>
-            </label>
-
-            <button className="gf-btn" type="submit" disabled={submitting}>
-              {submitting ? "Sending…" : "Submit"}
-            </button>
-
-            {submitted && (
-              <p className="gf-form-status gf-form-status--ok">
-                You&rsquo;re in — we&rsquo;ll be in touch shortly to set up your free trial.
-              </p>
-            )}
-            {errorMsg && <p className="gf-form-status gf-form-status--err">{errorMsg}</p>}
-          </form>
+          <GrowthFunnelTrialForm
+            source="growth-funnel"
+            pixelFormName="Growth Funnel — Free Trial"
+            message="Requested the 7-day free trial from the Growth Funnel page."
+          />
         </div>
       </section>
 

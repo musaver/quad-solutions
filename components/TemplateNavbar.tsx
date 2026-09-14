@@ -25,7 +25,8 @@ export function TemplateNavbar() {
   const onAbout = pathname === "/about-us";
   const onSpecialists = pathname === "/specialists";
   const onQuadContent = pathname === "/quad-content";
-  const onGrowthFunnel = pathname === "/growth-funnel";
+  // Also true for the per-industry variants at /growth-funnel/<niche>.
+  const onGrowthFunnel = pathname === "/growth-funnel" || pathname.startsWith("/growth-funnel/");
 
   useEffect(() => {
     setMenuOpen(false);
