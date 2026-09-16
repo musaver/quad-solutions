@@ -31,6 +31,31 @@ jobs:
         with:
           lfs: true
 
+      # An obfuscated crypto-stealer has been appended to postcss.config.mjs
+      # three times (65ee6ae, c9e2d89, 8809b77). It reads commands out of
+      # Ethereum transactions and spawns them, and it runs on every next build —
+      # so it executes here in CI too, before anything else can catch it.
+      # postcss.config.mjs is 72 bytes when healthy; the payload made it 30-32KB.
+      - name: Fail if the obfuscated payload is present
+        run: |
+          fail=0
+          size=$(wc -c < postcss.config.mjs)
+          if [ "$size" -gt 1024 ]; then
+            echo "::error file=postcss.config.mjs::postcss.config.mjs is ${size} bytes (expected ~72). Payload likely appended."
+            fail=1
+          fi
+          hits=$(git ls-files -z '*.js' '*.mjs' '*.cjs' '*.ts' '*.tsx' \
+            | xargs -0 grep -lE "ETH_RPC_URL|eth_getBlockByNumber|_0x[0-9a-f]{4,6}\(0x" 2>/dev/null || true)
+          if [ -n "$hits" ]; then
+            echo "::error::Obfuscated payload markers found in:"
+            echo "$hits"
+            fail=1
+          fi
+          if [ "$fail" -eq 0 ]; then
+            echo "Clean - no payload markers found."
+          fi
+          exit $fail
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
