@@ -1,1 +1,1 @@
-public/assets/video/growth-funnel.mp4 filter=lfs diff=lfs merge=lfs -text
+public/assets/video/*.mp4 binary
