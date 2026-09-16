@@ -13,6 +13,38 @@ import { useEffect, useRef, useState } from "react";
 
 type ChatMsg = { role: "user" | "assistant"; content: string };
 
+const BOLD_SPAN = /(\*\*[^*]+\*\*)/g;
+const BOLD_MARK = /\*\*/g;
+const TRAILING_MARK = /\*\*(?![\s\S]*\*\*)/;
+
+/**
+ * The model answers in light markdown, but the bubble renders plain text, so
+ * `**bold**` was showing its literal asterisks. Turn the bold spans into
+ * <strong> and leave the rest alone. Parts go in as React children, never as
+ * HTML, so there is nothing to sanitise.
+ *
+ * While a reply is still streaming an opening `**` arrives before its closing
+ * pair, so an odd marker count means the last one is still incomplete — drop it
+ * so asterisks do not flash mid-stream.
+ */
+function renderRich(text: string) {
+  const marks = text.match(BOLD_MARK);
+  const source =
+    marks && marks.length % 2 === 1
+      ? text.replace(TRAILING_MARK, "")
+      : text;
+
+  return source
+    .split(BOLD_SPAN)
+    .map((part, i) =>
+      part.startsWith("**") && part.endsWith("**") && part.length > 4 ? (
+        <strong key={i}>{part.slice(2, -2)}</strong>
+      ) : (
+        part
+      )
+    );
+}
+
 const GREETING =
   "Hi! I'm the Quad Solutions assistant. Ask me about growth marketing, creative production, digital products, or AI automation — or tap a suggestion below.";
 
@@ -158,16 +190,17 @@ export function LeadChatWidget() {
                     : "qs-lead-bubble--bot"
                 }`}
               >
-                {m.content ||
-                  (streaming && i === chat.length - 1 ? (
-                    <span className="qs-lead-typing" aria-label="typing">
-                      <span />
-                      <span />
-                      <span />
-                    </span>
-                  ) : (
-                    ""
-                  ))}
+                {m.content ? (
+                  renderRich(m.content)
+                ) : streaming && i === chat.length - 1 ? (
+                  <span className="qs-lead-typing" aria-label="typing">
+                    <span />
+                    <span />
+                    <span />
+                  </span>
+                ) : (
+                  ""
+                )}
               </div>
             ))}
 
