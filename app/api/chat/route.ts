@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
  *
  * Env vars:
  *   GROQ_API_KEY  (required) — your Groq API key (starts with "gsk_")
- *   GROQ_MODEL    (optional) — model id, defaults to "llama-3.3-70b-versatile"
+ *   GROQ_MODEL    (optional) — model id, defaults to "openai/gpt-oss-120b"
  *   GROQ_BASE_URL (optional) — defaults to https://api.groq.com/openai/v1
  *
  * Streams the reply back to the widget as plain text.
@@ -19,7 +19,7 @@ export const dynamic = "force-dynamic";
 type ChatMessage = { role: "user" | "assistant"; content: string };
 
 const MAX_TURNS = 20;
-const DEFAULT_MODEL = "llama-3.3-70b-versatile";
+const DEFAULT_MODEL = "openai/gpt-oss-120b";
 const DEFAULT_BASE_URL = "https://api.groq.com/openai/v1";
 
 /** Build the grounding system prompt from the same service tree the widget uses. */
@@ -108,6 +108,10 @@ export async function POST(request: NextRequest) {
         model,
         stream: true,
         max_tokens: 1024,
+        // gpt-oss is a reasoning model; keep thinking short so the widget starts
+        // streaming fast. Groq puts thinking on `delta.reasoning`, which the
+        // parser below ignores, so it never reaches the visitor.
+        reasoning_effort: "low",
         messages: [{ role: "system", content: SYSTEM_PROMPT }, ...history],
       }),
     });
